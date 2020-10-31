@@ -1,0 +1,16 @@
+version: '2'
+services:
+    app:
+        build: ./docker
+        container_name: coaster_cloud_storefront_app
+        ports:
+            - 80:80
+        env_file:
+            - .env
+        volumes:
+            - ./:/var/www/html:delegated
+        networks:
+            - local
+networks:
+    local:
+        driver: bridge
