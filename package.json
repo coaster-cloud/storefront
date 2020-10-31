@@ -1,0 +1,20 @@
+{
+  "name": "coaster.cloud-storefront",
+  "description": "This is the VueJS client application from [coaster.cloud](https://coaster.cloud).",
+  "author": {
+    "name": "Michel Chowanski",
+    "email": "michel@chowanski.de"
+  },
+  "scripts": {
+    "build": "echo \"Error: no build specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coaster-cloud/storefront.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coaster-cloud/storefront/issues"
+  },
+  "homepage": "https://github.com/coaster-cloud/storefront#readme"
+}
