@@ -15,17 +15,20 @@ class HtmlTemplatePlugin {
                         return console.error(err);
                     }
 
-                    let compiled = _.template(data.toString());
-                    let html = compiled({
-                        'jsFiles': entrypoints.entrypoints.app.js,
-                        'cssFiles':entrypoints.entrypoints.app.css
-                    });
+                    ['en', 'de'].forEach(function (locale) {
+                        let compiled = _.template(data.toString());
+                        let html = compiled({
+                            'jsFiles': entrypoints.entrypoints.app.js,
+                            'cssFiles':entrypoints.entrypoints.app.css,
+                            'locale': locale
+                        });
 
-                    fs.writeFile('./public/index.html', html, function(err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                    });
+                        fs.writeFile(`./public/index_${locale}.html`, html, function(err) {
+                            if (err) {
+                                return console.error(err);
+                            }
+                        });
+                    })
                 });
             }
         );
