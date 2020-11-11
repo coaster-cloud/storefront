@@ -1,4 +1,4 @@
-# coaster.cloud Storefront
+# coaster.cloud Web App
 This is the VueJS client application from [coaster.cloud](https://coaster.cloud).
 
 **This project is not meant for re-use.** It is open source to make it easy to contribute. We provide no support if you
@@ -10,8 +10,8 @@ contains all dependencies for building and serving the application.
 
 1. Clone this repository
 2. Create and start container with `docker-compose up -d --build`
-3. Install dependencies `docker-compose exec app npm install`
-4. Build javascript and css with `docker-compose exec app npm run build`
+3. Install dependencies `docker-compose exec nginx npm install`
+4. Build javascript and css with `docker-compose exec nginx npm run build`
 
 After that your local application will be accessible via `http://localhost`. You should see a "HELLO COASTER WORLD!" 
 message.

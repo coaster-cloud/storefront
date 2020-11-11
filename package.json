@@ -1,5 +1,5 @@
 {
-  "name": "coaster.cloud-storefront",
+  "name": "coaster.cloud-web-app",
   "description": "This is the VueJS client application from [coaster.cloud](https://coaster.cloud).",
   "author": {
     "name": "Michel Chowanski",
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coaster-cloud/storefront.git"
+    "url": "git+https://github.com/coaster-cloud/web-app.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/coaster-cloud/storefront/issues"
+    "url": "https://github.com/coaster-cloud/web-app/issues"
   },
-  "homepage": "https://github.com/coaster-cloud/storefront#readme",
+  "homepage": "https://github.com/coaster-cloud/web-app#readme",
   "devDependencies": {
     "@symfony/webpack-encore": "^0.31.0",
     "node-sass": "^4.14.1",

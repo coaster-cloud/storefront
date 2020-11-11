@@ -1,4 +1,4 @@
-FROM nginx:1.19.3
+FROM nginx:1.19.3 as base
 
 RUN apt-get update \
   && apt-get install -y curl \
@@ -9,6 +9,11 @@ RUN apt-get update \
 
 RUN npm install -g node-gyp
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
 WORKDIR /var/www/html
+
+FROM base as development
+
+FROM base as production
+COPY ./ ./
+COPY ./docker/nginx.conf /etc/nginx/conf.d/app.conf
+RUN npm install && npm run build
