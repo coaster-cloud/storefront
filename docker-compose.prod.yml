@@ -1,0 +1,13 @@
+version: '2'
+services:
+    nginx:
+        image: ghcr.io/coaster-cloud/web-app-nginx:latest
+        container_name: coaster_cloud_web_app_nginx
+        restart: always
+        ports:
+            - 8020:80
+        networks:
+            - local
+networks:
+    local:
+        driver: bridge
