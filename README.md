@@ -6,7 +6,7 @@ want to run your own, and will do breaking changes without notice.
 
 ## Installation
 You only need [docker-compose](https://docs.docker.com/compose/) to install this application. The app container
-contains all dependencies for building and serving the application.
+contains all dependencies for building and serving the application. The installation can take a few minutes.
 
 1. Clone this repository
 2. Create and start container with `docker-compose up -d --build`

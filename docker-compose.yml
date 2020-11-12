@@ -1,18 +1,17 @@
-version: '2'
+version: '3.8'
 services:
     nginx:
         build:
             context: ./
-            dockerfile: ./docker/Dockerfile
-            target: development
+            dockerfile: ./docker/nginx/Dockerfile
         container_name: coaster_cloud_web_app_nginx
         ports:
-            - 80:80
+            - 80:8020
         env_file:
             - .env
         volumes:
             - ./:/var/www/html:delegated
-            - ./docker/nginx.conf:/etc/nginx/conf.d/app.conf:delegated
+            - ./docker/nginx/server.conf:/etc/nginx/conf.d/server.conf:delegated
         networks:
             - local
 networks:

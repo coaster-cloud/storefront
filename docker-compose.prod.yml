@@ -5,7 +5,7 @@ services:
         container_name: coaster_cloud_web_app_nginx
         restart: always
         ports:
-            - 8020:80
+            - 8020:8020
         networks:
             - local
 networks:
