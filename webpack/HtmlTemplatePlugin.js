@@ -8,7 +8,7 @@ class HtmlTemplatePlugin {
             function () {
                 console.log('Create index file ...');
 
-                let entrypoints = require('./../public/entrypoints.json');
+                let entrypoints = require('./../public/assets/entrypoints.json');
 
                 fs.readFile('./html/index.html', function (err, data) {
                     if (err) {

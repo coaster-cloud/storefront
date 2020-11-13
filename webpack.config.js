@@ -2,8 +2,8 @@ let Encore = require('@symfony/webpack-encore');
 let HtmlTemplatePlugin = require('./webpack/HtmlTemplatePlugin')
 
 Encore
-    .setOutputPath('public/')
-    .setPublicPath('/')
+    .setOutputPath('public/assets/')
+    .setPublicPath('/assets')
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .enableSassLoader()
