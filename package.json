@@ -1,63 +1,33 @@
 {
-  "name": "coaster.cloud-web-app",
-  "description": "This is the VueJS client application from [coaster.cloud](https://coaster.cloud).",
-  "author": {
-    "name": "Michel Chowanski",
-    "email": "michel@chowanski.de"
-  },
+  "name": "web-app",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "encore dev",
-    "build": "encore production"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coaster-cloud/web-app.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/coaster-cloud/web-app/issues"
-  },
-  "homepage": "https://github.com/coaster-cloud/web-app#readme",
-  "devDependencies": {
-    "@symfony/webpack-encore": "^0.31.0",
-    "node-sass": "^4.14.1",
-    "raw-loader": "^4.0.2",
-    "sass-loader": "^9.0.3",
-    "vue-loader": "^15.9.3",
-    "url-loader": "^4.1.1",
-    "vue-template-compiler": "^2.6.12",
-    "yaml-loader": "^0.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "babel-polyfill": "^6.26"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js"
   },
   "dependencies": {
-    "@johmun/vue-tags-input": "^2.1.0",
-    "@sentry/browser": "^5.27.1",
-    "@sentry/integrations": "^5.27.1",
-    "axios": "^0.18.1",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.18.1",
-    "echarts": "^4.9.0",
-    "flag-icon-css": "^3.5.0",
-    "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.20",
-    "marked": "^1.2.2",
-    "moment": "^2.29.1",
-    "slugify": "^1.4.5",
-    "vue": "^2.6.12",
-    "vue-calendar-heatmap": "^0.8.4",
-    "vue-clickaway": "^2.2.2",
-    "vue-cookies": "^1.7.4",
-    "vue-cool-lightbox": "^2.6.4",
-    "vue-echarts": "^5.0.0-beta.0",
-    "vue-flux": "^6.3.0",
-    "vue-loading-overlay": "^3.4.2",
-    "vue-meta": "^2.4.0",
-    "vue-number-animation": "^1.0.5",
-    "vue-perfect-scrollbar": "^0.1.0",
-    "vue-router": "^3.4.7",
-    "vue-scrollto": "^2.19.1",
-    "vuex": "^3.5.1"
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/pwa": "^3.0.2",
+    "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.17.3",
+    "core-js": "^3.6.5",
+    "node-sass": "^5.0.0",
+    "nuxt": "^2.14.6",
+    "vue-flux": "^6.3.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "fibers": "^5.0.0",
+    "sass": "^1.30.0",
+    "sass-loader": "^10.1.0"
   }
 }
