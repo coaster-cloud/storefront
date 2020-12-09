@@ -4,7 +4,7 @@
 
     <div class="main-content">
       <h5 class="text-center">
-        Random
+        {{ $t('welcome') }}
       </h5>
       <b-row>
         <b-col
