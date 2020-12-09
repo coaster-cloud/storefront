@@ -47,22 +47,9 @@ export default {
   },
 
   async fetch () {
-    const query = `
-      query {
-        parks(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
-          items {
-            id, name, images { fileId }
-          }
-        },
-        attractions(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
-          items {
-            id, name, images { fileId }
-          }
-        }
-      }
-    `
-
-    const result = await this.$axios.post(this.$config.dataServiceUrl, { query }).then(res => res.data.data)
+    const result = await this.$axios.post(this.$config.dataServiceUrl, {
+      query: this.$options.__query
+    }).then(res => res.data.data)
 
     const me = this
 
@@ -83,6 +70,17 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<query>
+  query {
+    parks(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
+      items {
+        id, name, images { fileId }
+      }
+    },
+    attractions(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
+      items {
+        id, name, images { fileId }
+      }
+    }
+  }
+</query>

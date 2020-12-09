@@ -46,6 +46,13 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    extend(config) {
+      config.module.rules.push({
+        resourceQuery: /blockType=query/,
+        type: 'javascript/auto',
+        loader: require.resolve('./plugins/loader/query-loader.js')
+      })
+    }
   },
 
   publicRuntimeConfig: {
