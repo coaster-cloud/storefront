@@ -47,7 +47,7 @@
 
       <b-navbar-nav class="ml-auto">
         <b-nav-form key="nav-item-edit-mode" class="form-inline-nav">
-          <b-form-checkbox v-model="$store.state.common.editMode" switch>
+          <b-form-checkbox switch :value="$store.getters['common/getEditMode']" @change="(checked) => $store.commit('common/setEditMode', checked)">
             {{ $t('edit_mode') }}
           </b-form-checkbox>
         </b-nav-form>

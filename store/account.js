@@ -2,11 +2,13 @@ import VueCookies from 'vue-cookies'
 import JwtDecode from 'jwt-decode'
 
 export default {
-  state: {
-    username: null,
-    roles: [],
-    token: null,
-    expiresAt: null
+  state () {
+    return {
+      username: null,
+      roles: [],
+      token: null,
+      expiresAt: null
+    }
   },
 
   mutations: {

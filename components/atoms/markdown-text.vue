@@ -9,7 +9,7 @@
 
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <p v-html="compiledText" />
+  <div v-html="compiledText" />
 </template>
 
 <script>

@@ -1,7 +1,9 @@
 export default {
-  state: {
-    loading: 0,
-    editMode: false
+  state () {
+    return {
+      loading: 0,
+      editMode: false
+    }
   },
 
   mutations: {
@@ -16,6 +18,10 @@ export default {
   getters: {
     isLoading (state) {
       return state.loading > 0
+    },
+
+    getEditMode (state) {
+      return state.editMode
     }
   }
 }
