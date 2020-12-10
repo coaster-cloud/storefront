@@ -2,11 +2,8 @@
   <div>
     <b-container>
       <div class="container-shadow">
-        <!-- Navigation -->
-
+        <navigation />
         <Nuxt />
-
-        <!-- Bottom -->
         <bottom />
       </div>
     </b-container>
@@ -14,20 +11,23 @@
 </template>
 
 <script>
-import Bottom from '@/components/organisms/bottom'
+import Navigation from '~/components/organisms/navigation'
+import Bottom from '~/components/organisms/bottom'
 
 export default {
   components: {
+    Navigation,
     Bottom
   }
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/css/ci.scss";
+@import "~/assets/css/ci.scss";
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
-@import '@/assets/css/font.scss';
+@import '~/assets/css/font.scss';
+@import '~/assets/css/flags.scss';
 
 body {
   background-color: #eee;

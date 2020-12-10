@@ -72,11 +72,15 @@ export default {
     locales: [
       {
         code: 'en',
-        file: 'en/messages.yaml'
+        file: 'en/messages.yaml',
+        icon: 'flag-icon-gb',
+        label: 'English'
       },
       {
         code: 'de',
-        file: 'de/messages.yaml'
+        file: 'de/messages.yaml',
+        icon: 'flag-icon-de',
+        label: 'Deutsch'
       }
     ],
     lazy: true,

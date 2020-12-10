@@ -4,7 +4,7 @@
 
     <div class="main-content">
       <h5 class="text-center">
-        {{ $t('welcome') }}
+        Work in Progress
       </h5>
       <b-row>
         <b-col
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Hero from '@/components/organisms/hero'
+import Hero from '~/components/organisms/hero'
 
 export default {
   components: {

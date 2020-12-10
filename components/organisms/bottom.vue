@@ -7,7 +7,7 @@
     </div>
     <div class="footer-bottom border-top pt-3 d-flex flex-column flex-sm-row align-items-center">
       <div class="d-flex align-items-center">
-        <img class="logo" src="@/assets/images/logo.png">
+        <img class="logo" src="~/assets/images/logo.png">
         <div>
           <div>
             <p class="m-0">
@@ -35,7 +35,7 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/css/ci.scss";
+@import "~/assets/css/ci.scss";
 
 .app-footer {
   background: $gray-200;
