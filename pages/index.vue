@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Hero from '@/components/molecules/Hero'
+import Hero from '@/components/organisms/hero'
 
 export default {
   components: {
@@ -47,11 +47,11 @@ export default {
   },
 
   async fetch () {
+    const me = this
+
     const result = await this.$axios.post(this.$config.dataServiceUrl, {
       query: this.$options.__query
     }).then(res => res.data.data)
-
-    const me = this
 
     result.parks.items.forEach(function (park) {
       me.random.push(park)

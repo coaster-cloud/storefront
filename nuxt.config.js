@@ -19,7 +19,9 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/node_modules/vue-flux', mode: 'client' },
-    '~/plugins/prototypes/image'
+    '~/plugins/components/global',
+    '~/plugins/prototypes/image',
+    '~/plugins/prototypes/markdown'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -50,6 +52,12 @@ export default {
         type: 'javascript/auto',
         loader: require.resolve('./plugins/loader/query-loader.js')
       })
+
+      config.module.rules.push({
+        test:  /\.ya?ml$/,
+        type: 'json',
+        loader: 'yaml-loader'
+      })
     }
   },
 
@@ -64,15 +72,16 @@ export default {
     locales: [
       {
         code: 'en',
-        file: 'en.js'
+        file: 'en/messages.yaml'
       },
       {
         code: 'de',
-        file: 'de.js'
+        file: 'de/messages.yaml'
       }
     ],
     lazy: true,
     langDir: 'lang/',
-    defaultLocale: 'en'
+    defaultLocale: 'en',
+    strategy: 'prefix'
   }
 }
