@@ -22,3 +22,9 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## License
+
+* The source code licensed under [MIT](./LICENSE)
+* All fonts under `./assets/fonts` licensed under [Open Font License](https://fonts.google.com/specimen/Nunito#license)
+* All images under `./assets/images` and `./static` are proprietary. Using the images outside of this project is not permitted.
