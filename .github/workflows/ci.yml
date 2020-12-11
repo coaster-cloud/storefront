@@ -25,9 +25,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/nginx/Dockerfile
+          file: ./docker/node/Dockerfile
           push: true
-          build-args: |
-            bootstrap=production
           tags: |
             ghcr.io/coaster-cloud/web-app-nginx:latest
