@@ -13,6 +13,8 @@ Simply run the following tasks:
 * Install dependencies with `npm install`
 * Compile and start server with `npm dev`
 
+The app is then accessible via http://localhost:3000.
+
 Hot reload is active. Changes become directly visible after a few seconds.
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
