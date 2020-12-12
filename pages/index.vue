@@ -120,6 +120,10 @@ export default {
       query: me.$options.__query, variables: { locale: me.$i18n.locale }
     }).then(res => res.data.data)
 
+    me.totalParks = result.statistics.totalParks
+    me.totalAttractions = result.statistics.totalAttractions
+    me.totalContributions = result.statistics.totalContributions
+
     result.parks.items.forEach(function (park) {
       park.route =
 
@@ -155,9 +159,9 @@ export default {
   data () {
     return {
       random: [],
-      totalParks: 4234234,
-      totalAttractions: 56784,
-      totalContributions: 4342221
+      totalParks: 0,
+      totalAttractions: 0,
+      totalContributions: 0
     }
   }
 }
@@ -165,6 +169,11 @@ export default {
 
 <query>
   query ($locale: String!) {
+    statistics {
+      totalParks
+      totalAttractions
+      totalContributions
+    }
     parks(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
       items {
         id
