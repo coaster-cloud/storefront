@@ -3,9 +3,38 @@
     <hero />
 
     <div class="main-content">
-      <h5 class="text-center">
-        Work in Progress
-      </h5>
+      <h1 class="text-primary text-center">{{ $t('welcome') }}</h1>
+
+      <!-- Teaser -->
+      <b-row>
+        <b-col md="8">
+          <b-media>
+            <template v-slot:aside>
+              <img src="~/assets/images/icons/count.png" class="img-responsive teaser-icon" alt="Count" />
+            </template>
+
+            <markdown-text :text="$t('teaser_count_rides')"></markdown-text>
+          </b-media>
+
+          <b-media>
+            <template v-slot:aside>
+              <img src="~/assets/images/icons/bar-chart.png" class="img-responsive teaser-icon" alt="Statistics" />
+            </template>
+
+            <markdown-text :text="$t('teaser_statistics')"></markdown-text>
+          </b-media>
+
+          <b-media>
+            <template v-slot:aside>
+              <img src="~/assets/images/icons/rating.png" class="img-responsive teaser-icon" alt="Rating" />
+            </template>
+
+            <markdown-text :text="$t('teaser_rating')"></markdown-text>
+          </b-media>
+        </b-col>
+      </b-row>
+
+      <!-- Random parks / attractions -->
       <b-row>
         <b-col
           v-for="(item, index) in random"
@@ -39,11 +68,13 @@
 </template>
 
 <script>
+import MarkdownText from '~/components/atoms/markdown-text'
 import Hero from '~/components/organisms/hero'
 
 export default {
   components: {
-    Hero
+    Hero,
+    MarkdownText
   },
 
   async fetch () {
@@ -116,3 +147,31 @@ export default {
     }
   }
 </query>
+
+<style lang="scss" scoped>
+@import "~/assets/css/ci";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.teaser-icon {
+  max-height: 100px;
+}
+
+.media {
+  padding-bottom: 1rem;
+}
+
+.hero {
+  border-top: 1px solid $primary;
+  border-bottom: 1px solid $primary;
+}
+
+@include media-breakpoint-up(md) {
+  .number-row {
+    div:not(:last-child){
+      margin-bottom: 2rem;
+    }
+  }
+}
+</style>

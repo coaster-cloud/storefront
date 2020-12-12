@@ -73,13 +73,13 @@ export default {
     locales: [
       {
         code: 'en',
-        file: 'en/messages.yaml',
+        file: 'en.js',
         icon: 'flag-icon-gb',
         label: 'English'
       },
       {
         code: 'de',
-        file: 'de/messages.yaml',
+        file: 'de.js',
         icon: 'flag-icon-de',
         label: 'Deutsch'
       }
