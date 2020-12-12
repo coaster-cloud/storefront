@@ -1,0 +1,145 @@
+@import "~/assets/css/ci.scss";
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
+@import '~/assets/css/font.scss';
+@import '~/assets/css/flags.scss';
+
+body {
+  background-color: #eee;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.modal-title {
+  color: $primary;
+}
+
+@include media-breakpoint-down(md) {
+  .container {
+    width: 100%;
+    max-width: none;
+
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.main-content {
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.text-small {
+  font-size: .75rem;
+}
+
+@for $i from 10 through 78 {
+  .text-#{$i} {
+    font-size: #{$i}px;
+  }
+}
+
+.btn {
+  &.rounded,
+  &.btn-rounded {
+    border-radius: 40px !important;
+  }
+
+  //padding: .5rem 1.25rem;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.error-page {
+  padding: 120px 0;
+}
+
+.markdown-content-list {
+  div:not(:last-child){
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Bugfix for select boxes
+.custom-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+// Collapse
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
+}
+
+// Badge Dots
+@each $name, $value in $theme-colors {
+  .badge-dot-#{$name} {
+    height: 4px;
+    width: 4px;
+    background-color: $value;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+// Contributors
+.contributors {
+  padding-left: 0;
+
+  > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  > li {
+    display: inline;
+
+    &:after {
+      content: ', ';
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+  }
+}
+
+// Content block
+.content-block {
+  margin-bottom: 2.0rem;
+}
+
+// Cards
+.card-list {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px 1px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.08);
+  border: 0;
+  overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer
+}
+
+@include media-breakpoint-up(md) {
+  .left-separator {
+    border-left: 1px dashed #ebedf2;
+  }
+}
+
+.bottom-separator {
+  border-bottom: 1px dashed #ebedf2;
+}
+
+// Action box
+.action-box {
+  @extend .alert, .alert-light;
+}

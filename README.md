@@ -1,29 +1,32 @@
 # coaster.cloud Web App
-This is the VueJS client application from [coaster.cloud](https://coaster.cloud).
+This is the VueJS / NuxtJS client application for [coaster.cloud](https://coaster.cloud).
 
 **This project is not meant for re-use.** It is open source to make it easy to contribute. We provide no support if you
 want to run your own, and will do breaking changes without notice.
 
-## Work in Progress
-coaster.cloud is already a single page application (SPA) but still shares some interfaces with a legacy PHP backend
-application. These interfaces have to be solved before this repository can be filled completely and taken live.
-Therefore, this repository is still "incomplete". These tasks have to be done in the legacy PHP app before
-we can continue with this WebApp:
+## Local development
+[NodeJS](https://nodejs.org/en/) is the only requirement you need locally to set up the project.
 
-- [ ] Replace all legacy RESTful Endpoints with new GraphQL API
-- [ ] Move all translations from API to Single Page Application
-- [x] Move Media Service to own Microservice
+Simply run the following tasks:
 
-## Installation
-You only need [docker-compose](https://docs.docker.com/compose/) to install this application. The app container
-contains all dependencies for building and serving the application. The installation can take a few minutes.
+* Copy `.env.dist` to `.env` and add credentials
+* Install dependencies with `npm install`
+* Compile and start server with `npm dev`
 
-1. Clone this repository
-2. Create and start container with `docker-compose up -d --build`
-3. Install dependencies `docker-compose exec nginx npm install`
-4. Build javascript and css with `docker-compose exec nginx npm run build`
+Hot reload is active. Changes become directly visible after a few seconds.
 
-After that your local application will be accessible via `http://localhost`. You should see a "HELLO COASTER WORLD!" 
-message.
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-Run `docker-compose stop` to stop and `docker-compose start` to start the application. 
+## Production development
+The project will later run with Docker. To test the app in production mode you need to ...
+
+* ... install [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/install/)
+* ... build and start container with `docker-compose up -d --build`
+
+The app is then accessible via http://localhost:8020.
+
+## License
+
+* The source code licensed under [MIT](./LICENSE)
+* All fonts under `./assets/fonts` licensed under [Open Font License](https://fonts.google.com/specimen/Nunito#license)
+* All images under `./assets/images` and `./static` are proprietary. Using the images outside of this project is not permitted.

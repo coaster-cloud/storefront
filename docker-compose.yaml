@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  node:
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    container_name: coaster_cloud_web_app_node
+    ports:
+      - 127.0.0.1:8020:8020
+    networks:
+      - local
+networks:
+  local:
+    driver: bridge
