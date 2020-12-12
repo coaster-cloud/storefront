@@ -14,8 +14,6 @@
 
 <script>
 export default {
-  name: 'MarkdownText',
-
   props: {
     text: {
       type: String,

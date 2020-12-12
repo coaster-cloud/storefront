@@ -24,6 +24,7 @@
     "nuxt-i18n": "^6.16.0",
     "vue-cookies": "^1.7.4",
     "vue-flux": "^6.3.1",
+    "vue-number-animation": "^1.0.5",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {

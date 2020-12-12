@@ -3,34 +3,68 @@
     <hero />
 
     <div class="main-content">
-      <h1 class="text-primary text-center">{{ $t('welcome') }}</h1>
+      <h1 class="text-primary text-center">
+        {{ $t('welcome') }}
+      </h1>
 
-      <!-- Teaser -->
       <b-row>
+        <!-- Teaser -->
         <b-col md="8">
           <b-media>
             <template v-slot:aside>
-              <img src="~/assets/images/icons/count.png" class="img-responsive teaser-icon" alt="Count" />
+              <img src="~/assets/images/icons/count.png" class="img-responsive teaser-icon" alt="Count">
             </template>
 
-            <markdown-text :text="$t('teaser_count_rides')"></markdown-text>
+            <markdown-text :text="$t('teaser_count_rides')" />
           </b-media>
 
           <b-media>
             <template v-slot:aside>
-              <img src="~/assets/images/icons/bar-chart.png" class="img-responsive teaser-icon" alt="Statistics" />
+              <img src="~/assets/images/icons/bar-chart.png" class="img-responsive teaser-icon" alt="Statistics">
             </template>
 
-            <markdown-text :text="$t('teaser_statistics')"></markdown-text>
+            <markdown-text :text="$t('teaser_statistics')" />
           </b-media>
 
           <b-media>
             <template v-slot:aside>
-              <img src="~/assets/images/icons/rating.png" class="img-responsive teaser-icon" alt="Rating" />
+              <img src="~/assets/images/icons/rating.png" class="img-responsive teaser-icon" alt="Rating">
             </template>
 
-            <markdown-text :text="$t('teaser_rating')"></markdown-text>
+            <markdown-text :text="$t('teaser_rating')" />
           </b-media>
+        </b-col>
+
+        <!-- Metrics -->
+        <b-col md="4">
+          <b-row class="number-row">
+            <b-col sm="4" md="12">
+              <b-card no-body class="border-0 text-center">
+                <p class="text-muted h3">
+                  {{ $t('parks') }}
+                </p>
+                <magic-number :to="totalParks" class="text-primary h1" />
+              </b-card>
+            </b-col>
+
+            <b-col sm="4" md="12">
+              <b-card no-body class="border-0 text-center">
+                <p class="text-muted h3">
+                  {{ $t('attractions') }}
+                </p>
+                <magic-number :to="totalAttractions" class="text-primary h1" />
+              </b-card>
+            </b-col>
+
+            <b-col sm="4" md="12">
+              <b-card no-body class="border-0 text-center">
+                <p class="text-muted h3">
+                  {{ $t('contributions') }}
+                </p>
+                <magic-number :to="totalContributions" class="text-primary h1" />
+              </b-card>
+            </b-col>
+          </b-row>
         </b-col>
       </b-row>
 
@@ -69,10 +103,12 @@
 
 <script>
 import MarkdownText from '~/components/atoms/markdown-text'
+import MagicNumber from '~/components/atoms/magic-number'
 import Hero from '~/components/organisms/hero'
 
 export default {
   components: {
+    MagicNumber,
     Hero,
     MarkdownText
   },
@@ -118,7 +154,10 @@ export default {
 
   data () {
     return {
-      random: []
+      random: [],
+      totalParks: 4234234,
+      totalAttractions: 56784,
+      totalContributions: 4342221
     }
   }
 }

@@ -20,9 +20,10 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/node_modules/vue-flux', mode: 'client' },
-    '~/plugins/components/global',
-    '~/plugins/prototypes/image',
-    '~/plugins/prototypes/markdown'
+    '~/plugins/vue-number-animation.client.js',
+    '~/plugins/global-components.js',
+    '~/plugins/image.js',
+    '~/plugins/markdown.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -51,7 +52,7 @@ export default {
       config.module.rules.push({
         resourceQuery: /blockType=query/,
         type: 'javascript/auto',
-        loader: require.resolve('./plugins/loader/query-loader.js')
+        loader: require.resolve('./loader/query-loader.js')
       })
 
       config.module.rules.push({
