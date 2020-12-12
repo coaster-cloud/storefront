@@ -1,27 +1,29 @@
 # coaster.cloud Web App
-This is the VueJS client application from [coaster.cloud](https://coaster.cloud).
+This is the VueJS / NuxtJS client application for [coaster.cloud](https://coaster.cloud).
 
 **This project is not meant for re-use.** It is open source to make it easy to contribute. We provide no support if you
 want to run your own, and will do breaking changes without notice.
 
-## Build Setup
+## Local development
+[NodeJS](https://nodejs.org/en/) is the only requirement you need locally to set up the project.
 
-```bash
-# install dependencies
-$ npm install
+Simply run the following tasks:
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+* Copy `.env.dist` to `.env` and add credentials
+* Install dependencies with `npm install`
+* Compile and start server with `npm dev`
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
+Hot reload is active. Changes become directly visible after a few seconds.
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Production development
+The project will later run with Docker. To test the app in production mode you need to ...
+
+* ... install [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/install/)
+* ... build and start container with `docker-compose up -d --build`
+
+The app is then accessible via http://localhost:8020.
 
 ## License
 
