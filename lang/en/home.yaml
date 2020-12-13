@@ -1,21 +1,21 @@
-welcome: 'Welcome to coaster.cloud'
-teaser_count_rides: |
+home.welcome: 'Welcome to coaster.cloud'
+home.teaser_count_rides: |
   ##### Count rides
   **coaster.cloud** gives you the opportunity to **count** all your attraction rides. It does not matter whether it is
   a **roller coaster**, **water ride**, **slide** or a **flat ride**. You can count them all - or just a part. It’s **your choice**!
 
-teaser_statistics: |
+home.teaser_statistics: |
   ##### Awesome statistics
   How often did you ride an attraction? How many meters did you ride on a roller coaster? What was your fastest
   ride? You can see these and other **awesome statistics** in your profile and share them with your friends. Take a
   look at a our [profile](/profile/migo315) to see some examples.
 
-teaser_rating: |
+home.teaser_rating: |
   ##### Your favourite rides?
   What's your favorite attraction? Which ones are in your top 20? On **coaster.cloud** you can **rate each attraction**.
   Soon you will also have the possibility to create your personal **top or flop lists**.
 
-teaser_community: |
+home.teaser_community: |
   #### Community project
   This is a community project, which can only exist through the **participation of many people**. We are happy therefore
   for every contribution. No matter whether you maintain a complete new park or fix technical data of an existing attraction - **any help is welcome**.

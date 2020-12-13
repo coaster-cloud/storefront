@@ -1,5 +1,15 @@
 <template>
   <div>
-    Imprint
+    <div class="main-content">
+      <!-- <breadcrumb :items="breadcrumbs" /> -->
+
+      <div class="markdown-content-list">
+        <markdown-text :text="$t('imprint.owner')" />
+        <markdown-text :text="$t('imprint.disclaimer.warranty')" />
+        <markdown-text :text="$t('imprint.disclaimer.copyright')" />
+        <markdown-text :text="$t('imprint.disclaimer.external_links')" />
+        <markdown-text :text="$t('imprint.list_of_origins')" />
+      </div>
+    </div>
   </div>
 </template>

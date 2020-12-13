@@ -1,17 +1,17 @@
 ---
-welcome: 'Willkommen bei coaster.cloud'
-teaser_count_rides: |
+home.welcome: 'Willkommen bei coaster.cloud'
+home.teaser_count_rides: |
   ##### Fahrten zählen
   **coaster.cloud** gibt dir die Möglichkeit, alle deine Attraktionsfahrten **zu zählen**. Es spielt keine Rolle, ob es sich bei
   um eine **Achterbahn**,  eine **Wasserfahrt**, eine **Rutsche** oder ein **Karussell** handelt. Du kannst sie alle zählen - oder nur ein paar davon. Es ist **deine Wahl**!
-teaser_statistics: |
+home.teaser_statistics: |
   ##### Großartige Statistiken
   Wie oft bist du eine Attraktion gefahren? Wie viele Meter hast du auf einer Achterbahn hinterlegt? Was war deine schnellste
   Fahrt? Du kannst diese und andere **tolle Statistiken** in deinem Profil sehen und sie mit deinen Freunden teilen. Werf einfach ein Blick auf unser [Profil](/profile/migo315), um einige Beispiele zu sehen.
-teaser_rating: |
+home.teaser_rating: |
   ##### Deine Lieblingsattraktionen?
   Was ist deine Lieblingsattraktion? Welche sind in deinen Top 20? Auf **coaster. cloud** kannst du jede Attraktion **bewerten**. In kürze wirst du auch die Möglichkeit haben, deine persönlichen **Top oder Flop Listen** zu erstellen.
-teaser_community: |
+home.teaser_community: |
   #### Gemeinschaftsprojekt
   Dies ist ein Gemeinschaftsprojekt, das nur durch die **Teilnahme vieler** existieren kann. Wir freuen uns daher
   über jeden Beitrag. Egal, ob du einen komplett neuen Park hinzufügst oder technische Daten einer bestehenden Attraktion bearbeitest - **jede Hilfe ist willkommen**.

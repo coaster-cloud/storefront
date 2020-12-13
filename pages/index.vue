@@ -4,7 +4,7 @@
 
     <div class="main-content">
       <h1 class="text-primary text-center">
-        {{ $t('welcome') }}
+        {{ $t('home.welcome') }}
       </h1>
 
       <b-row>
@@ -15,7 +15,7 @@
               <img src="~/assets/images/icons/count.png" class="img-responsive teaser-icon" alt="Count">
             </template>
 
-            <markdown-text :text="$t('teaser_count_rides')" />
+            <markdown-text :text="$t('home.teaser_count_rides')" />
           </b-media>
 
           <b-media>
@@ -23,7 +23,7 @@
               <img src="~/assets/images/icons/bar-chart.png" class="img-responsive teaser-icon" alt="Statistics">
             </template>
 
-            <markdown-text :text="$t('teaser_statistics')" />
+            <markdown-text :text="$t('home.teaser_statistics')" />
           </b-media>
 
           <b-media>
@@ -31,7 +31,7 @@
               <img src="~/assets/images/icons/rating.png" class="img-responsive teaser-icon" alt="Rating">
             </template>
 
-            <markdown-text :text="$t('teaser_rating')" />
+            <markdown-text :text="$t('home.teaser_rating')" />
           </b-media>
         </b-col>
 

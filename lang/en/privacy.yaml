@@ -1,0 +1,75 @@
+privacy.preamble: |
+  #### Introduction
+  We respect your privacy and comply with applicable laws and regulations (e.g., GDPR). This privacy policy explains the nature, scope and purpose of the processing of personal data collected by using coaster.cloud. This may involve data that you enter in a form. Some data is automatically collected when you visit the website. These are mainly technical data (e.g. internet browser, operating system or visited page).
+privacy.owner: |
+  #### Responsible person
+  Michel Chowanski<br>
+  Friedenstr. 10<br>
+  46485 Wesel<br>
+  Germany<br>
+  hello@coaster.cloud
+privacy.glossary: |
+  #### Glossary
+  Below we explain some terms used in this privacy policy:
+
+  * **Users** means every visitor to coaster.cloud, whether logged in or out.
+  * **Personal data** means every personal information, such as name, email, address and metadata.
+  * **Content data** means any content that you have freely contributed to coaster.cloud. These can be text information, photos and videos.
+  * **Metadata** means any technical information about your visit. This could be, for example, your IP address, access time, information about your device or your browser.
+  * **Data processors** means persons, companies, authorities, institutions or similar who process personal data on behalf of coaster.cloud.
+  * **Data processing** means any operation or series of operations in connection with personal data carried out with or without the aid of automated procedures.
+privacy.user_rights: |
+  #### Rights as user
+  * In accordance with Art. 15 GDPR you have the right to request confirmation whether the data concerned is being processed and to request information about this data as well as further information and a copy of the data.
+  * In accordance with Art. 16 of the GDPR, you have the right to request the completion of data concerning you or the correction of inaccurate data concerning you.
+  * In accordance with Art. 17 GDPR, you have the right to demand that relevant data be deleted immediately or, alternatively, to demand a restriction on the processing of the data in accordance with Art. 18 GDPR.
+  * In accordance with Art. 20 GDPR you have the right to request to be provided with the data concerning you that you have provided to us and to request its transmission to other responsible persons.
+  * In accordance with Art. 77 GDPR you also have the right to file a complaint with the competent supervisory authority.
+privacy.cookies: |
+  #### Cookies
+  *Cookies* are small files that are stored on the user's computer. Various information can be stored within the cookies. A cookie is primarily used to store information about a user during or after their visit to coaster.cloud. We currently use only one technical cookie.
+  We set a *session cookie* on every visit to coaster.cloud. This cookie uniquely identifies each user. This cookie is required for logging in to coaster.cloud and is only valid during the current session.
+  Third parties may also set cookies. If a third party sets cookies, this will be indicated in the corresponding section in this privacy policy or in the third party's privacy policy.
+
+  If users do not wish stored cookies on their computer, they have to deactivate the corresponding option in the system settings of their browser. Stored cookies can be deleted in the system settings of the browser. If cookies are excluded, the login function on coaster.cloud can no longer be used.
+privacy.webfonts: |
+  #### Webfonts
+  Google Fonts are used on this website. Google Fonts is a service of Google Inc. ("Google"). These web fonts are integrated by calling up a server, usually a Google server in the USA. This tells the server which of our websites you have visited. Your IP address will be saved by Google. More information can be found in Google's privacy policy at [https://www.google.com/fonts#AboutPlace:about](https://www.google.com/fonts#AboutPlace:about) and [https://www.google.com/policies/privacy/](https://www.google.com/policies/privacy/).
+privacy.signup: |
+  #### Registration function
+  You can create a profile on coaster.cloud for free. In order to create an account, you must provide an email address, name and username. This information is stored long-term by us. Furthermore, your name and username are made available on coaster.cloud and can be seen by anyone.
+privacy.contribution: |
+  #### Contents / Data management
+  Registered users are able to contribute to coaster.cloud by editing, deleting and adding new information.
+
+  All actions performed are logged as "changes" in order to provide users with a transparent history of our data. In the log, the edited object, the changes made, the time of the changes and a link to the profile account of the respective editor are stored. This log can be viewed by anyone.
+privacy.image_upload: |
+  #### Uploading images
+  Registered users are able to upload images. These images will be uploaded to our content delivery network (CDN) and are available for anyone to view. Copyright information is displayed beneath each image along with a link to the profile of the user who uploaded it, in order that all images can be attributed to the contributing users.
+privacy.log_file: |
+  #### Collection of access data and log files
+  Our hosting provider collects access data every time coaster.cloud is used. The data includes the name of the website accessed, file, date and time of access, amount of data transferred, notification of successful access, browser type and version, the user's operating system, referrer URL (the previously visited page), IP address and the requesting provider.
+
+  This data cannot be associated with any specific user by us. It is not combined with data from other sources. The access data is stored for a maximum period of 7 days and then deleted. Data which must be stored longer than this in order to serve as evidence is not deleted until the relevant matter is concluded.
+
+  A processing agreement has been agreed with our ISP for this purpose.
+privacy.sentry: |
+  #### Sentry
+  We use the Sentry (Sentry, 1501 Mariposa St # 408, San Francisco, CA 94107, USA) to identify and analyze error messages while using coaster.cloud. In addition to the error message, additional metadata such as the browser or the operating system are saved anonymously. This data is used exclusively for error analysis. Further information can be found in the Sentry privacy policy: [https://sentry.io/privacy/](https://sentry.io/privacy/)
+
+  A processing agreement has been agreed with Sentry for this purpose.
+privacy.cloudflare: |
+  #### Cloudflare
+  We use features of CloudFlare. Provider is CloudFlare, Inc. 665 3rd St. # 200, San Francisco, CA 94107,
+  USA. CloudFlare offers a worldwide distributed Content Delivery Network with DNS. Technically, the information transfer passed between your browser and our website through the network of CloudFlare. CloudFlare is able to analyze the traffic between users and our websites. In addition, CloudFlare may store cookies on your computer to maximize network resources, manage traffic and protect coaster.cloud from malicious traffic. For more information, see Cloudflare's Privacy Policy at: [https://www.cloudflare.com/privacypolicy/](https://www.cloudflare.com/privacypolicy/)
+
+  A processing agreement has been agreed with Cloudflare for this purpose.
+privacy.youtube: |
+  #### YouTube videos
+  We use YouTube to show "Onride" videos. The videos were embedded in the extended data protection mode. YouTube uses cookies to collect information about visitors. It also may connect to the Google DoubleClick network. Starting a video could trigger further data processing by Youtube. We have no influence on that. For more information about privacy at YouTube, see
+  their privacy policy at: [http://www.youtube.com/t/privacy_at_youtube](http://www.youtube.com/t/privacy_at_youtube)
+privacy.analytics: |
+  #### Webanalyse
+  This website uses "Umami", an open source and self-hosted software to collect anonymous usage data for this website. This data is used to determine which content and structures work and which do not. This allows us to continuously improve our website and to react to new requirements.
+
+  Data like the browser, operating system, the accessed website, country of origin and other anonymous data are stored. This data cannot be assigned to any user or IP after processing. No cookie is used to collect the data.

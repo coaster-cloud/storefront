@@ -1,0 +1,125 @@
+---
+privacy.preamble: |
+  #### Einführung
+  Wir respektieren deine Privatsphäre und halten uns an die geltenden Gesetze und Vorschriften (z.B. DSGVO). Diese Datenschutzerklärung erläutert Art, Umfang und Zweck der Verarbeitung personenbezogener Daten, die unter Verwendung von coaster.cloud erhoben werden. laut. Dies kann Daten beinhalten, die du in einem Formular speicherst. Einige Daten werden automatisch erhoben, wenn du die Website besuchst. Dabei handelt es sich vor allem um technische Daten (z.B. Internetbrowser, Betriebssystem oder die besuchte Seite).
+privacy.owner: |
+  #### Verantwortlicher
+  Michel Chowanski<br>
+  Friedenstr. 10<br>
+  46485 Wesel<br>
+  hello@coaster.cloud
+privacy.glossary: |
+  #### Glossar
+  Nachfolgend erläutern wir einige in der Datenschutzerklärung vorkommende Begriffe:
+
+  * Nutzer (jeder Besucher von coaster.cloud)
+  * Personenbezogene Daten (Angaben zur Ihrer Person, z.B. Namen, eMail, Adresse)
+  * Inhaltsdaten (von Ihnen erstellten Inhalte, z.B. Texteingaben, Fotografien, Videos)
+  * Metadaten (z.B., Zugriffszeiten, IP-Adressen, Informationen zu Ihren Geräten)
+  * Auftragsverarbeiter (Auftragsverarbeiter sind natürliche oder juristische Personen, Behörden, Einrichtungen oder
+  andere Stellen, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeiten.)
+  * Verarbeitung (Daten werden mit oder ohne automatischer Verfahren zusammengeführt und ausgewertet)
+privacy.user_rights: |
+  #### Rechte als Nutzer
+  Ihre Rechte als Nutzer von coaster.cloud haben wir nachfolgend erläutert.
+
+  * Recht auf Auskunft: Sie haben das Recht eine Auskunft und Kopie Ihrer bei uns gespeicherten personenbezogenen
+  Daten zu verlangen.
+  * Recht auf Korrektur: Sie haben das Recht auf eine Vervollständigung bzw. Berichtigung der bei uns gespeicherten
+  personenbezogenen Daten zu verlangen.
+  * Recht auf Löschung: Sie haben das Recht auf eine Löschung der bei uns gespeicherten personenbezogenen Daten.
+  * Recht auf Einschränkung: Sie haben das Recht auf Ihrer bei uns gespeicherten personenbezogenen Daten einzuschränken.
+  * Recht auf Datenübertragung: Sie haben das Recht, auf die Übertragung / Erhalt Ihrer bei uns gespeicherten
+  personenbezogenen Daten in einem gängigen Format zu verlangen.
+  * Widerrufsrecht: Sie haben das recht, erteilte Einwilligungen mit Wirkung für die Zukunft zu widerrufen.
+  * Widerspruchsrecht: Sie können der künftigen Verarbeitung der Ihrer Daten nach Maßgabe der gesetzlichen Vorgaben
+  jederzeit widersprechen.
+privacy.cookies: |
+  #### Cookies
+  Als „Cookies“ werden kleine Dateien bezeichnet, die auf Rechnern der Nutzer gespeichert werden. Auf coaster.cloud
+  werden aktuell zwei Cookies explizit gesetzt:
+
+  **Session Cookie**: Jeder Nutzer auf coaster.cloud erhält eine temporäre ID (Session), mit denen wir
+  identifizieren können ob der Nutzer auf coaster.cloud angemeldet ist bzw. um welchen Nutzer es sich handelt.
+  Dieser Cookie wird maßgeblich für das Profilfunktion auf coaster.cloud benötigt. Dieser ist nur während der
+  aktuellen Session gültig.
+
+  Drittanbieter können ebenfalls Cookies setzen. Sofern ein Drittanbieter Cookies setzt, wird dies im entsprechenden
+  Abschnitt in dieser Datenschutzerklärung auch dargelegt.
+
+  Falls die Nutzer nicht möchten, dass Cookies auf ihrem Rechner gespeichert werden, werden sie gebeten die
+  entsprechende Option in den Systemeinstellungen ihres Browsers zu deaktivieren. Gespeicherte Cookies können in
+  den Systemeinstellungen des Browsers gelöscht werden. Bei Ausschluss von Cookies kann die Registrier und
+  Anmeldefunktion auf coaster.cloud nicht mehr genutzt werden.
+privacy.webfonts: |
+  #### Webfonts
+  Auf diesen Internetseiten werden externe Schriften (Google Fonts) verwendet. Google Fonts ist ein Dienst der Google Inc.
+  ("Google"). Die Einbindung dieser Web Fonts erfolgt durch einen Serveraufruf, in der Regel ein Server von Google in den USA.
+  Hierdurch wird an den Server übermittelt, welche unserer Internetseiten Sie besucht haben. Auch ihre IP-Adresse wird von Google gespeichert. Nähere Informationen finden Sie in
+  den Datenschutzhinweisen von Google unter [https://www.google.com/fonts#AboutPlace:about](https://www.google.com/fonts#AboutPlace:about) und [https://www.google.com/policies/privacy/](https://www.google.com/policies/privacy/).
+privacy.signup: |
+  #### Registrierfunktion
+  Sie haben die Möglichkeit kostenlos und freiwillig ein Profil auf coaster.cloud anzulegen. Hierzu wird
+  Ihre eMail Adresse, Ihr Name und ein Benutzername abgefragt. Diese Angaben werden bei uns langfristig gespeichert.
+  Des Weiteren wird Ihr Name und Benutzername auf coaster.cloud ausgegeben und kann daher von jedem öffentlich
+  eingesehen werden.
+privacy.contribution: |
+  #### Inhalte / Datenpflege
+  Als registrierter Nutzer haben Sie die Möglichkeit Inhalte auf coaster.cloud zu hinterlassen. Darunter gehört
+  das Bearbeiten, Löschen und Hinzufügen von neuen bzw. Bestandsdaten.
+
+  Alle vorgenommen Aktionen werden als "Änderung" geloggt, um allen Nutzern eine transparente Historie zu unseren
+  Daten zu ermöglichen. Im Log wird das bearbeitete Objekt, die durchgeführten Änderungen, Zeitpunkt der
+  Änderungen und Verknüpfung zum Profilaccount des jeweiligen Bearbeiters gespeichert. Das Log ist frei von jedem einsehbar.
+privacy.image_upload: |
+  #### Hochladen von Bildern
+  Als registrierter Nutzer haben Sie die Möglichkeit Bilder hochzuladen. Diese Bilder werden auf unserem "Content Delivery Network"
+  (CDN) geladen und sind öffentlich für jeden frei einsehbar. Des Weiteren wird auf coaster.cloud
+  unter dem Bild ein Copyright Hinweis mit einer Verknüpfung zum Profil angezeigt, so dass jedes Bild einen Nutzer zugewiesen
+  werden kann.
+privacy.log_file: |
+  #### Erhebung von Zugriffsdaten und Logfiles
+  Unser Hostinganbieter erhebt bei jedem Aufruf von coaster.cloud Zugriffdaten. Zu den Zugriffsdaten gehören
+  Name der abgerufenen Webseite, Datei, Datum und Uhrzeit des Abrufs, übertragene Datenmenge, Meldung über erfolgreichen
+  Abruf, Browsertyp nebst Version, das Betriebssystem des Nutzers, Referrer URL (die zuvor besuchte Seite), IP-Adresse
+  und der anfragende Provider.
+
+  Diese Daten sind für uns keiner bestimmten Personen zuordenbar. Eine Zusammenführung dieser Daten mit anderen
+  Datenquellen wird nicht vorgenommen.Die Zugriffsdaten werden für die Dauer von maximal 7 Tagen gespeichert und
+  anschließend gelöscht. Daten, deren weitere Aufbewahrung zu Beweiszwecken erforderlich ist, sind bis zur endgültigen
+  Klärung des jeweiligen Vorfalls von der Löschung ausgenommen.
+
+  Hierzu wurde mit unserem Hoster ein Auftragsverarbeitungsvertrag abgeschlossen.
+privacy.sentry: |
+  #### Sentry
+  Wir nutzen den Dienst Sentry (Sentry, 1501 Mariposa St #408, San Francisco, CA 94107, USA) um Fehlermeldungen
+  während der Nutzung von coaster.cloud zu ermitteln und zu analysieren. Neben der Fehlermeldung werden
+  dabei auch weitere Metadaten wie zb. der Browser oder das Betriebssystem anonym gespeichert. Diesen Daten werden
+  ausschließlich zur Fehleranalyse verwendet. Weitere Informationen sind in der Datenschutzerklärung von Sentry
+  einsehbar: [https://sentry.io/privacy/](https://sentry.io/privacy/)
+
+  Hierzu wurde mit Sentry ein Auftragsverarbeitungsvertrag abgeschlossen.
+privacy.cloudflare: |
+  #### Cloudflare
+  Unsere Seiten nutzen Funktionen von CloudFlare. Anbieter ist die CloudFlare, Inc. 665 3rd St. #200, San Francisco, CA 94107,
+  USA. CloudFlare bietet ein weltweit verteiltes Content Delivery Network mit DNS an. Technisch wird der Informationstransfer
+  zwischen Ihrem Browser und unserer Website über das Netzwerk von CloudFlare geleitet. CloudFlare ist damit in der Lage,
+  den Datenverkehr zwischen Anwender und unseren Webseiten zu analysieren, um beispielsweise Angriffe auf unsere Dienste
+  zu erkennen und abzuwehren. Zudem speichert CloudFlare zur Optimierung und Analyse unter Umständen Cookies auf Ihrem
+  Rechner. Weitere Informationen finden Sie in der Datenschutzerklärung von Cloudflare unter: [https://www.cloudflare.com/privacypolicy/](https://www.cloudflare.com/privacypolicy/)
+
+  Mit Cloudflare wurde ein Auftragsverarbeitungsvertrag abgeschlossen.
+privacy.youtube: |
+  #### YouTube Videos
+  Wir setzen zum Einbinden von Onride Videos den Anbieter YouTube ein. Die Videos wurden dabei im erweiterten
+  Datenschutzmodus eingebettet. Wie die meisten Websites verwendet aber auch YouTube Cookies, um Informationen über
+  die Besucher ihrer Internetseite zu sammeln. YouTube verwendet diese unter anderem zur Erfassung von Videostatistiken,
+  zur Vermeidung von Betrug und zur Verbesserung der Userfreundlichkeit. Auch führt dies zu einer Verbindungsaufnahme
+  mit dem Google DoubleClick Netzwerk. Wenn Sie das Video starten, könnte dies weitere Datenverarbeitungsvorgänge
+  auslösen. Darauf haben wir keinen Einfluss. Weitere Informationen über Datenschutz bei YouTube finden Sie in
+  deren Datenschutzerklärung unter: [http://www.youtube.com/t/privacy_at_youtube](http://www.youtube.com/t/privacy_at_youtube)
+privacy.analytics: |
+  #### Webanalyse
+  Diese Webseite nutzt "Umami", eine Open Source und selbstgehostete Software um anonyme Nutzungsdaten für diese Webseite zu sammeln. Diese Daten werden verwendet um festzustellen, welche Inhalte und Strukturen funktionieren und welcher eher nicht. Wir können damit unsere Webseite stetig verbessern und auf neue Anforderungen reagieren.
+
+  Es werden dabei Daten wie der Browser, Betriebssystem, die aufgerufene Webseite, Herkunftsland sowie weitere anonyme Daten gespeichert. Diese Daten können nach der Verarbeitung keinem Benutzer sowie keiner IP zugeordnet werden. Für die Erfassung der Daten wird kein Cookie verwendet.
