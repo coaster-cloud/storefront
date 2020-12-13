@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-content">
-      <!-- <breadcrumb :items="breadcrumbs" /> -->
+      <breadcrumb :items="breadcrumbs" />
 
       <div class="markdown-content-list">
         <markdown-text :text="$t('privacy.preamble')" />
@@ -25,6 +25,15 @@
 
 <script>
 export default {
+  computed: {
+    breadcrumbs () {
+      return [
+        { label: this.$t('home'), route: 'index' },
+        { label: this.$t('privacy') }
+      ]
+    }
+  },
+
   head () {
     return this.$createHead({
       title: this.$t('privacy'),

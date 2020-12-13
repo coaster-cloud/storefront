@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-content">
-      <!-- <breadcrumb :items="breadcrumbs" /> -->
+      <breadcrumb :items="breadcrumbs" />
 
       <div class="markdown-content-list">
         <markdown-text :text="$t('terms.main')" />
@@ -15,6 +15,15 @@
 
 <script>
 export default {
+  computed: {
+    breadcrumbs () {
+      return [
+        { label: this.$t('home'), route: 'index' },
+        { label: this.$t('terms') }
+      ]
+    }
+  },
+
   head () {
     return this.$createHead({
       title: this.$t('terms'),
