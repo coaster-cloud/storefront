@@ -1,11 +1,14 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'web-app',
+    title: 'coaster.cloud',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'og:title', name: 'og:title', content: 'coaster.cloud' },
+      { hid: 'og:site_name', name: 'og:site_name', content: 'coaster.cloud' },
+      { hid: 'og:image', name: 'og:image', content: '/opengraph.jpg' },
+      { hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: 'coaster.cloud' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -23,7 +26,8 @@ export default {
     '~/plugins/vue-number-animation.client.js',
     '~/plugins/global-components.js',
     '~/plugins/image.js',
-    '~/plugins/markdown.js'
+    '~/plugins/markdown.js',
+    '~/plugins/create-head.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

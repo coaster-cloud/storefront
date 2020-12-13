@@ -22,3 +22,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  head () {
+    return this.$createHead({
+      title: this.$t('privacy'),
+      description: this.$t('meta.description')
+    })
+  }
+}
+</script>

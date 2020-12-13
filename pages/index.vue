@@ -163,6 +163,13 @@ export default {
       totalAttractions: 0,
       totalContributions: 0
     }
+  },
+
+  head () {
+    return this.$createHead({
+      title: this.$t('meta.title'),
+      description: this.$t('meta.description')
+    })
   }
 }
 </script>
