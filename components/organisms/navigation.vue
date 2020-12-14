@@ -19,8 +19,8 @@
         </b-nav-item>
 
         <!-- Logged in -->
-        <template v-if="$store.getters.hasToken">
-          <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile', params: {account: $store.getters.getUsername}})">
+        <template v-if="$store.getters['account/hasToken']">
+          <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile', params: {account: $store.getters['account/getUsername']}})">
             {{ $t('my_profile') }}
           </b-nav-item>
 
@@ -34,7 +34,7 @@
         </template>
 
         <!-- Logged out -->
-        <template v-if="!$store.getters.hasToken">
+        <template v-if="!$store.getters['account/hasToken']">
           <b-nav-item key="nav-item-login" v-b-modal.login-form>
             {{ $t('login') }}
           </b-nav-item>

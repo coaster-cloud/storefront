@@ -27,6 +27,7 @@ export default {
     '~/plugins/global-components.js',
     '~/plugins/image.js',
     '~/plugins/markdown.js',
+    '~/plugins/vue-scroll-to.js',
     '~/plugins/create-head.js'
   ],
 
@@ -47,6 +48,11 @@ export default {
     'nuxt-i18n'
   ],
 
+  // Bootstrap
+  bootstrapVue: {
+    icons: true
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
 
@@ -63,6 +69,16 @@ export default {
         test:  /\.ya?ml$/,
         type: 'json',
         loader: 'yaml-loader'
+      })
+
+      config.module.rules.push({
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: /(node_modules)/,
+        options: {
+          fix: true
+        }
       })
     }
   },
@@ -102,5 +118,8 @@ export default {
       short_name: 'coaster.cloud',
       description: 'Discover, count and search theme parks and their attractions. Create awesome statistics of your theme park visits.',
     }
-  }
+  },
+
+  // Loading
+  loading: false
 }
