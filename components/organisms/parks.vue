@@ -4,7 +4,7 @@
     <client-only>
       <b-row align-h="between" class="mb-2">
         <b-col cols="6" lg="4" xl="3">
-          <text-filter v-model="filter.name" :placeholder="$t('search_park')" />
+          <text-filter v-model="selectedName" :placeholder="$t('search_park')" />
         </b-col>
         <b-col cols="6" class="text-right">
           <b-button v-b-toggle.park-filter variant="light">
@@ -19,22 +19,22 @@
         <div class="row mb-2">
           <!-- Sorting -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <b-form-select v-model="sorting.selected" :options="sorting.options" />
+            <b-form-select v-model="selectedSort" :options="sortOptions" />
           </div>
 
           <!-- Type -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="filter.type.selected" :placeholder="$t('all_parks')" :options="filter.type.options" />
+            <select-filter v-model="selectedType" :placeholder="$t('all_parks')" :options="typeOptions" />
           </div>
 
           <!-- Country -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="filter.country.selected" :placeholder="$t('all_countries')" :options="filter.country.options" />
+            <select-filter v-model="selectedCountry" :placeholder="$t('all_countries')" :options="countryOptions" />
           </div>
 
           <!-- State -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="filter.state.selected" :placeholder="$t('any_status')" :options="filter.state.options" />
+            <select-filter v-model="selectedState" :placeholder="$t('any_status')" :options="stateOptions" />
           </div>
         </div>
       </b-collapse>
@@ -75,13 +75,12 @@
 
       <b-col cols="12">
         <b-pagination
-          v-model="paging.currentPage"
+          v-model="selectedPage"
           :limit="3"
           align="center"
           class="align-items-center"
           :total-rows="totalParks"
-          :per-page="paging.itemsPerPage"
-          @change="(page) => loadParks(true, page)"
+          :per-page="itemsPerPage"
         />
       </b-col>
     </b-row>
@@ -103,7 +102,7 @@ export default {
   },
 
   async fetch () {
-    await this.loadParks()
+    await this.loadParks(true)
   },
 
   data () {
@@ -111,38 +110,85 @@ export default {
       showFilter: Object.keys(this.$route.query).length > 0,
       parks: [],
       totalParks: 0,
-      paging: {
-        itemsPerPage: 24,
-        currentPage: _.get(this.$route.query, 'page', 1)
-      },
-      filter: {
-        name: _.get(this.$route.query, 'name', null),
-        type: {
-          selected: _.get(this.$route.query, 'type', null),
-          options: []
-        },
-        country: {
-          selected: _.get(this.$route.query, 'country', null),
-          options: []
-        },
-        state: {
-          selected: _.get(this.$route.query, 'state', null),
-          options: []
-        }
-      },
-      sorting: {
-        selected: _.get(this.$route.query, 'sort', 'RELEVANCE').toUpperCase(),
-        options: [
-          { value: 'RELEVANCE', text: this.$t('standard_sorting') },
-          { value: 'NAME_ASC', text: this.$t('alphabetical') },
-          { value: 'TOTAL_ATTRACTIONS_DESC', text: this.$t('total_attractions') }
-        ]
+      itemsPerPage: 24,
+      typeOptions: [],
+      countryOptions: [],
+      stateOptions: [],
+      sortOptions: [
+        { value: null, text: this.$t('standard_sorting') },
+        { value: 'NAME_ASC'.toLowerCase(), text: this.$t('alphabetical') },
+        { value: 'TOTAL_ATTRACTIONS_DESC'.toLowerCase(), text: this.$t('total_attractions') }
+      ],
+      facetMap: {
+        TYPE: 'typeOptions',
+        COUNTRY: 'countryOptions',
+        STATE: 'stateOptions'
       }
     }
   },
 
   // Computed
   computed: {
+    selectedPage: {
+      get () {
+        return _.get(this.$route.query, 'page', 1)
+      },
+
+      set (value) {
+        this.updateRoute({ page: value === 1 ? null : value })
+      }
+    },
+
+    selectedName: {
+      get () {
+        return _.get(this.$route.query, 'name', null)
+      },
+
+      set (value) {
+        this.updateRoute({ name: value, page: null })
+      }
+    },
+
+    selectedType: {
+      get () {
+        return _.get(this.$route.query, 'type', null)
+      },
+
+      set (value) {
+        this.updateRoute({ type: value, page: null })
+      }
+    },
+
+    selectedCountry: {
+      get () {
+        return _.get(this.$route.query, 'country', null)
+      },
+
+      set (value) {
+        this.updateRoute({ country: value, page: null })
+      }
+    },
+
+    selectedState: {
+      get () {
+        return _.get(this.$route.query, 'state', null)
+      },
+
+      set (value) {
+        this.updateRoute({ state: value, page: null })
+      }
+    },
+
+    selectedSort: {
+      get () {
+        return _.get(this.$route.query, 'sort', null)
+      },
+
+      set (value) {
+        this.updateRoute({ sort: value, page: null })
+      }
+    },
+
     normalizedParks () {
       const list = []
       const me = this
@@ -151,7 +197,7 @@ export default {
         const types = park.types.map(v => v.label)
 
         let feature = null
-        if (me.sorting.selected === 'TOTAL_ATTRACTIONS_DESC') {
+        if (me.selectedSort === 'TOTAL_ATTRACTIONS_DESC'.toLowerCase()) {
           feature = me.$t('n_attractions', { '{value}': park.totalAttractions })
         }
 
@@ -170,109 +216,63 @@ export default {
       })
 
       return list
-    },
-
-    urlQuery () {
-      const me = this
-      const query = []
-
-      query.push({ field: 'page', value: me.paging.currentPage !== 1 ? me.paging.currentPage : null })
-      query.push({ field: 'sort', value: me.sorting.selected !== 'RELEVANCE' ? me.sorting.selected.toLowerCase() : null })
-      query.push({ field: 'name', value: me.filter.name !== null && me.filter.name.length > 0 ? me.filter.name : null })
-      query.push({ field: 'type', value: me.filter.type.selected !== null ? me.filter.type.selected : null })
-      query.push({ field: 'country', value: me.filter.country.selected !== null ? me.filter.country.selected : null })
-      query.push({ field: 'state', value: me.filter.state.selected !== null ? me.filter.state.selected : null })
-
-      const result = {}
-      query.filter(item => item.value !== null).forEach(function (item) {
-        result[item.field] = item.value
-      })
-
-      return result
     }
   },
 
   // Mounted
   mounted () {
-    const me = this
-
-    me.$watch('filter.name', () => me.loadParks(true, 1))
-    me.$watch('filter.type.selected', () => me.loadParks(true, 1))
-    me.$watch('filter.country.selected', () => me.loadParks(true, 1))
-    me.$watch('filter.state.selected', () => me.loadParks(true, 1))
-    me.$watch('sorting.selected', () => me.loadParks(true, 1))
+    this.$watch('$route.query', () => this.loadParks())
   },
 
   // Methods
   methods: {
-    async loadParks (scroll = false, page = null) {
+    updateRoute (fields) {
+      // Always set page to null if page is one
+      if (Object.prototype.hasOwnProperty.call(fields, 'page')) {
+        // fields.page = fields.page === 1 ? null : fields.page
+      }
+
+      this.$router.replace({
+        query: _.omitBy({ ...this.$route.query, ...fields }, _.isNil)
+      })
+    },
+
+    async loadParks (initial = false) {
       const me = this
 
       me.$store.commit('common/setLoading', true)
 
-      if (page !== null) {
-        me.paging.currentPage = page
-      }
-
       const variables = {
-        page: me.paging.currentPage,
-        itemsPerPage: me.paging.itemsPerPage,
-        sort: me.sorting.selected,
+        page: me.selectedPage,
+        itemsPerPage: me.itemsPerPage,
+        sort: me.selectedSort === null ? 'RELEVANCE' : me.selectedSort.toUpperCase(),
         locale: me.$i18n.locale,
-        facet: ['TYPE', 'COUNTRY', 'STATE'],
-        filter: {}
-      }
-
-      if (me.filter.name) {
-        variables.filter.search = me.filter.name
-      }
-
-      if (me.filter.type.selected) {
-        variables.filter.type = me.filter.type.selected
-      }
-
-      if (me.filter.country.selected) {
-        variables.filter.country = me.filter.country.selected
-      }
-
-      if (me.filter.state.selected) {
-        variables.filter.state = me.filter.state.selected
+        facet: Object.keys(me.facetMap),
+        filter: _.omitBy({
+          search: me.selectedName,
+          type: me.selectedType,
+          country: me.selectedCountry,
+          state: me.selectedState
+        }, _.isNil)
       }
 
       const result = await me.$axios.post(me.$config.dataServiceUrl, {
         query: me.$options.__query, variables
       }).then(res => res.data.data)
 
-      // Add filter options
       result.parks.facets.forEach(function (facet) {
-        const facetKey = facet.key.toLowerCase()
-
-        if (Object.prototype.hasOwnProperty.call(me.filter, facetKey)) {
-          me.filter[facetKey].options = []
-
-          facet.terms.forEach(function (term) {
-            me.filter[facetKey].options.push({
-              value: term.key,
-              text: term.label
-            })
-          })
-        }
+        me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
       })
 
-      // Set parks
       me.parks = result.parks.items
       me.totalParks = result.parks.pagination.totalItems
 
-      if (scroll === true) {
-        me.$scrollTo('.breadcrumb')
-      }
+      me.$store.commit('common/setLoading', false)
 
       me.$emit('refreshed', {
         totalParks: me.totalParks,
-        queryParams: me.urlQuery
+        initial
       })
-
-      me.$store.commit('common/setLoading', false)
     }
   }
 }

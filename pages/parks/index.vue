@@ -53,15 +53,8 @@ export default {
 
       me.totalParks = result.totalParks
 
-      // Generate new url
-      const generatedRoute = me.$router.resolve(me.localePath({
-        name: 'parks',
-        query: result.queryParams
-      }))
-
-      // Only push if generated route has difference to our current route
-      if (generatedRoute.resolved.fullPath !== me.$route.fullPath) {
-        me.$router.push(generatedRoute.location)
+      if (!result.initial) {
+        me.$scrollTo('.breadcrumb')
       }
     }
 
