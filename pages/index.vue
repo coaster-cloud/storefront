@@ -97,6 +97,23 @@
           </b-card>
         </b-col>
       </b-row>
+
+      <!-- Community teaser -->
+      <div class="main-content">
+        <b-media>
+          <template v-slot:aside>
+            <img src="~/assets/images/icons/people.png" class="img-responsive teaser-icon" alt="People">
+          </template>
+
+          <markdown-text :text="$t('home.teaser_community')" />
+
+          <div class="text-right">
+            <NuxtLink tag="button" :to="localePath('activities')" class="btn btn-primary btn-sm">
+              {{ $t('goto_activity') }}
+            </NuxtLink>
+          </div>
+        </b-media>
+      </div>
     </div>
   </div>
 </template>
