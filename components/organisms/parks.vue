@@ -198,7 +198,7 @@ export default {
 
         let feature = null
         if (me.selectedSort === 'TOTAL_ATTRACTIONS_DESC'.toLowerCase()) {
-          feature = me.$t('n_attractions', { '{value}': park.totalAttractions })
+          feature = me.$t('n_attractions', { value: park.attractions.totalItems })
         }
 
         let imageUrl = PlaceholderImage
@@ -306,6 +306,9 @@ query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, 
                 country {
                     label(locale: $locale)
                 }
+            }
+            attractions {
+                totalItems
             }
         }
     }
