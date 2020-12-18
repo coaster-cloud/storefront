@@ -227,11 +227,6 @@ export default {
   // Methods
   methods: {
     updateRoute (fields) {
-      // Always set page to null if page is one
-      if (Object.prototype.hasOwnProperty.call(fields, 'page')) {
-        // fields.page = fields.page === 1 ? null : fields.page
-      }
-
       this.$router.replace({
         query: _.omitBy({ ...this.$route.query, ...fields }, _.isNil)
       })
