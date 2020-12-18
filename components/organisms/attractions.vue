@@ -152,22 +152,22 @@ export default {
       sortOptions: [
         { value: null, text: this.$t('standard_sorting'), attribute: null },
         { value: 'NAME_ASC'.toLowerCase(), text: this.$t('alphabetical'), attribute: null },
-        { value: 'LENGTH_DESC'.toLowerCase(), text: this.$t('attribute.length'), attribute: 'length' },
-        { value: 'HEIGHT_DESC'.toLowerCase(), text: this.$t('attribute.height'), attribute: 'height' },
-        { value: 'RIDE_TIME_DESC'.toLowerCase(), text: this.$t('attribute.ride_time'), attribute: 'ride_time' },
-        { value: 'SPEED_DESC'.toLowerCase(), text: this.$t('attribute.speed'), attribute: 'speed' },
-        { value: 'SPEED_UP_DESC'.toLowerCase(), text: this.$t('attribute.speedup'), attribute: 'speedup' },
-        { value: 'MAX_GFORCE_DESC'.toLowerCase(), text: this.$t('attribute.max_gforce'), attribute: 'max_gforce' },
-        { value: 'CAPACITY_DESC'.toLowerCase(), text: this.$t('attribute.capacity'), attribute: 'capacity' },
-        { value: 'MAX_TILT_DESC'.toLowerCase(), text: this.$t('attribute.max_tilt'), attribute: 'max_tilt' }
+        { value: 'LENGTH_DESC'.toLowerCase(), text: this.$t('length'), attribute: 'length' },
+        { value: 'HEIGHT_DESC'.toLowerCase(), text: this.$t('height'), attribute: 'height' },
+        { value: 'RIDE_TIME_DESC'.toLowerCase(), text: this.$t('ride_time'), attribute: 'ride_time' },
+        { value: 'SPEED_DESC'.toLowerCase(), text: this.$t('speed'), attribute: 'speed' },
+        { value: 'SPEED_UP_DESC'.toLowerCase(), text: this.$t('speedup'), attribute: 'speedup' },
+        { value: 'MAX_GFORCE_DESC'.toLowerCase(), text: this.$t('max_gforce'), attribute: 'max_gforce' },
+        { value: 'CAPACITY_DESC'.toLowerCase(), text: this.$t('capacity'), attribute: 'capacity' },
+        { value: 'MAX_TILT_DESC'.toLowerCase(), text: this.$t('max_tilt'), attribute: 'max_tilt' }
       ],
       facetMap: {
-        CATEGORY: 'categoryOptions'
-        // MANUFACTURER: 'manufacturerOptions'
-        // STATE: 'stateOptions',
-        // THRILL: 'thrillOptions',
-        // ELEMENT: 'elementOptions'
-        // TAG: 'tagOptions'
+        CATEGORY: 'categoryOptions',
+        MANUFACTURER: 'manufacturerOptions',
+        STATE: 'stateOptions',
+        THRILL: 'thrillOptions',
+        ELEMENT: 'elementOptions',
+        TAG: 'tagOptions'
       }
     }
   },
@@ -276,11 +276,11 @@ export default {
 
     selectedAccompanied: {
       get () {
-        return _.get(this.$route.query, 'accompanied', true)
+        return _.get(this.$route.query, 'accompanied', false)
       },
 
       set (value) {
-        this.updateRoute({ accompanied: value, page: null })
+        this.updateRoute({ accompanied: value === false ? null : value, page: null })
       }
     },
 
@@ -316,7 +316,13 @@ export default {
           types: attraction.category.label,
           feature,
           image: imageUrl,
-          route: { name: 'parks-park', params: { park: attraction.slug } }
+          route: {
+            name: 'parks-park-attractions-attraction',
+            params: {
+              park: attraction.park.slug,
+              attraction: attraction.slug
+            }
+          }
         })
       })
 
@@ -420,14 +426,15 @@ query ($locale: String, $facet: [AttractionFacet]!, $itemsPerPage: Int!, $page: 
             category {
                 label(locale: $locale)
             }
-            length: attribute(key: "length") { valueAsString }
-            height: attribute(key: "height") { valueAsString }
-            ride_time: attribute(key: "ride_time") { valueAsString }
-            speed: attribute(key: "speed") { valueAsString }
-            speedup: attribute(key: "speedup") { valueAsString }
-            max_gforce: attribute(key: "max_gforce") { valueAsString }
-            capacity: attribute(key: "capacity") { valueAsString }
-            max_tilt: attribute(key: "max_tilt") { valueAsString }
+            park { slug }
+            length: attribute(key: "length") { valueAsString(locale: $locale) }
+            height: attribute(key: "height") { valueAsString(locale: $locale) }
+            ride_time: attribute(key: "ride_time") { valueAsString(locale: $locale) }
+            speed: attribute(key: "speed") { valueAsString(locale: $locale) }
+            speedup: attribute(key: "speedup") { valueAsString(locale: $locale) }
+            max_gforce: attribute(key: "max_gforce") { valueAsString(locale: $locale) }
+            capacity: attribute(key: "capacity") { valueAsString(locale: $locale) }
+            max_tilt: attribute(key: "max_tilt") { valueAsString(locale: $locale) }
         }
     }
 }
