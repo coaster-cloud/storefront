@@ -2,14 +2,6 @@
   <div>
     <div class="main-content">
       <breadcrumb :items="breadcrumbs" />
-
-      <!-- TODO: Park add
-      <div class="text-center mb-3">
-        <action-button add-icon v-b-modal.park-create-form>{{ $t('add.park') }}</action-button>
-        <form-modal id="park-create-form" :title="$t('add.park')" :uri="$generateUrl('api_park_createpark')" @finish="onParkCreated"></form-modal>
-      </div>
-      -->
-
       <parks @refreshed="afterRefresh" />
     </div>
   </div>
@@ -17,13 +9,9 @@
 
 <script>
 import Parks from '~/components/organisms/parks'
-// import FormModal from "../../molecules/FormModal"
-// import ActionButton from "../../atoms/ActionButton"
 
 export default {
   components: {
-    // ActionButton,
-    // FormModal,
     Parks
   },
 
@@ -57,16 +45,6 @@ export default {
         me.$scrollTo('.breadcrumb')
       }
     }
-
-    /* TODO: Park add
-    onParkCreated (formData) {
-      this.$trackEvent('Park created')
-
-      this.$router.push(this.localePath({
-        name: 'parks-park',
-        params: { park: formData.slug }
-      }))
-    } */
   },
 
   head () {
