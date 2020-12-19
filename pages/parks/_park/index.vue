@@ -33,6 +33,47 @@
             <h5>{{ $t('history') }}</h5>
             <value-list :items="reverseHistory" />
           </div>
+
+          <!-- Contributors -->
+          <div class="content-block">
+            <h5>{{ $t('contributors') }}</h5>
+            <ul class="contributors">
+              <li v-for="(item, index) in park.contributors" :key="index">
+                <NuxtLink :to="{name: 'app_account_showprofile', params: {account: item.account.username}}">
+                  {{ item.account.username }}
+                </NuxtLink>
+                ({{ item.totalContributions }})
+              </li>
+            </ul>
+          </div>
+        </b-col>
+
+        <b-col md="5" xl="4" order="1" order-md="2" class="mb-5 mb-md-0 left-separator">
+          <!-- Carousel -->
+          <template v-if="park.images.length > 0">
+            <template v-if="isClient">
+              <b-carousel v-model="slide" :interval="4000" controls img-width="512" img-height="288">
+                <template v-for="(image, index) in park.images">
+                  <NuxtLink :key="index" :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+                    <b-carousel-slide :img-src="image.middle" />
+                  </NuxtLink>
+                </template>
+              </b-carousel>
+            </template>
+
+            <template v-else>
+              <NuxtLink :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+                <img :src="park.images[0].middle" class="img-fluid">
+              </NuxtLink>
+            </template>
+          </template>
+
+          <!-- Fallback image -->
+          <template v-else>
+            <router-link :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+              <img src="~/assets/images/placeholder.middle.jpg" class="img-fluid">
+            </router-link>
+          </template>
         </b-col>
       </b-row>
     </div>
@@ -49,7 +90,9 @@ export default {
 
   data () {
     return {
-      park: null
+      slide: 0,
+      park: null,
+      isClient: false
     }
   },
 
@@ -141,9 +184,15 @@ export default {
     }
   },
 
+  mounted () {
+    this.isClient = true
+  },
+
   methods: {
     async loadPark () {
       const me = this
+
+      me.$store.commit('common/setLoading', true)
 
       const result = await me.$axios.post(me.$config.dataServiceUrl, {
         query: me.$options.__query,
@@ -154,6 +203,8 @@ export default {
       }).then(res => res.data.data)
 
       this.park = result.park
+
+      me.$store.commit('common/setLoading', false)
     }
   },
 
