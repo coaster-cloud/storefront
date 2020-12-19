@@ -201,16 +201,11 @@ export default {
           feature = me.$t('n_attractions', { value: park.attractions.totalItems })
         }
 
-        let imageUrl = PlaceholderImage
-        if (park.images.length > 0) {
-          imageUrl = me.$image(me.$config.imageUrl, park.images[0].fileId, 'middle')
-        }
-
         list.push({
           name: park.name,
           types: types.join(' / '),
           feature,
-          image: imageUrl,
+          image: _.get(park, 'images[0].url', PlaceholderImage),
           route: { name: 'parks-park', params: { park: park.slug } }
         })
       })
@@ -292,7 +287,7 @@ query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, 
             name
             slug
             images {
-                fileId
+                url(size: MIDDLE)
             }
             types {
                 label(locale: $locale)

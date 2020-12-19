@@ -80,7 +80,7 @@
         >
           <b-card class="card-list" no-body>
             <NuxtLink :to="localePath(item.route)">
-              <b-card-img :src="$image($config.imageUrl, item.image, 'middle')" top />
+              <b-card-img :src="item.image" top />
             </NuxtLink>
 
             <div class="card-body">
@@ -146,7 +146,7 @@ export default {
 
       me.random.push({
         name: park.name,
-        image: park.images[0].fileId,
+        image: park.images[0].url,
         route: {
           name: 'parks-park',
           params: {
@@ -160,7 +160,7 @@ export default {
     result.attractions.items.forEach(function (attraction) {
       me.random.push({
         name: attraction.name,
-        image: attraction.images[0].fileId,
+        image: attraction.images[0].url,
         route: {
           name: 'parks-park-attractions-attraction',
           params: {
@@ -204,7 +204,7 @@ export default {
         name
         slug
         types { label(locale: $locale)}
-        images { fileId }
+        images { url(size: MIDDLE) }
       }
     },
     attractions(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
@@ -213,7 +213,7 @@ export default {
         name
         slug
         category { label(locale: $locale)}
-        images { fileId }
+        images { url(size: MIDDLE) }
         park { slug }
       }
     }

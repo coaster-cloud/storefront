@@ -306,16 +306,11 @@ export default {
           feature = _.get(attraction, `${matchedSort.attribute}.valueAsString`, null)
         }
 
-        let imageUrl = PlaceholderImage
-        if (attraction.images.length > 0) {
-          imageUrl = me.$image(me.$config.imageUrl, attraction.images[0].fileId, 'middle')
-        }
-
         list.push({
           name: attraction.name,
           types: attraction.category.label,
           feature,
-          image: imageUrl,
+          image: _.get(attraction, 'images[0].url', PlaceholderImage),
           route: {
             name: 'parks-park-attractions-attraction',
             params: {
@@ -421,7 +416,7 @@ query ($locale: String, $facet: [AttractionFacet]!, $itemsPerPage: Int!, $page: 
             name
             slug
             images {
-                fileId
+                url(size: MIDDLE)
             }
             category {
                 label(locale: $locale)
