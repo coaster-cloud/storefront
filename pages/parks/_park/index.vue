@@ -54,7 +54,7 @@
             <template v-if="isClient">
               <b-carousel v-model="slide" :interval="4000" controls img-width="512" img-height="288">
                 <template v-for="(image, index) in park.images">
-                  <NuxtLink :key="index" :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+                  <NuxtLink :key="index" :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
                     <b-carousel-slide :img-src="image.middle" />
                   </NuxtLink>
                 </template>
@@ -62,7 +62,7 @@
             </template>
 
             <template v-else>
-              <NuxtLink :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+              <NuxtLink :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
                 <img :src="park.images[0].middle" class="img-fluid">
               </NuxtLink>
             </template>
@@ -70,10 +70,21 @@
 
           <!-- Fallback image -->
           <template v-else>
-            <router-link :to="{name: 'app_park_showimages', params: {park: park.slug}}">
+            <router-link :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
               <img src="~/assets/images/placeholder.middle.jpg" class="img-fluid">
             </router-link>
           </template>
+
+          <!-- Park actions -->
+          <div class="text-center mt-3">
+            <NuxtLink tag="button" :to="localePath({name: 'parks-park-images', params: {park: park.slug}})" class="btn btn-primary btn-block mb-1 text-left">
+              <b-icon icon="images" aria-hidden="true" /> {{ $t('image_gallery') }}
+            </NuxtLink>
+
+            <NuxtLink tag="button" :to="localePath({name: 'parks-park-attractions', params: {park: park.slug}})" class="btn btn-primary btn-block mb-1 text-left">
+              <b-icon icon="table" aria-hidden="true" /> {{ $t('attractions') }}
+            </NuxtLink>
+          </div>
         </b-col>
       </b-row>
     </div>
