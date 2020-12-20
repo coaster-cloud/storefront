@@ -39,7 +39,7 @@
             <h5>{{ $t('contributors') }}</h5>
             <ul class="contributors">
               <li v-for="(item, index) in park.contributors" :key="index">
-                <NuxtLink :to="{name: 'app_account_showprofile', params: {account: item.account.username}}">
+                <NuxtLink :to="localePath({name: 'profile-username', params: {username: item.account.username}})">
                   {{ item.account.username }}
                 </NuxtLink>
                 ({{ item.totalContributions }})
