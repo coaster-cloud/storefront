@@ -9,13 +9,7 @@
 </template>
 
 <script>
-import Attractions from '~/components/organisms/attractions'
-
 export default {
-  components: {
-    Attractions
-  },
-
   data () {
     return {
       totalAttractions: 0

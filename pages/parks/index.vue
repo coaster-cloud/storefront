@@ -8,13 +8,7 @@
 </template>
 
 <script>
-import Parks from '~/components/organisms/parks'
-
 export default {
-  components: {
-    Parks
-  },
-
   data () {
     return {
       totalParks: 0

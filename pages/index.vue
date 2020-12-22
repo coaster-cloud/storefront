@@ -119,17 +119,7 @@
 </template>
 
 <script>
-import MarkdownText from '~/components/atoms/markdown-text'
-import MagicNumber from '~/components/atoms/magic-number'
-import Hero from '~/components/organisms/hero'
-
 export default {
-  components: {
-    MagicNumber,
-    Hero,
-    MarkdownText
-  },
-
   async fetch () {
     const me = this
 

@@ -78,6 +78,7 @@ export default {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
+        locale: me.$i18n.locale,
         input: {
           username: me.username,
           password: me.password,
@@ -104,12 +105,12 @@ export default {
 </script>
 
 <query>
-mutation ($input: LoginByPasswordInput!) {
+mutation ($locale: String!, $input: LoginByPasswordInput!) {
   loginByPassword(input: $input) {
     token
     violations {
       field
-      message
+      message(locale: $locale)
     }
   }
 }

@@ -24,7 +24,6 @@ export default {
   plugins: [
     { src: '~/node_modules/vue-flux', mode: 'client' },
     '~/plugins/vue-number-animation.client.js',
-    '~/plugins/global-components.js',
     '~/plugins/markdown.js',
     '~/plugins/vue-scroll-to.js',
     '~/plugins/graphql.js',
