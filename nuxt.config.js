@@ -46,7 +46,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/sentry',
-    'nuxt-i18n'
+    'nuxt-i18n',
+    ['cookie-universal-nuxt', { parseJSON: false }]
   ],
 
   // Bootstrap

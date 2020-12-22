@@ -16,8 +16,6 @@
         <bottom />
       </div>
     </b-container>
-
-    <login-form />
   </div>
 </template>
 

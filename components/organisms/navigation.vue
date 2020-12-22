@@ -20,7 +20,7 @@
 
         <!-- Logged in -->
         <template v-if="$store.getters['account/hasToken']">
-          <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile', params: {account: $store.getters['account/getUsername']}})">
+          <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile-username', params: {username: $store.getters['account/getUsername']}})">
             {{ $t('my_profile') }}
           </b-nav-item>
 
@@ -67,11 +67,14 @@
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
+
+    <login-form />
   </b-navbar>
 </template>
 
 <script>
 export default {
+
   computed: {
     currentLocale () {
       return this.$i18n.locales.filter(i => i.code === this.$i18n.locale)[0]
@@ -79,6 +82,48 @@ export default {
 
     availableLocales () {
       return this.$i18n.locales
+    }
+  },
+  created () {
+    this.initiateSession()
+  },
+
+  methods: {
+    logout () {
+      this.$store.commit('account/unauthenticate')
+
+      this.$root.$bvToast.toast(this.$t('logout_success'), {
+        title: this.$t('logout'),
+        variant: 'success',
+        solid: true,
+        toaster: 'b-toaster-top-center'
+      })
+    },
+
+    initiateSession () {
+      const me = this
+
+      me.$store.commit('account/reauthenticate')
+
+      // Check every 30 seconds the token
+      setInterval(function () {
+        if (me.$store.getters['account/getTokenExpiresAt'] === null) {
+          return
+        }
+
+        if (me.$store.getters['account/getTokenExpiresAt'] > (new Date().getTime() / 1000)) {
+          return
+        }
+
+        me.$store.commit('account/unauthenticate')
+
+        me.$root.$bvToast.toast(me.$t('session_expired'), {
+          title: me.$t('logout'),
+          variant: 'danger',
+          solid: true,
+          toaster: 'b-toaster-top-center'
+        })
+      }, 30000)
     }
   }
 }

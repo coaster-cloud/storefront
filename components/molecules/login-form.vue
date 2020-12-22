@@ -81,7 +81,7 @@ export default {
         input: {
           username: me.username,
           password: me.password,
-          lifetime: me.rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 24
+          lifetime: me.rememberMe ? 60 * 60 * 24 * 30 : 60 * 5
         }
       })
 

@@ -1,4 +1,3 @@
-import VueCookies from 'vue-cookies'
 import JwtDecode from 'jwt-decode'
 
 export default {
@@ -13,15 +12,15 @@ export default {
 
   mutations: {
     reauthenticate (state) {
-      const token = VueCookies.get('_token')
+      const token = this.$cookies.get('_token')
 
-      if (token === null) {
+      if (!token) {
         return
       }
 
       const decodedToken = JwtDecode(token)
       if (decodedToken.exp <= (new Date().getTime() / 1000)) {
-        VueCookies.remove('_token')
+        this.$cookies.remove('_token')
 
         return
       }
@@ -40,13 +39,13 @@ export default {
       state.roles = decodedToken.roles
       state.expiresAt = decodedToken.exp
 
-      VueCookies.set(
+      this.$cookies.set(
         '_token',
         token,
-        new Date(state.expiresAt * 1000).toUTCString(),
-        '',
-        '',
-        window.location.href.match('https') !== null
+        {
+          expires: new Date(state.expiresAt * 1000),
+          sameSite: true
+        }
       )
     },
 
@@ -56,7 +55,7 @@ export default {
       state.username = null
       state.roles = []
 
-      VueCookies.remove('_token')
+      this.$cookies.remove('_token')
     }
   },
   getters: {
