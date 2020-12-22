@@ -10,7 +10,7 @@
 <template>
   <div>
     <template v-if="isClient">
-      <number :from="from" :to="to" :duration="5" :delay="1" easing="Power1.easeOut" />
+      <number :from="from" :to="to" :duration="5" easing="Power1.easeOut" />
     </template>
     <template v-else>
       <span>{{ from }}</span>

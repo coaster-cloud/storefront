@@ -1,5 +1,14 @@
 <template>
   <div>
+    <loading
+      :active.sync="$store.getters['common/isLoading']"
+      :is-full-page="true"
+      loader="dots"
+      color="#4A4090"
+      background-color="#D3D3D3"
+      :opacity="0.7"
+    />
+
     <b-container>
       <div class="container-shadow">
         <navigation />
@@ -11,13 +20,16 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
 import Navigation from '~/components/organisms/navigation'
 import Bottom from '~/components/organisms/bottom'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
   components: {
     Navigation,
-    Bottom
+    Bottom,
+    Loading
   }
 }
 </script>

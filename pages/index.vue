@@ -80,7 +80,7 @@
         >
           <b-card class="card-list" no-body>
             <NuxtLink :to="localePath(item.route)">
-              <b-card-img :src="$image($config.imageUrl, item.image, 'middle')" top />
+              <b-card-img :src="item.image" top />
             </NuxtLink>
 
             <div class="card-body">
@@ -97,28 +97,33 @@
           </b-card>
         </b-col>
       </b-row>
+
+      <!-- Community teaser -->
+      <div class="main-content">
+        <b-media>
+          <template v-slot:aside>
+            <img src="~/assets/images/icons/people.png" class="img-responsive teaser-icon" alt="People">
+          </template>
+
+          <markdown-text :text="$t('home.teaser_community')" />
+
+          <div class="text-right">
+            <NuxtLink tag="button" :to="localePath('activities')" class="btn btn-primary btn-sm">
+              {{ $t('goto_activity') }}
+            </NuxtLink>
+          </div>
+        </b-media>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import MarkdownText from '~/components/atoms/markdown-text'
-import MagicNumber from '~/components/atoms/magic-number'
-import Hero from '~/components/organisms/hero'
-
 export default {
-  components: {
-    MagicNumber,
-    Hero,
-    MarkdownText
-  },
-
   async fetch () {
     const me = this
 
-    const result = await me.$axios.post(me.$config.dataServiceUrl, {
-      query: me.$options.__query, variables: { locale: me.$i18n.locale }
-    }).then(res => res.data.data)
+    const result = await me.$graphql(me.$options.__query, { locale: me.$i18n.locale })
 
     me.totalParks = result.statistics.totalParks
     me.totalAttractions = result.statistics.totalAttractions
@@ -129,7 +134,7 @@ export default {
 
       me.random.push({
         name: park.name,
-        image: park.images[0].fileId,
+        image: park.images[0].url,
         route: {
           name: 'parks-park',
           params: {
@@ -143,7 +148,7 @@ export default {
     result.attractions.items.forEach(function (attraction) {
       me.random.push({
         name: attraction.name,
-        image: attraction.images[0].fileId,
+        image: attraction.images[0].url,
         route: {
           name: 'parks-park-attractions-attraction',
           params: {
@@ -187,7 +192,7 @@ export default {
         name
         slug
         types { label(locale: $locale)}
-        images { fileId }
+        images { url(size: MIDDLE) }
       }
     },
     attractions(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
@@ -196,7 +201,7 @@ export default {
         name
         slug
         category { label(locale: $locale)}
-        images { fileId }
+        images { url(size: MIDDLE) }
         park { slug }
       }
     }
