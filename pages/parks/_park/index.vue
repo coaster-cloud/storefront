@@ -204,11 +204,8 @@ export default {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
-        query: me.$options.__query,
-        variables: {
-          parkSlug: me.$route.params.park,
-          locale: me.$i18n.locale
-        }
+        parkSlug: me.$route.params.park,
+        locale: me.$i18n.locale
       })
 
       this.park = result.park
