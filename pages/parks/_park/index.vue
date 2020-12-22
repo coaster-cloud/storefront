@@ -203,19 +203,15 @@ export default {
     async loadPark () {
       const me = this
 
-      me.$store.commit('common/setLoading', true)
-
-      const result = await me.$axios.post(me.$config.dataServiceUrl, {
+      const result = await me.$graphql(me.$options.__query, {
         query: me.$options.__query,
         variables: {
           parkSlug: me.$route.params.park,
           locale: me.$i18n.locale
         }
-      }).then(res => res.data.data)
+      })
 
       this.park = result.park
-
-      me.$store.commit('common/setLoading', false)
     }
   },
 

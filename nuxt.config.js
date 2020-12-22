@@ -27,6 +27,7 @@ export default {
     '~/plugins/global-components.js',
     '~/plugins/markdown.js',
     '~/plugins/vue-scroll-to.js',
+    '~/plugins/graphql.js',
     '~/plugins/create-head.js'
   ],
 
@@ -44,6 +45,7 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/sentry',
     'nuxt-i18n'
   ],
 

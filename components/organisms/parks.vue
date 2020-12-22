@@ -230,8 +230,6 @@ export default {
     async loadParks (initial = false) {
       const me = this
 
-      me.$store.commit('common/setLoading', true)
-
       const variables = {
         page: me.selectedPage,
         itemsPerPage: me.itemsPerPage,
@@ -246,9 +244,7 @@ export default {
         }, _.isNil)
       }
 
-      const result = await me.$axios.post(me.$config.dataServiceUrl, {
-        query: me.$options.__query, variables
-      }).then(res => res.data.data)
+      const result = await me.$graphql(me.$options.__query, variables)
 
       result.parks.facets.forEach(function (facet) {
         me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
@@ -256,8 +252,6 @@ export default {
 
       me.parks = result.parks.items
       me.totalParks = result.parks.pagination.totalItems
-
-      me.$store.commit('common/setLoading', false)
 
       me.$emit('refreshed', {
         totalParks: me.totalParks,

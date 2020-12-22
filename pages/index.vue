@@ -133,9 +133,7 @@ export default {
   async fetch () {
     const me = this
 
-    const result = await me.$axios.post(me.$config.dataServiceUrl, {
-      query: me.$options.__query, variables: { locale: me.$i18n.locale }
-    }).then(res => res.data.data)
+    const result = await me.$graphql(me.$options.__query, { locale: me.$i18n.locale })
 
     me.totalParks = result.statistics.totalParks
     me.totalAttractions = result.statistics.totalAttractions

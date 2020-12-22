@@ -341,8 +341,6 @@ export default {
     async loadAttractions (initial = false) {
       const me = this
 
-      me.$store.commit('common/setLoading', true)
-
       let safetyRegulation = null
       if (me.selectedSize || me.selectedAge) {
         safetyRegulation = {
@@ -370,9 +368,7 @@ export default {
         }, _.isNil)
       }
 
-      const result = await me.$axios.post(me.$config.dataServiceUrl, {
-        query: me.$options.__query, variables
-      }).then(res => res.data.data)
+      const result = await me.$graphql(me.$options.__query, variables)
 
       result.attractions.facets.forEach(function (facet) {
         me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
@@ -380,8 +376,6 @@ export default {
 
       me.attractions = result.attractions.items
       me.totalAttractions = result.attractions.pagination.totalItems
-
-      me.$store.commit('common/setLoading', false)
 
       me.$emit('refreshed', {
         totalAttractions: me.totalAttractions,
