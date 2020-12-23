@@ -208,6 +208,12 @@ export default {
         locale: me.$i18n.locale
       })
 
+      if (!result.park) {
+        me.$nuxt.error({ statusCode: 404 })
+
+        return
+      }
+
       this.park = result.park
     }
   },
