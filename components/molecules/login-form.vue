@@ -8,39 +8,40 @@
   -->
 
 <template>
-  <b-modal id="login-form" size="xs" :title="$t('login')" scrollable no-stacking>
-    <ul v-if="globalViolations.length > 0" class="alert alert-danger">
-      <li v-for="(violation, index) in globalViolations" :key="index">
-        {{ violation.message }}
-      </li>
-    </ul>
+  <b-modal
+    id="login-form"
+    size="xs"
+    :title="$t('login')"
+    no-stacking
+    @hidden="reset"
+  >
+    <alert-list :values="globalViolations" />
 
-    <!-- Username -->
-    <b-form-group label-cols-sm="3" label-for="login-form-username" :label="$t('username_and_email')">
-      <b-form-input id="login-form-username" v-model="username" type="text" :state="usernameViolations.length === 0 ? null : false" />
-      <b-form-invalid-feedback v-for="(violation, index) in usernameViolations" :key="index" :state="false">
-        {{ violation.message }}
-      </b-form-invalid-feedback>
-    </b-form-group>
+    <text-input
+      id="login-form-username"
+      v-model="username"
+      :label="$t('username_and_email')"
+      :label-col="12"
+      :violations="usernameViolations"
+    />
 
-    <!-- Password -->
-    <b-form-group label-cols-sm="3" label-for="login-form-password" :label="$t('password')">
-      <b-form-input id="login-form-password" v-model="password" type="password" :state="passwordViolations.length === 0 ? null : false" />
-      <b-form-invalid-feedback v-for="(violation, index) in passwordViolations" :key="index" :state="false">
-        {{ violation.message }}
-      </b-form-invalid-feedback>
-    </b-form-group>
+    <text-input
+      id="login-form-password"
+      v-model="password"
+      type="password"
+      :label="$t('password')"
+      :label-col="12"
+      :violations="passwordViolations"
+    />
 
-    <!-- Lifetime -->
-    <b-form-group :label-cols-sm="3">
-      <b-form-checkbox id="login-form-remember-me" v-model="rememberMe" switch>
-        {{ $t('remember_me') }}
-      </b-form-checkbox>
-    </b-form-group>
+    <switch-input
+      id="login-form-remember-me"
+      v-model="rememberMe"
+      :label="$t('remember_me')"
+      :label-col="12"
+    />
 
     <template v-slot:modal-footer="{ ok }">
-      <slot name="footer-buttons" />
-
       <b-button variant="primary ml-auto" @click="save(ok)">
         {{ $t('login') }}
       </b-button>
@@ -61,19 +62,26 @@ export default {
 
   computed: {
     globalViolations () {
-      return this.violations.filter(v => v.field === null)
+      return this.violations.filter(v => v.field === null).map(v => v.message)
     },
 
     usernameViolations () {
-      return this.violations.filter(v => v.field === 'username')
+      return this.violations.filter(v => v.field === 'username').map(v => v.message)
     },
 
     passwordViolations () {
-      return this.violations.filter(v => v.field === 'password')
+      return this.violations.filter(v => v.field === 'password').map(v => v.message)
     }
   },
 
   methods: {
+    reset () {
+      this.username = ''
+      this.password = ''
+      this.rememberMe = false
+      this.violations = []
+    },
+
     async save (ok) {
       const me = this
 
@@ -82,7 +90,7 @@ export default {
         input: {
           username: me.username,
           password: me.password,
-          lifetime: me.rememberMe ? 60 * 60 * 24 * 30 : 60 * 5
+          lifetime: me.rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 24
         }
       })
 
@@ -98,6 +106,8 @@ export default {
           solid: true,
           toaster: 'b-toaster-top-center'
         })
+
+        me.reset()
       }
     }
   }
