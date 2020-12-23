@@ -42,6 +42,10 @@
     />
 
     <template v-slot:modal-footer="{ ok }">
+      <b-button v-b-modal.reset-password-form variant="light">
+        {{ $t('change_password') }}
+      </b-button>
+
       <b-button variant="primary ml-auto" @click="save(ok)">
         {{ $t('login') }}
       </b-button>
@@ -94,12 +98,12 @@ export default {
         }
       })
 
-      me.violations = result.loginByPassword.violations
+      me.violations = result.login.violations
 
-      if (result.loginByPassword.token) {
+      if (result.login.token) {
         ok()
 
-        me.$store.commit('account/authenticate', result.loginByPassword.token)
+        me.$store.commit('account/authenticate', result.login.token)
         me.$root.$bvToast.toast(this.$t('login_success'), {
           title: this.$t('login'),
           variant: 'success',
@@ -115,8 +119,8 @@ export default {
 </script>
 
 <query>
-mutation ($locale: String!, $input: LoginByPasswordInput!) {
-  loginByPassword(input: $input) {
+mutation ($locale: String!, $input: LoginInput!) {
+login(input: $input) {
     token
     violations {
       field

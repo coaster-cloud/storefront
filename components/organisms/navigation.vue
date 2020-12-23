@@ -70,6 +70,7 @@
 
     <login-form />
     <register-form />
+    <reset-password-form />
   </b-navbar>
 </template>
 
