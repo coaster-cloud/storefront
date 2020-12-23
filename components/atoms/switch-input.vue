@@ -9,13 +9,9 @@
 
 <template>
   <b-form-group :label-cols-sm="labelCol">
-    <b-form-checkbox :id="id" v-model="modelValue" switch>
+    <b-form-checkbox :id="id" v-model="modelValue" switch :state="violations.length === 0 ? null : false">
       {{ label }}
     </b-form-checkbox>
-
-    <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
-      {{ violation }}
-    </b-form-invalid-feedback>
   </b-form-group>
 </template>
 

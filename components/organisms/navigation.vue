@@ -69,6 +69,7 @@
     </b-collapse>
 
     <login-form />
+    <register-form />
   </b-navbar>
 </template>
 
