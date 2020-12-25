@@ -24,7 +24,7 @@
             {{ $t('my_profile') }}
           </b-nav-item>
 
-          <b-nav-item key="nav-item-profile-form" v-b-modal.profile-form>
+          <b-nav-item key="nav-item-profile-form" v-b-modal.update-account-form>
             {{ $t('settings') }}
           </b-nav-item>
 
@@ -71,6 +71,7 @@
     <login-form />
     <register-form />
     <reset-password-form />
+    <update-account-form />
   </b-navbar>
 </template>
 

@@ -5,13 +5,24 @@ Vue.prototype.$graphql = async function (query, variables = {}) {
   const me = this
   let result = null
 
+  const headers = {}
+  if (me.$store.getters['account/hasToken']) {
+    headers['X-AUTH-TOKEN'] = me.$store.getters['account/getToken']
+  }
+
   me.$store.commit('common/setLoading', true)
 
   try {
-    const response = await me.$axios.post(me.$config.dataServiceUrl, {
-      query,
-      variables
-    })
+    const response = await me.$axios.post(
+      me.$config.dataServiceUrl,
+      {
+        query,
+        variables
+      },
+      {
+        headers
+      }
+    )
 
     const errors = _.get(response, 'data.errors', [])
     if (errors.length > 0) {
