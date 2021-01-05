@@ -112,11 +112,11 @@ export default {
       const data = []
 
       data.push({
-        label: this.$t('type'),
+        label: this.$t('category'),
         type: 'route-list',
-        value: this.park.types.map(function (value) {
+        value: this.park.categories.map(function (value) {
           return {
-            route: { name: 'parks', query: { type: value.key } },
+            route: { name: 'parks', query: { category: value.key } },
             label: value.label
           }
         })
@@ -173,7 +173,7 @@ export default {
         return {
           id: item.id,
           text: `${item.date.value} | ${item.label}`,
-          class: classMap[item.type].class
+          class: classMap[item.type.key].class
         }
       })
     },
@@ -234,7 +234,7 @@ query ($parkSlug: String!, $locale: String!) {
         name
         shortDescription(locale: $locale)
         slug
-        types { key, label(locale: $locale) }
+        categories { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
         web
         latitude
@@ -263,7 +263,7 @@ query ($parkSlug: String!, $locale: String!) {
         },
         history {
             id
-            type
+            type { key }
             date { format, value }
             label(locale: $locale)
         },

@@ -2,6 +2,14 @@
   <div>
     <div class="main-content">
       <breadcrumb :items="breadcrumbs" />
+
+      <!-- Park add -->
+      <div class="text-center mb-3">
+        <action-button add-icon>
+          {{ $t('add.park') }}
+        </action-button>
+      </div>
+
       <parks @refreshed="afterRefresh" />
     </div>
   </div>
