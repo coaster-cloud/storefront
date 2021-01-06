@@ -24,7 +24,7 @@
             {{ $t('my_profile') }}
           </b-nav-item>
 
-          <b-nav-item key="nav-item-profile-form" v-b-modal.profile-form>
+          <b-nav-item key="nav-item-profile-form" v-b-modal.update-account-form>
             {{ $t('settings') }}
           </b-nav-item>
 
@@ -47,7 +47,7 @@
 
       <b-navbar-nav class="ml-auto">
         <b-nav-form key="nav-item-edit-mode" class="form-inline-nav">
-          <b-form-checkbox switch :value="$store.getters['common/getEditMode']" @change="(checked) => $store.commit('common/setEditMode', checked)">
+          <b-form-checkbox v-model="editMode" switch>
             {{ $t('edit_mode') }}
           </b-form-checkbox>
         </b-nav-form>
@@ -69,6 +69,9 @@
     </b-collapse>
 
     <login-form />
+    <register-form />
+    <reset-password-form />
+    <update-account-form />
   </b-navbar>
 </template>
 
@@ -82,6 +85,16 @@ export default {
 
     availableLocales () {
       return this.$i18n.locales
+    },
+
+    editMode: {
+      get () {
+        return this.$store.getters['common/getEditMode']
+      },
+
+      set (value) {
+        this.$store.commit('common/setEditMode', value)
+      }
     }
   },
   created () {

@@ -2,6 +2,16 @@
   <div>
     <div class="main-content">
       <breadcrumb :items="breadcrumbs" />
+
+      <!-- Park add -->
+      <div class="text-center mb-3">
+        <action-button v-b-modal.create-park-form add-icon>
+          {{ $t('add.park') }}
+        </action-button>
+
+        <create-park-form @finish="onParkCreated" />
+      </div>
+
       <parks @refreshed="afterRefresh" />
     </div>
   </div>
@@ -38,6 +48,14 @@ export default {
       if (!result.initial) {
         me.$scrollTo('.breadcrumb')
       }
+    },
+
+    onParkCreated (park) {
+      // this.$trackEvent('Park created');
+      this.$router.push(this.localePath({
+        name: 'parks-park',
+        params: { park: park.slug }
+      }))
     }
   },
 

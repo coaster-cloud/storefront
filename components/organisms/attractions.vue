@@ -133,6 +133,13 @@ export default {
     NoData
   },
 
+  props: {
+    parkId: {
+      type: String,
+      default: null
+    }
+  },
+
   async fetch () {
     await this.loadAttractions(true)
   },
@@ -357,6 +364,7 @@ export default {
         locale: me.$i18n.locale,
         facet: Object.keys(me.facetMap),
         filter: _.omitBy({
+          park: me.parkId,
           search: me.selectedName,
           category: me.selectedCategory,
           thrill: me.selectedThrill,

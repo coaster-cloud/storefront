@@ -22,9 +22,9 @@
             <b-form-select v-model="selectedSort" :options="sortOptions" />
           </div>
 
-          <!-- Type -->
+          <!-- Category -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedType" :placeholder="$t('all_parks')" :options="typeOptions" />
+            <select-filter v-model="selectedCategory" :placeholder="$t('all_parks')" :options="categoryOptions" />
           </div>
 
           <!-- Country -->
@@ -60,7 +60,7 @@
               </NuxtLink>
 
               <div class="pt-2 text-muted text-small text-center">
-                {{ park.types }}
+                {{ park.categories }}
               </div>
 
               <template v-if="park.feature">
@@ -111,7 +111,7 @@ export default {
       parks: [],
       totalParks: 0,
       itemsPerPage: 24,
-      typeOptions: [],
+      categoryOptions: [],
       countryOptions: [],
       stateOptions: [],
       sortOptions: [
@@ -120,7 +120,7 @@ export default {
         { value: 'TOTAL_ATTRACTIONS_DESC'.toLowerCase(), text: this.$t('total_attractions') }
       ],
       facetMap: {
-        TYPE: 'typeOptions',
+        CATEGORY: 'categoryOptions',
         COUNTRY: 'countryOptions',
         STATE: 'stateOptions'
       }
@@ -149,13 +149,13 @@ export default {
       }
     },
 
-    selectedType: {
+    selectedCategory: {
       get () {
-        return _.get(this.$route.query, 'type', null)
+        return _.get(this.$route.query, 'category', null)
       },
 
       set (value) {
-        this.updateRoute({ type: value, page: null })
+        this.updateRoute({ category: value, page: null })
       }
     },
 
@@ -194,7 +194,7 @@ export default {
       const me = this
 
       this.parks.forEach(function (park) {
-        const types = park.types.map(v => v.label)
+        const categories = park.categories.map(v => v.label)
 
         let feature = null
         if (me.selectedSort === 'TOTAL_ATTRACTIONS_DESC'.toLowerCase()) {
@@ -203,7 +203,7 @@ export default {
 
         list.push({
           name: park.name,
-          types: types.join(' / '),
+          categories: categories.join(' / '),
           feature,
           image: _.get(park, 'images[0].url', PlaceholderImage),
           route: { name: 'parks-park', params: { park: park.slug } }
@@ -238,7 +238,7 @@ export default {
         facet: Object.keys(me.facetMap),
         filter: _.omitBy({
           search: me.selectedName,
-          type: me.selectedType,
+          category: me.selectedCategory,
           country: me.selectedCountry,
           state: me.selectedState
         }, _.isNil)
@@ -283,7 +283,7 @@ query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, 
             images {
                 url(size: MIDDLE)
             }
-            types {
+            categories {
                 label(locale: $locale)
             }
             address {

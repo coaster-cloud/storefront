@@ -141,7 +141,7 @@ export default {
             park: park.slug
           }
         },
-        text: park.types.map(type => type.label).join(' / ')
+        text: park.categories.map(type => type.label).join(' / ')
       })
     })
 
@@ -191,7 +191,7 @@ export default {
         id
         name
         slug
-        types { label(locale: $locale)}
+        categories { label(locale: $locale)}
         images { url(size: MIDDLE) }
       }
     },
