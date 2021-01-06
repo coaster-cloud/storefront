@@ -9,7 +9,14 @@
 
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-    <b-form-select :id="id" v-model="modelValue" :multiple="false" :options="options" :state="violations.length === 0 ? null : false" />
+    <template v-if="multiple">
+      <b-form-checkbox-group :id="id" v-model="modelValue" stacked :options="options" :state="violations.length === 0 ? null : false" />
+    </template>
+
+    <template v-else>
+      <b-form-select :id="id" v-model="modelValue" :multiple="false" :options="options" :state="violations.length === 0 ? null : false" />
+    </template>
+
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
     </b-form-invalid-feedback>
@@ -25,7 +32,7 @@ export default {
     },
 
     value: {
-      type: String,
+      type: [String, Array],
       required: true
     },
 
@@ -52,6 +59,11 @@ export default {
     labelCol: {
       type: Number,
       default: 3
+    },
+
+    multiple: {
+      type: Boolean,
+      default: false
     }
   },
 
