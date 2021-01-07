@@ -14,22 +14,21 @@
     :title="$t('add.park')"
     no-stacking
     @show="load"
-    @hidden="reset"
   >
-    <alert-list :values="globalViolations" />
+    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
 
     <text-input
       id="create-park-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="nameViolations"
+      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
     />
 
     <select-input
       id="create-park-form-categories"
       v-model="categories"
       :label="$t('type')"
-      :violations="categoriesViolations"
+      :violations="violations.filter(v => v.field === 'categories').map(v => v.message)"
       :options="categoriesOptions"
       multiple
     />
@@ -38,7 +37,7 @@
       id="create-park-form-state"
       v-model="state"
       :label="$t('state')"
-      :violations="stateViolations"
+      :violations="violations.filter(v => v.field === 'state').map(v => v.message)"
       :options="stateOptions"
     />
 
@@ -54,41 +53,16 @@
 export default {
   data () {
     return {
-      name: '',
+      name: null,
       categories: [],
-      state: '',
+      state: null,
       violations: [],
       stateOptions: [],
       categoriesOptions: []
     }
   },
 
-  computed: {
-    globalViolations () {
-      return this.violations.filter(v => v.field === null).map(v => v.message)
-    },
-
-    nameViolations () {
-      return this.violations.filter(v => v.field === 'name').map(v => v.message)
-    },
-
-    categoriesViolations () {
-      return this.violations.filter(v => v.field === 'categories').map(v => v.message)
-    },
-
-    stateViolations () {
-      return this.violations.filter(v => v.field === 'state').map(v => v.message)
-    }
-  },
-
   methods: {
-    reset () {
-      this.name = ''
-      this.categories = []
-      this.state = ''
-      this.violations = []
-    },
-
     async load () {
       const me = this
 
@@ -104,6 +78,11 @@ export default {
           }
         }
       `
+
+      this.name = null
+      this.categories = []
+      this.state = null
+      this.violations = []
 
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale
@@ -160,8 +139,6 @@ export default {
         ok()
 
         me.$emit('finish', result.createPark.park)
-
-        me.reset()
       }
     }
   }

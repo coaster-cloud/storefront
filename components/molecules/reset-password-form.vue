@@ -13,20 +13,20 @@
     size="xs"
     :title="$t('change_password')"
     no-stacking
-    @hidden="reset"
+    @show="load"
   >
     <div class="text-muted text-small">
       {{ $t('reset_password_introduction') }}
     </div>
 
-    <alert-list :values="globalViolations" />
+    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
 
     <text-input
       id="register-form-email"
       v-model="email"
       :label="$t('email')"
       :label-col="12"
-      :violations="emailViolations"
+      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -41,31 +41,32 @@
 export default {
   data () {
     return {
-      email: '',
+      email: null,
       violations: []
     }
   },
 
-  computed: {
-    globalViolations () {
-      return this.violations.filter(v => v.field === null).map(v => v.message)
-    },
-
-    emailViolations () {
-      return this.violations.filter(v => v.field === 'email').map(v => v.message)
-    }
-  },
-
   methods: {
-    reset () {
-      this.email = ''
+    load () {
+      this.email = null
       this.violations = []
     },
 
     async save (ok) {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const query = `
+        mutation ($locale: String!, $input: ResetPasswordInput!){
+          resetPassword(input: $input) {
+            violations {
+              field
+              message(locale: $locale)
+            }
+          }
+        }
+      `
+
+      const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         input: {
           email: me.email
@@ -83,21 +84,8 @@ export default {
           solid: true,
           toaster: 'b-toaster-top-center'
         })
-
-        me.reset()
       }
     }
   }
 }
 </script>
-
-<query>
-mutation ($locale: String!, $input: ResetPasswordInput!){
-  resetPassword(input: $input) {
-    violations {
-      field
-      message(locale: $locale)
-    }
-  }
-}
-</query>

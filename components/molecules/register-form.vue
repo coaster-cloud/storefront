@@ -13,29 +13,29 @@
     size="xs"
     :title="$t('register')"
     no-stacking
-    @hidden="reset"
+    @show="load"
   >
-    <alert-list :values="globalViolations" />
+    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
 
     <text-input
       id="register-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="nameViolations"
+      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
     />
 
     <text-input
       id="register-form-email"
       v-model="email"
       :label="$t('email')"
-      :violations="emailViolations"
+      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
     />
 
     <text-input
       id="register-form-username"
       v-model="username"
       :label="$t('username')"
-      :violations="usernameViolations"
+      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
     />
 
     <text-input
@@ -43,7 +43,7 @@
       v-model="password"
       type="password"
       :label="$t('password')"
-      :violations="passwordViolations"
+      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
     />
 
     <switch-input
@@ -51,7 +51,7 @@
       v-model="termsAccepted"
       :label="$t('accept_terms_label')"
       :label-col="12"
-      :violations="termsAcceptedViolations"
+      :violations="violations.filter(v => v.field === 'termsAccepted').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -66,47 +66,21 @@
 export default {
   data () {
     return {
-      name: '',
-      email: '',
-      username: '',
-      password: '',
+      name: null,
+      email: null,
+      username: null,
+      password: null,
       termsAccepted: false,
       violations: []
     }
   },
 
-  computed: {
-    globalViolations () {
-      return this.violations.filter(v => v.field === null).map(v => v.message)
-    },
-
-    nameViolations () {
-      return this.violations.filter(v => v.field === 'name').map(v => v.message)
-    },
-
-    emailViolations () {
-      return this.violations.filter(v => v.field === 'email').map(v => v.message)
-    },
-
-    usernameViolations () {
-      return this.violations.filter(v => v.field === 'username').map(v => v.message)
-    },
-
-    passwordViolations () {
-      return this.violations.filter(v => v.field === 'password').map(v => v.message)
-    },
-
-    termsAcceptedViolations () {
-      return this.violations.filter(v => v.field === 'termsAccepted').map(v => v.message)
-    }
-  },
-
   methods: {
-    reset () {
-      this.name = ''
-      this.email = ''
-      this.username = ''
-      this.password = ''
+    load () {
+      this.name = null
+      this.email = null
+      this.username = null
+      this.password = null
       this.termsAccepted = false
       this.violations = []
     },
@@ -114,7 +88,18 @@ export default {
     async save (ok) {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const query = `
+        mutation ($locale: String!, $input: RegisterInput!){
+          register(input: $input) {
+            violations {
+              field
+              message(locale: $locale)
+            }
+          }
+        }
+      `
+
+      const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         input: {
           name: me.name,
@@ -137,21 +122,8 @@ export default {
           solid: true,
           toaster: 'b-toaster-top-center'
         })
-
-        me.reset()
       }
     }
   }
 }
 </script>
-
-<query>
-mutation ($locale: String!, $input: RegisterInput!){
-  register(input: $input) {
-    violations {
-      field
-      message(locale: $locale)
-    }
-  }
-}
-</query>
