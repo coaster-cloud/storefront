@@ -13,16 +13,16 @@
     size="xs"
     :title="$t('login')"
     no-stacking
-    @hidden="reset"
+    @show="load"
   >
-    <alert-list :values="globalViolations" />
+    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
 
     <text-input
       id="login-form-username"
       v-model="username"
       :label="$t('username_and_email')"
       :label-col="12"
-      :violations="usernameViolations"
+      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
     />
 
     <text-input
@@ -31,7 +31,7 @@
       type="password"
       :label="$t('password')"
       :label-col="12"
-      :violations="passwordViolations"
+      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
     />
 
     <switch-input
@@ -57,31 +57,17 @@
 export default {
   data () {
     return {
-      username: '',
-      password: '',
+      username: null,
+      password: null,
       rememberMe: false,
       violations: []
     }
   },
 
-  computed: {
-    globalViolations () {
-      return this.violations.filter(v => v.field === null).map(v => v.message)
-    },
-
-    usernameViolations () {
-      return this.violations.filter(v => v.field === 'username').map(v => v.message)
-    },
-
-    passwordViolations () {
-      return this.violations.filter(v => v.field === 'password').map(v => v.message)
-    }
-  },
-
   methods: {
-    reset () {
-      this.username = ''
-      this.password = ''
+    load () {
+      this.username = null
+      this.password = null
       this.rememberMe = false
       this.violations = []
     },
@@ -89,7 +75,19 @@ export default {
     async save (ok) {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const query = `
+        mutation ($locale: String!, $input: LoginInput!) {
+          login(input: $input) {
+            token
+            violations {
+              field
+              message(locale: $locale)
+            }
+          }
+        }
+      `
+
+      const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         input: {
           username: me.username,
@@ -110,22 +108,8 @@ export default {
           solid: true,
           toaster: 'b-toaster-top-center'
         })
-
-        me.reset()
       }
     }
   }
 }
 </script>
-
-<query>
-mutation ($locale: String!, $input: LoginInput!) {
-login(input: $input) {
-    token
-    violations {
-      field
-      message(locale: $locale)
-    }
-  }
-}
-</query>

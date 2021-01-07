@@ -14,6 +14,14 @@
           <div class="content-block">
             <h5>{{ $t('basic_data') }}</h5>
             <key-value-list :items="basicData" />
+
+            <div class="text-right">
+              <action-button v-b-modal.update-park-basic-form modify-icon>
+                {{ $t('modify.basic_data') }}
+              </action-button>
+
+              <update-park-basic-form :park-id="park.id" @finish="onModification" />
+            </div>
           </div>
 
           <!-- Additional information -->
@@ -215,6 +223,21 @@ export default {
       }
 
       this.park = result.park
+    },
+
+    onModification (park) {
+      // this.$trackEvent('Park modified');
+
+      if (park.slug !== this.$route.params.park) {
+        this.$router.replace(this.localePath({
+          name: 'parks-park',
+          params: { park: park.slug }
+        }))
+
+        return
+      }
+
+      this.loadPark()
     }
   },
 

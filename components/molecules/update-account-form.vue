@@ -15,29 +15,28 @@
     :title="$t('settings')"
     no-stacking
     @show="load"
-    @hidden="reset"
   >
-    <alert-list :values="globalViolations" />
+    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
 
     <text-input
       id="update-account-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="nameViolations"
+      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
     />
 
     <text-input
       id="update-account-form-email"
       v-model="email"
       :label="$t('email')"
-      :violations="emailViolations"
+      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
     />
 
     <text-input
       id="update-account-form-username"
       v-model="username"
       :label="$t('username')"
-      :violations="usernameViolations"
+      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
     />
 
     <select-input
@@ -45,7 +44,7 @@
       v-model="locale"
       :label="$t('locale')"
       :description="$t('locale_used_for_email')"
-      :violations="localeViolations"
+      :violations="violations.filter(v => v.field === 'locale').map(v => v.message)"
       :options="localeOptions"
     />
 
@@ -54,7 +53,7 @@
       v-model="password"
       type="password"
       :label="$t('password')"
-      :violations="passwordViolations"
+      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -69,36 +68,16 @@
 export default {
   data () {
     return {
-      name: '',
-      email: '',
-      username: '',
-      locale: this.$i18n.locale,
-      password: '',
+      name: null,
+      email: null,
+      username: null,
+      locale: null,
+      password: null,
       violations: []
     }
   },
 
   computed: {
-    globalViolations () {
-      return this.violations.filter(v => v.field === null).map(v => v.message)
-    },
-
-    nameViolations () {
-      return this.violations.filter(v => v.field === 'name').map(v => v.message)
-    },
-
-    emailViolations () {
-      return this.violations.filter(v => v.field === 'email').map(v => v.message)
-    },
-
-    usernameViolations () {
-      return this.violations.filter(v => v.field === 'username').map(v => v.message)
-    },
-
-    localeViolations () {
-      return this.violations.filter(v => v.field === 'locale').map(v => v.message)
-    },
-
     localeOptions () {
       return this.$i18n.locales.map(function (locale) {
         return {
@@ -106,23 +85,10 @@ export default {
           text: locale.label
         }
       })
-    },
-
-    passwordViolations () {
-      return this.violations.filter(v => v.field === 'password').map(v => v.message)
     }
   },
 
   methods: {
-    reset () {
-      this.name = ''
-      this.email = ''
-      this.username = ''
-      this.locale = this.$i18n.locale
-      this.password = ''
-      this.violations = []
-    },
-
     async load () {
       const me = this
 
@@ -136,6 +102,9 @@ export default {
           }
         }
       `
+
+      this.password = null
+      this.violations = []
 
       const result = await me.$graphql(query)
 
@@ -151,11 +120,11 @@ export default {
       const me = this
 
       const query = `
-        mutation ($input: UpdateAccountInput!){
+        mutation ($locale: String!, $input: UpdateAccountInput!){
           updateAccount(input: $input){
             violations {
               field
-              message
+              message(locale: $locale)
             }
           }
         }
@@ -181,8 +150,6 @@ export default {
 
       if (me.violations.length === 0) {
         ok()
-
-        me.reset()
       }
     }
   }
