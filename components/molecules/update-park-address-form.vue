@@ -27,14 +27,14 @@
     <text-input
       id="update-park-address-form-house-number"
       v-model="houseNumber"
-      :label="$t('houseNumber')"
+      :label="$t('house_number')"
       :violations="violations.filter(v => v.field === 'houseNumber').map(v => v.message)"
     />
 
     <text-input
       id="update-park-address-form-postal-code"
       v-model="postalCode"
-      :label="$t('postalCode')"
+      :label="$t('postal_code')"
       :violations="violations.filter(v => v.field === 'postalCode').map(v => v.message)"
     />
 
