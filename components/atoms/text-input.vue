@@ -9,7 +9,7 @@
 
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label">
-    <b-form-input :id="id" v-model.trim="modelValue" :type="type" :state="violations.length === 0 ? null : false" />
+    <b-form-input :id="id" v-model.trim="modelValue" :type="type" :state="violations.length === 0 ? null : false" :formatter="formatter" />
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
     </b-form-invalid-feedback>
@@ -47,6 +47,11 @@ export default {
     labelCol: {
       type: Number,
       default: 3
+    },
+
+    formatter: {
+      type: Function,
+      default: null
     }
   },
 
