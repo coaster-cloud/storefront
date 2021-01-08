@@ -20,7 +20,7 @@
     <textarea-input
       id="update-park-short-description-form-en"
       v-model="en"
-      :label="$t('name')"
+      :label="labelEnglish"
       :label-col="12"
       :violations="violations.filter(v => v.field === 'en').map(v => v.message)"
     />
@@ -28,7 +28,7 @@
     <textarea-input
       id="update-park-short-description-form-de"
       v-model="de"
-      :label="$t('name')"
+      :label="labelGerman"
       :label-col="12"
       :violations="violations.filter(v => v.field === 'de').map(v => v.message)"
     />
@@ -55,6 +55,16 @@ export default {
       en: null,
       de: null,
       violations: []
+    }
+  },
+
+  computed: {
+    labelEnglish () {
+      return this.$t('short_description') + ' (' + this.$t('locale.en') + ')'
+    },
+
+    labelGerman () {
+      return this.$t('short_description') + ' (' + this.$t('locale.de') + ')'
     }
   },
 

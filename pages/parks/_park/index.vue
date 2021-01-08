@@ -24,8 +24,13 @@
                 {{ $t('modify.short_description') }}
               </action-button>
 
+              <action-button v-b-modal.update-park-address-form modify-icon>
+                {{ $t('modify.address') }}
+              </action-button>
+
               <update-park-basic-form :park-id="park.id" @finish="onModification" />
               <update-park-short-description-form :park-id="park.id" @finish="onModification" />
+              <update-park-address-form :park-id="park.id" @finish="onModification" />
             </div>
           </div>
 
