@@ -47,9 +47,11 @@
               <template v-slot:action="props">
                 <b-button-group>
                   <action-button v-b-modal="`update-park-zone-form-${props.item.id}`" modify-icon icon-only />
+                  <action-button v-b-modal="`delete-park-zone-form-${props.item.id}`" delete-icon icon-only />
                 </b-button-group>
 
                 <update-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
+                <delete-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
               </template>
             </value-list>
 
