@@ -18,6 +18,8 @@
         <template v-for="(item, index) in normalizedItems">
           <b-list-group-item :key="index" :class="item.class" class="d-flex justify-content-between align-items-center">
             {{ item.text }}
+
+            <slot name="action" :item="item" />
           </b-list-group-item>
         </template>
       </b-list-group>
@@ -44,6 +46,7 @@ export default {
   computed: {
     normalizedItems () {
       return this.items.map(item => ({
+        id: item.id,
         text: item.text,
         class: _.get(item, 'class', null)
       }))

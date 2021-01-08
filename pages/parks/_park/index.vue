@@ -43,7 +43,15 @@
           <!-- Park zones -->
           <div v-if="zones.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('park_zones') }}</h5>
-            <value-list :items="zones" />
+            <value-list :items="zones">
+              <template v-slot:action="props">
+                <b-button-group>
+                  <action-button v-b-modal="`update-park-zone-form-${props.item.id}`" modify-icon icon-only />
+                </b-button-group>
+
+                <update-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
+              </template>
+            </value-list>
 
             <div class="text-right">
               <action-button v-b-modal.add-park-zone-form modify-icon>
