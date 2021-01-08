@@ -41,9 +41,17 @@
           </div>
 
           <!-- Park zones -->
-          <div v-if="zones.length > 0" class="content-block">
+          <div v-if="zones.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('park_zones') }}</h5>
             <value-list :items="zones" />
+
+            <div class="text-right">
+              <action-button v-b-modal.add-park-zone-form modify-icon>
+                {{ $t('add.park_zone') }}
+              </action-button>
+
+              <add-park-zone-form :park-id="park.id" @finish="onModification" />
+            </div>
           </div>
 
           <!-- History -->
