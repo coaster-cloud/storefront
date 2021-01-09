@@ -70,11 +70,11 @@
             <value-list :items="reverseHistory">
               <template v-slot:action="props">
                 <b-button-group>
-                  <!--<action-button v-b-modal="`update-park-zone-form-${props.item.id}`" modify-icon icon-only />-->
+                  <action-button v-b-modal="`update-park-history-form-${props.item.id}`" modify-icon icon-only />
                   <action-button v-b-modal="`delete-park-history-form-${props.item.id}`" delete-icon icon-only />
                 </b-button-group>
 
-                <!--<update-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />-->
+                <update-park-history-form :park-id="park.id" :history-id="props.item.id" @finish="onModification" />
                 <delete-park-history-form :park-id="park.id" :history-id="props.item.id" @finish="onModification" />
               </template>
             </value-list>
