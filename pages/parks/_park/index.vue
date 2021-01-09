@@ -67,7 +67,17 @@
           <!-- History -->
           <div v-if="reverseHistory.length > 0" class="content-block">
             <h5>{{ $t('history') }}</h5>
-            <value-list :items="reverseHistory" />
+            <value-list :items="reverseHistory">
+              <template v-slot:action="props">
+                <b-button-group>
+                  <!--<action-button v-b-modal="`update-park-zone-form-${props.item.id}`" modify-icon icon-only />-->
+                  <action-button v-b-modal="`delete-park-history-form-${props.item.id}`" delete-icon icon-only />
+                </b-button-group>
+
+                <!--<update-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />-->
+                <delete-park-history-form :park-id="park.id" :history-id="props.item.id" @finish="onModification" />
+              </template>
+            </value-list>
 
             <div class="text-right">
               <action-button v-b-modal.add-park-history-form add-icon>
