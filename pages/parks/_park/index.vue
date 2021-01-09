@@ -56,7 +56,7 @@
             </value-list>
 
             <div class="text-right">
-              <action-button v-b-modal.add-park-zone-form modify-icon>
+              <action-button v-b-modal.add-park-zone-form add-icon>
                 {{ $t('add.park_zone') }}
               </action-button>
 
@@ -68,6 +68,14 @@
           <div v-if="reverseHistory.length > 0" class="content-block">
             <h5>{{ $t('history') }}</h5>
             <value-list :items="reverseHistory" />
+
+            <div class="text-right">
+              <action-button v-b-modal.add-park-history-form add-icon>
+                {{ $t('add.park_history') }}
+              </action-button>
+
+              <add-park-history-form :park-id="park.id" @finish="onModification" />
+            </div>
           </div>
 
           <!-- Contributors -->

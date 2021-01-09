@@ -8,7 +8,7 @@
   -->
 
 <template>
-  <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label">
+  <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
     <b-form-input :id="id" v-model.trim="modelValue" :type="type" :state="violations.length === 0 ? null : false" :formatter="formatter" />
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
@@ -30,6 +30,11 @@ export default {
     },
 
     label: {
+      type: String,
+      default: null
+    },
+
+    description: {
       type: String,
       default: null
     },
