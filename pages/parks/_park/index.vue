@@ -65,7 +65,7 @@
           </div>
 
           <!-- History -->
-          <div v-if="reverseHistory.length > 0" class="content-block">
+          <div v-if="reverseHistory.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('history') }}</h5>
             <value-list :items="reverseHistory">
               <template v-slot:action="props">
