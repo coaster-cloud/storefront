@@ -35,9 +35,9 @@
           </div>
 
           <!-- Additional information -->
-          <div v-if="park.attributes.length > 0" class="content-block">
+          <div v-if="attributes > 0" class="content-block">
             <h5>{{ $t('additional_information') }}</h5>
-            <key-value-list :items="park.attributes" />
+            <key-value-list :items="attributes" />
           </div>
 
           <!-- Park zones -->
@@ -210,6 +210,17 @@ export default {
       return data
     },
 
+    attributes () {
+      return this.park.attributes.map(function (attribute) {
+        return {
+          label: attribute.type.label,
+          type: attribute.type.type.toLowerCase(),
+          value: attribute.value,
+          text: attribute.valueAsString
+        }
+      })
+    },
+
     zones () {
       return this.park.zones.map(item => ({ id: item.id, text: item.name }))
     },
@@ -337,10 +348,12 @@ query ($parkSlug: String!, $locale: String!) {
             label(locale: $locale)
         },
         attributes {
-            key
-            type
-            category
-            label(locale: $locale)
+            type {
+              key
+              type
+              category
+              label(locale: $locale)
+            }
             value
             valueAsString(locale: $locale)
         },
