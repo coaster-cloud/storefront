@@ -9,24 +9,27 @@
 
 <template>
   <b-modal
-    id="add-park-zone-form"
+    id="reset-password-form"
     size="xs"
-    :title="$t('add.park_zone')"
+    :title="$t('change_password')"
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
+    <div class="text-muted text-small">
+      {{ $t('reset_password_introduction') }}
+    </div>
 
     <text-input
-      id="add-park-zone-form-name"
-      v-model="name"
-      :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      id="register-form-email"
+      v-model="email"
+      :label="$t('email')"
+      :label-col="12"
+      :violations="getFieldViolations('[email]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
       <b-button variant="primary ml-auto" @click="save(ok)">
-        {{ $t('save') }}
+        {{ $t('confirm_email') }}
       </b-button>
     </template>
   </b-modal>
@@ -34,41 +37,32 @@
 
 <script>
 export default {
-  props: {
-    parkId: {
-      type: String,
-      required: true
-    }
-  },
-
   data () {
     return {
-      name: null,
+      email: null,
       violations: []
     }
   },
 
   methods: {
-    load () {
-      const me = this
+    getFieldViolations (path) {
+      return this.violations.filter(v => v.field === path).map(v => v.message)
+    },
 
-      me.name = null
+    load () {
+      this.email = null
+      this.violations = []
     },
 
     async save (ok) {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $locale: String!, $input: AddParkZoneInput!){
-          addParkZone(park: $parkId, input: $input) {
+        mutation ($locale: String!, $input: ResetPasswordInput!){
+          resetPassword(input: $input) {
             violations {
               field
               message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
             }
           }
         }
@@ -76,18 +70,22 @@ export default {
 
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
-        parkId: me.parkId,
         input: {
-          name: me.name
+          email: me.email
         }
       })
 
-      me.violations = result.addParkZone.violations
+      me.violations = result.resetPassword.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.addParkZone.park)
+        this.$root.$bvToast.toast(this.$t('reset_password_success'), {
+          title: this.$t('change_password'),
+          variant: 'success',
+          solid: true,
+          toaster: 'b-toaster-top-center'
+        })
       }
     }
   }

@@ -15,13 +15,11 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="update-park-zone-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="getFieldViolations('[updateParkZones][0][name]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -33,7 +31,11 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
@@ -48,8 +50,7 @@ export default {
 
   data () {
     return {
-      name: null,
-      violations: []
+      name: null
     }
   },
 
@@ -76,40 +77,7 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $zoneId: String!, $locale: String!, $input: UpdateParkZoneInput!){
-          updateParkZone(park: $parkId, zone: $zoneId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        zoneId: me.zoneId,
-        input: {
-          name: me.name
-        }
-      })
-
-      me.violations = result.updateParkZone.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updateParkZone.park)
-      }
+      await this.updatePark(this.parkId, { updateParkZones: [{ id: this.zoneId, name: this.name }] }, ok)
     }
   }
 }

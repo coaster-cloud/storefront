@@ -15,20 +15,18 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="create-park-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="getFieldViolations('[name]')"
     />
 
     <select-input
       id="create-park-form-categories"
       v-model="categories"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === 'categories').map(v => v.message)"
+      :violations="getFieldViolations('[categories]')"
       :options="categoriesOptions"
       multiple
     />
@@ -37,7 +35,7 @@
       id="create-park-form-state"
       v-model="state"
       :label="$t('state')"
-      :violations="violations.filter(v => v.field === 'state').map(v => v.message)"
+      :violations="getFieldViolations('[state]')"
       :options="stateOptions"
     />
 
@@ -50,13 +48,16 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   data () {
     return {
       name: null,
       categories: [],
       state: null,
-      violations: [],
       stateOptions: [],
       categoriesOptions: []
     }
@@ -106,40 +107,13 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($locale: String!, $input: CreateParkInput!){
-          createPark(input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        input: {
-          name: me.name,
-          categories: me.categories,
-          state: me.state
-        }
-      })
-
-      me.violations = result.createPark.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.createPark.park)
+      const input = {
+        name: this.name,
+        categories: this.categories,
+        state: this.state
       }
+
+      await this.createPark(input, ok)
     }
   }
 }

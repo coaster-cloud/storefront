@@ -35,9 +35,17 @@
           </div>
 
           <!-- Additional information -->
-          <div v-if="park.attributes.length > 0" class="content-block">
+          <div v-if="attributes.length > 0" class="content-block">
             <h5>{{ $t('additional_information') }}</h5>
-            <key-value-list :items="park.attributes" />
+            <key-value-list :items="attributes" />
+
+            <div class="text-right">
+              <action-button v-b-modal.update-park-attributes-form add-icon>
+                {{ $t('modify.additional_information') }}
+              </action-button>
+
+              <update-park-attributes-form :park-id="park.id" @finish="onModification" />
+            </div>
           </div>
 
           <!-- Park zones -->
@@ -65,7 +73,7 @@
           </div>
 
           <!-- History -->
-          <div v-if="reverseHistory.length > 0" class="content-block">
+          <div v-if="reverseHistory.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('history') }}</h5>
             <value-list :items="reverseHistory">
               <template v-slot:action="props">
@@ -210,6 +218,17 @@ export default {
       return data
     },
 
+    attributes () {
+      return this.park.attributes.map(function (attribute) {
+        return {
+          label: attribute.type.label,
+          type: attribute.type.type.toLowerCase(),
+          value: attribute.value,
+          text: attribute.valueAsString
+        }
+      })
+    },
+
     zones () {
       return this.park.zones.map(item => ({ id: item.id, text: item.name }))
     },
@@ -221,7 +240,7 @@ export default {
         renamed: { class: 'list-group-item-warning' }
       }
 
-      const items = this.park.history
+      const items = this.park.histories
 
       return items.reverse().map(function (item) {
         return {
@@ -330,17 +349,19 @@ query ($parkSlug: String!, $locale: String!) {
             customCopyrightName
             customCopyrightUrl
         },
-        history {
+        histories {
             id
             type { key }
             date { format, value }
             label(locale: $locale)
         },
         attributes {
-            key
-            type
-            category
-            label(locale: $locale)
+            type {
+              key
+              type
+              category
+              label(locale: $locale)
+            }
             value
             valueAsString(locale: $locale)
         },

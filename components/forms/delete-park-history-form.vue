@@ -9,13 +9,11 @@
 
 <template>
   <b-modal
-    :id="`delete-park-zone-form-${zoneId}`"
+    :id="`delete-park-history-form-${historyId}`"
     size="sm"
     :title="$t('please_confirm')"
     no-stacking
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <p>{{ $t('confirm_delete') }}</p>
 
     <template v-slot:modal-footer="{ ok }">
@@ -31,14 +29,18 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
       required: true
     },
 
-    zoneId: {
+    historyId: {
       type: String,
       required: true
     }
@@ -46,44 +48,13 @@ export default {
 
   data () {
     return {
-      name: null,
-      violations: []
+      name: null
     }
   },
 
   methods: {
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $zoneId: String!, $locale: String!){
-          deleteParkZone(park: $parkId, zone: $zoneId) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        zoneId: me.zoneId
-      })
-
-      me.violations = result.deleteParkZone.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.deleteParkZone.park)
-      }
+      await this.updatePark(this.parkId, { deleteParkHistories: [this.historyId] }, ok)
     }
   }
 }

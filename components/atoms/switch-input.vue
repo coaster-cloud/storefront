@@ -40,7 +40,7 @@ export default {
 
     labelCol: {
       type: Number,
-      default: 3
+      default: 4
     }
   },
 

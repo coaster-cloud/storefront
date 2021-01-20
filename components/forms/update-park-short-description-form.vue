@@ -15,14 +15,12 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <textarea-input
       id="update-park-short-description-form-en"
       v-model="en"
       :label="labelEnglish"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'en').map(v => v.message)"
+      :violations="getFieldViolations('[shortDescription][en]')"
     />
 
     <textarea-input
@@ -30,7 +28,7 @@
       v-model="de"
       :label="labelGerman"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'de').map(v => v.message)"
+      :violations="getFieldViolations('[shortDescription][de]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -42,7 +40,11 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
@@ -53,8 +55,7 @@ export default {
   data () {
     return {
       en: null,
-      de: null,
-      violations: []
+      de: null
     }
   },
 
@@ -93,40 +94,14 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkShortDescriptionInput!){
-          updateParkShortDescription(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
+      const input = {
+        shortDescription: {
+          en: this.en,
+          de: this.de
         }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        input: {
-          en: me.en,
-          de: me.de
-        }
-      })
-
-      me.violations = result.updateParkShortDescription.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updateParkShortDescription.park)
       }
+
+      await this.updatePark(this.parkId, input, ok)
     }
   }
 }

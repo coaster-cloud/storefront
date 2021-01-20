@@ -16,27 +16,25 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="update-account-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="getFieldViolations('[name]')"
     />
 
     <text-input
       id="update-account-form-email"
       v-model="email"
       :label="$t('email')"
-      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
+      :violations="getFieldViolations('[email]')"
     />
 
     <text-input
       id="update-account-form-username"
       v-model="username"
       :label="$t('username')"
-      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
+      :violations="getFieldViolations('[username]')"
     />
 
     <select-input
@@ -44,7 +42,7 @@
       v-model="locale"
       :label="$t('locale')"
       :description="$t('locale_used_for_email')"
-      :violations="violations.filter(v => v.field === 'locale').map(v => v.message)"
+      :violations="getFieldViolations('[locale]')"
       :options="localeOptions"
     />
 
@@ -53,7 +51,7 @@
       v-model="password"
       type="password"
       :label="$t('password')"
-      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
+      :violations="getFieldViolations('[password]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -89,6 +87,10 @@ export default {
   },
 
   methods: {
+    getFieldViolations (path) {
+      return this.violations.filter(v => v.field === path).map(v => v.message)
+    },
+
     async load () {
       const me = this
 

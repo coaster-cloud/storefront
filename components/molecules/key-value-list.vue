@@ -16,66 +16,75 @@
     <template v-else>
       <dl class="row">
         <template v-for="(row, rowIndex) in normalizedItems">
-          <template v-if="(!Array.isArray(row.value) && row.value !== null) || (Array.isArray(row.value) && row.value.length > 0)">
-            <dt :key="`key-${rowIndex}`" class="col-sm-3 font-weight-normal">
-              {{ row.label }}:
-            </dt>
-            <dd :key="`value-${rowIndex}`" class="col-sm-9 text-muted">
-              <template v-if="row.type === 'timestamp'">
-                {{ row.value|timestamp }}
-              </template>
+          <dt :key="`key-${rowIndex}`" class="col-sm-3 font-weight-normal">
+            {{ row.label }}:
+          </dt>
+          <dd :key="`value-${rowIndex}`" class="col-sm-9 text-muted">
+            <!-- Timestamp -->
+            <template v-if="row.type === 'timestamp'">
+              {{ row.value|timestamp }}
+            </template>
 
-              <template v-else-if="row.type === 'boolean' && !row.value">
-                <b-icon icon="x-circle" variant="danger" />
-              </template>
+            <!-- Boolean: False -->
+            <template v-else-if="row.type === 'boolean' && !row.value">
+              <b-icon icon="x-circle" variant="danger" />
+            </template>
 
-              <template v-else-if="row.type === 'boolean' && row.value">
-                <b-icon icon="check-circle" variant="success" />
-              </template>
+            <!-- Boolean: True -->
+            <template v-else-if="row.type === 'boolean' && row.value">
+              <b-icon icon="check-circle" variant="success" />
+            </template>
 
-              <template v-else-if="row.type === 'list'">
-                <div v-for="(item, listIndex) in row.value" :key="listIndex">
-                  {{ item }}
-                </div>
-              </template>
+            <!-- Text List -->
+            <template v-else-if="row.type === 'list'">
+              <div v-for="(item, listIndex) in row.value" :key="listIndex">
+                {{ item }}
+              </div>
+            </template>
 
-              <template v-else-if="row.type === 'label-list'">
-                <div v-for="(item, labelListIndex) in row.value" :key="labelListIndex">
-                  {{ item.label }}
-                </div>
-              </template>
+            <!-- Label List -->
+            <template v-else-if="row.type === 'label-list'">
+              <div v-for="(item, labelListIndex) in row.value" :key="labelListIndex">
+                {{ item.label }}
+              </div>
+            </template>
 
-              <template v-else-if="row.type === 'label'">
+            <!-- Label -->
+            <template v-else-if="row.type === 'label'">
+              {{ row.value.label }}
+            </template>
+
+            <!-- External Link -->
+            <template v-else-if="row.type === 'link'">
+              <a :href="row.value" target="_blank" rel="nofollow">{{ row.value }}</a>
+            </template>
+
+            <!-- Internal Route -->
+            <template v-else-if="row.type === 'route'">
+              <NuxtLink :to="localePath(row.value.route)">
                 {{ row.value.label }}
-              </template>
+              </NuxtLink>
+            </template>
 
-              <template v-else-if="row.type === 'link'">
-                <a :href="row.value" target="_blank" rel="nofollow">{{ row.value }}</a>
-              </template>
-
-              <template v-else-if="row.type === 'route'">
-                <NuxtLink :to="localePath(row.value.route)">
-                  {{ row.value.label }}
+            <!-- Internal Route List -->
+            <template v-else-if="row.type === 'route-list'">
+              <div v-for="(item, routeListIndex) in row.value" :key="routeListIndex">
+                <NuxtLink :to="localePath(item.route)">
+                  {{ item.label }}
                 </NuxtLink>
-              </template>
+              </div>
+            </template>
 
-              <template v-else-if="row.type === 'route-list'">
-                <div v-for="(item, routeListIndex) in row.value" :key="routeListIndex">
-                  <NuxtLink :to="localePath(item.route)">
-                    {{ item.label }}
-                  </NuxtLink>
-                </div>
-              </template>
+            <!-- Callback -->
+            <template v-else-if="row.type === 'callback'">
+              {{ row.value() }}
+            </template>
 
-              <template v-else-if="row.type === 'callback'">
-                {{ row.value() }}
-              </template>
-
-              <template v-else>
-                {{ row.text ? row.text : row.value }}
-              </template>
-            </dd>
-          </template>
+            <!-- Text -->
+            <template v-else>
+              {{ row.text ? row.text : row.value }}
+            </template>
+          </dd>
         </template>
       </dl>
     </template>
@@ -100,12 +109,14 @@ export default {
 
   computed: {
     normalizedItems () {
-      return this.items.map(item => ({
-        label: item.label,
-        type: item.type.toLowerCase(),
-        value: _.get(item, 'value', null),
-        text: _.get(item, 'text', _.get(item, 'valueAsString', null))
-      }))
+      return this.items
+        .filter(item => Array.isArray(item.value) ? item.value.length > 0 : item.value !== null)
+        .map(item => ({
+          label: item.label,
+          type: item.type.toLowerCase(),
+          value: _.get(item, 'value', null),
+          text: _.get(item, 'text', _.get(item, 'valueAsString', null))
+        }))
     }
   }
 }
