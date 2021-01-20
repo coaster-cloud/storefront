@@ -19,14 +19,14 @@
       id="update-park-basic-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === '[name]').map(v => v.message)"
+      :violations="getFieldViolations('[name]')"
     />
 
     <select-input
       id="update-park-basic-form-categories"
       v-model="categories"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === '[categories]').map(v => v.message)"
+      :violations="getFieldViolations('[categories]')"
       :options="categoriesOptions"
       multiple
     />
@@ -35,7 +35,7 @@
       id="update-park-basic-form-state"
       v-model="state"
       :label="$t('state')"
-      :violations="violations.filter(v => v.field === '[state]').map(v => v.message)"
+      :violations="getFieldViolations('[state]')"
       :options="stateOptions"
     />
 
@@ -43,7 +43,7 @@
       id="update-park-basic-form-timezone"
       v-model="timezone"
       :label="$t('timezone')"
-      :violations="violations.filter(v => v.field === '[timezone]').map(v => v.message)"
+      :violations="getFieldViolations('[timezone]')"
       :options="timezoneOptions"
     />
 
@@ -51,7 +51,7 @@
       id="update-park-basic-form-web"
       v-model="web"
       :label="$t('web')"
-      :violations="violations.filter(v => v.field === '[web]').map(v => v.message)"
+      :violations="getFieldViolations('[web]')"
     />
 
     <text-input
@@ -59,7 +59,7 @@
       v-model="latitude"
       :label="$t('latitude')"
       :formatter="formatCoordinate"
-      :violations="violations.filter(v => v.field === '[latitude]').map(v => v.message)"
+      :violations="getFieldViolations('[latitude]')"
     />
 
     <text-input
@@ -67,7 +67,7 @@
       v-model="longitude"
       :label="$t('longitude')"
       :formatter="formatCoordinate"
-      :violations="violations.filter(v => v.field === '[longitude]').map(v => v.message)"
+      :violations="getFieldViolations('[longitude]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -79,7 +79,11 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
@@ -96,7 +100,6 @@ export default {
       web: null,
       latitude: null,
       longitude: null,
-      violations: [],
       stateOptions: [],
       categoriesOptions: [],
       timezoneOptions: []
@@ -177,45 +180,17 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
-          updatePark(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        input: {
-          name: me.name,
-          categories: me.categories,
-          state: me.state,
-          timezone: me.timezone,
-          web: me.web,
-          latitude: me.latitude,
-          longitude: me.longitude
-        }
-      })
-
-      me.violations = result.updatePark.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updatePark.park)
+      const input = {
+        name: this.name,
+        categories: this.categories,
+        state: this.state,
+        timezone: this.timezone,
+        web: this.web,
+        latitude: this.latitude,
+        longitude: this.longitude
       }
+
+      await this.updatePark(this.parkId, input, ok)
     }
   }
 }

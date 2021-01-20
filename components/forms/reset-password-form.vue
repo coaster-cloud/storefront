@@ -24,7 +24,7 @@
       v-model="email"
       :label="$t('email')"
       :label-col="12"
-      :violations="violations.filter(v => v.field === '[email]').map(v => v.message)"
+      :violations="getFieldViolations('[email]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -45,6 +45,10 @@ export default {
   },
 
   methods: {
+    getFieldViolations (path) {
+      return this.violations.filter(v => v.field === path).map(v => v.message)
+    },
+
     load () {
       this.email = null
       this.violations = []

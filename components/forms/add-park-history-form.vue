@@ -19,7 +19,7 @@
       id="add-park-history-form-type"
       v-model="type"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === '[addParkHistories][0][type]').map(v => v.message)"
+      :violations="getFieldViolations('[addParkHistories][0][type]')"
       :options="typeOptions"
     />
 
@@ -28,7 +28,7 @@
       v-model="date"
       :label="$t('date')"
       :description="$t('input_hint.flex_date')"
-      :violations="violations.filter(v => v.field === '[addParkHistories][0][date]').map(v => v.message)"
+      :violations="getFieldViolations('[addParkHistories][0][date]')"
     />
 
     <text-input
@@ -36,7 +36,7 @@
       id="add-park-history-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === '[addParkHistories][0][name]').map(v => v.message)"
+      :violations="getFieldViolations('[addParkHistories][0][name]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -48,7 +48,11 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
@@ -61,7 +65,6 @@ export default {
       type: null,
       date: null,
       name: null,
-      violations: [],
       typeOptions: []
     }
   },
@@ -116,48 +119,16 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
-          updatePark(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
       const input = {
-        type: me.type,
-        date: me.date
+        type: this.type,
+        date: this.date
       }
 
-      if (me.hasNameField) {
-        input.name = me.name
+      if (this.hasNameField) {
+        input.name = this.name
       }
 
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        input: {
-          addParkHistories: [input]
-        }
-      })
-
-      me.violations = result.updatePark.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updatePark.park)
-      }
+      await this.updatePark(this.parkId, { addParkHistories: [input] }, ok)
     }
   }
 }

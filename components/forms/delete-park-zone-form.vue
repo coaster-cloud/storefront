@@ -9,7 +9,7 @@
 
 <template>
   <b-modal
-    :id="`delete-park-history-form-${historyId}`"
+    :id="`delete-park-zone-form-${zoneId}`"
     size="sm"
     :title="$t('please_confirm')"
     no-stacking
@@ -29,14 +29,18 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
       required: true
     },
 
-    historyId: {
+    zoneId: {
       type: String,
       required: true
     }
@@ -44,46 +48,13 @@ export default {
 
   data () {
     return {
-      name: null,
-      violations: []
+      name: null
     }
   },
 
   methods: {
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
-          updatePark(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        input: {
-          deleteParkHistories: [me.historyId]
-        }
-      })
-
-      me.violations = result.updatePark.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updatePark.park)
-      }
+      await this.updatePark(this.parkId, { deleteParkZones: [this.zoneId] }, ok)
     }
   }
 }

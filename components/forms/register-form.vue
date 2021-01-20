@@ -9,43 +9,52 @@
 
 <template>
   <b-modal
-    id="login-form"
+    id="register-form"
     size="xs"
-    :title="$t('login')"
+    :title="$t('register')"
     no-stacking
     @show="load"
   >
     <text-input
-      id="login-form-username"
-      v-model="username"
-      :label="$t('username_and_email')"
-      :label-col="12"
-      :violations="violations.filter(v => v.field === '[username]').map(v => v.message)"
+      id="register-form-name"
+      v-model="name"
+      :label="$t('name')"
+      :violations="getFieldViolations('[name]')"
     />
 
     <text-input
-      id="login-form-password"
+      id="register-form-email"
+      v-model="email"
+      :label="$t('email')"
+      :violations="getFieldViolations('[email]')"
+    />
+
+    <text-input
+      id="register-form-username"
+      v-model="username"
+      :label="$t('username')"
+      :violations="getFieldViolations('[username]')"
+    />
+
+    <text-input
+      id="register-form-password"
       v-model="password"
       type="password"
       :label="$t('password')"
-      :label-col="12"
-      :violations="violations.filter(v => v.field === '[password]').map(v => v.message)"
+      :violations="getFieldViolations('[password]')"
     />
 
     <switch-input
-      id="login-form-remember-me"
-      v-model="rememberMe"
-      :label="$t('remember_me')"
+      id="register-form-terms"
+      v-model="termsAccepted"
+      :label="$t('accept_terms_label')"
       :label-col="12"
+      :violations="getFieldViolations('[termsAccepted]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
-      <b-button v-b-modal.reset-password-form variant="light">
-        {{ $t('change_password') }}
-      </b-button>
-
       <b-button variant="primary ml-auto" @click="save(ok)">
-        {{ $t('login') }}
+        {{ $t('register') }}
       </b-button>
     </template>
   </b-modal>
@@ -55,18 +64,26 @@
 export default {
   data () {
     return {
+      name: null,
+      email: null,
       username: null,
       password: null,
-      rememberMe: false,
+      termsAccepted: false,
       violations: []
     }
   },
 
   methods: {
+    getFieldViolations (path) {
+      return this.violations.filter(v => v.field === path).map(v => v.message)
+    },
+
     load () {
+      this.name = null
+      this.email = null
       this.username = null
       this.password = null
-      this.rememberMe = false
+      this.termsAccepted = false
       this.violations = []
     },
 
@@ -74,9 +91,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($locale: String!, $input: LoginInput!) {
-          login(input: $input) {
-            token
+        mutation ($locale: String!, $input: RegisterInput!){
+          register(input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -88,20 +104,22 @@ export default {
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         input: {
+          name: me.name,
+          email: me.email,
           username: me.username,
           password: me.password,
-          lifetime: me.rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 24
+          locale: me.$i18n.locale,
+          termsAccepted: me.termsAccepted
         }
       })
 
-      me.violations = result.login.violations
+      me.violations = result.register.violations
 
-      if (result.login.token) {
+      if (me.violations.length === 0) {
         ok()
 
-        me.$store.commit('account/authenticate', result.login.token)
-        me.$root.$bvToast.toast(this.$t('login_success'), {
-          title: this.$t('login'),
+        this.$root.$bvToast.toast(this.$t('register_success'), {
+          title: this.$t('register'),
           variant: 'success',
           solid: true,
           toaster: 'b-toaster-top-center'

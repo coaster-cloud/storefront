@@ -19,42 +19,42 @@
       id="update-park-address-form-street"
       v-model="street"
       :label="$t('street')"
-      :violations="violations.filter(v => v.field === '[address][street]').map(v => v.message)"
+      :violations="getFieldViolations('[address][street]')"
     />
 
     <text-input
       id="update-park-address-form-house-number"
       v-model="houseNumber"
       :label="$t('house_number')"
-      :violations="violations.filter(v => v.field === '[address][houseNumber]').map(v => v.message)"
+      :violations="getFieldViolations('[address][houseNumber]')"
     />
 
     <text-input
       id="update-park-address-form-postal-code"
       v-model="postalCode"
       :label="$t('postal_code')"
-      :violations="violations.filter(v => v.field === '[address][postalCode]').map(v => v.message)"
+      :violations="getFieldViolations('[address][postalCode]')"
     />
 
     <text-input
       id="update-park-address-form-city"
       v-model="city"
       :label="$t('city')"
-      :violations="violations.filter(v => v.field === '[address][city]').map(v => v.message)"
+      :violations="getFieldViolations('[address][city]')"
     />
 
     <text-input
       id="update-park-address-form-province"
       v-model="province"
       :label="$t('province')"
-      :violations="violations.filter(v => v.field === '[address][province]').map(v => v.message)"
+      :violations="getFieldViolations('[address][province]')"
     />
 
     <select-input
       id="update-park-address-form-country"
       v-model="country"
       :label="$t('country')"
-      :violations="violations.filter(v => v.field === '[address][country]').map(v => v.message)"
+      :violations="getFieldViolations('[address][country]')"
       :options="countryOptions"
     />
 
@@ -67,7 +67,11 @@
 </template>
 
 <script>
+import ParkUpdateForm from '~/components/mixins/park-update-form'
+
 export default {
+  mixins: [ParkUpdateForm],
+
   props: {
     parkId: {
       type: String,
@@ -83,7 +87,6 @@ export default {
       city: null,
       province: null,
       country: null,
-      violations: [],
       countryOptions: []
     }
   },
@@ -135,46 +138,18 @@ export default {
     },
 
     async save (ok) {
-      const me = this
-
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
-          updatePark(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              slug
-            }
-          }
+      const input = {
+        address: {
+          street: this.street,
+          houseNumber: this.houseNumber,
+          postalCode: this.postalCode,
+          city: this.city,
+          province: this.province,
+          country: this.country
         }
-      `
-
-      const result = await me.$graphql(query, {
-        locale: me.$i18n.locale,
-        parkId: me.parkId,
-        input: {
-          address: {
-            street: me.street,
-            houseNumber: me.houseNumber,
-            postalCode: me.postalCode,
-            city: me.city,
-            province: me.province,
-            country: me.country
-          }
-        }
-      })
-
-      me.violations = result.updatePark.violations
-
-      if (me.violations.length === 0) {
-        ok()
-
-        me.$emit('finish', result.updatePark.park)
       }
+
+      await this.updatePark(this.parkId, input, ok)
     }
   }
 }
