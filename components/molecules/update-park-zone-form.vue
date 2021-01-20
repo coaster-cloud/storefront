@@ -15,13 +15,11 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="update-park-zone-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[updateParkZones][0][name]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -79,8 +77,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $zoneId: String!, $locale: String!, $input: UpdateParkZoneInput!){
-          updateParkZone(park: $parkId, zone: $zoneId, input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -97,18 +95,19 @@ export default {
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         parkId: me.parkId,
-        zoneId: me.zoneId,
         input: {
-          name: me.name
+          updateParkZones: [
+            { id: me.zoneId, name: me.name }
+          ]
         }
       })
 
-      me.violations = result.updateParkZone.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.updateParkZone.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

@@ -15,48 +15,46 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="update-park-address-form-street"
       v-model="street"
       :label="$t('street')"
-      :violations="violations.filter(v => v.field === 'street').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][street]').map(v => v.message)"
     />
 
     <text-input
       id="update-park-address-form-house-number"
       v-model="houseNumber"
       :label="$t('house_number')"
-      :violations="violations.filter(v => v.field === 'houseNumber').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][houseNumber]').map(v => v.message)"
     />
 
     <text-input
       id="update-park-address-form-postal-code"
       v-model="postalCode"
       :label="$t('postal_code')"
-      :violations="violations.filter(v => v.field === 'postalCode').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][postalCode]').map(v => v.message)"
     />
 
     <text-input
       id="update-park-address-form-city"
       v-model="city"
       :label="$t('city')"
-      :violations="violations.filter(v => v.field === 'city').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][city]').map(v => v.message)"
     />
 
     <text-input
       id="update-park-address-form-province"
       v-model="province"
       :label="$t('province')"
-      :violations="violations.filter(v => v.field === 'province').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][province]').map(v => v.message)"
     />
 
     <select-input
       id="update-park-address-form-country"
       v-model="country"
       :label="$t('country')"
-      :violations="violations.filter(v => v.field === 'country').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[address][country]').map(v => v.message)"
       :options="countryOptions"
     />
 
@@ -140,8 +138,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkAddressInput!){
-          updateParkAddress(park: $parkId, input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -159,21 +157,23 @@ export default {
         locale: me.$i18n.locale,
         parkId: me.parkId,
         input: {
-          street: me.street,
-          houseNumber: me.houseNumber,
-          postalCode: me.postalCode,
-          city: me.city,
-          province: me.province,
-          country: me.country
+          address: {
+            street: me.street,
+            houseNumber: me.houseNumber,
+            postalCode: me.postalCode,
+            city: me.city,
+            province: me.province,
+            country: me.country
+          }
         }
       })
 
-      me.violations = result.updateParkAddress.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.updateParkAddress.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

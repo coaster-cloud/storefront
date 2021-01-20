@@ -35,9 +35,17 @@
           </div>
 
           <!-- Additional information -->
-          <div v-if="attributes > 0" class="content-block">
+          <div v-if="attributes.length > 0" class="content-block">
             <h5>{{ $t('additional_information') }}</h5>
             <key-value-list :items="attributes" />
+
+            <div class="text-right">
+              <action-button v-b-modal.update-park-attributes-form add-icon>
+                {{ $t('modify.additional_information') }}
+              </action-button>
+
+              <update-park-attributes-form :park-id="park.id" @finish="onModification" />
+            </div>
           </div>
 
           <!-- Park zones -->
@@ -232,7 +240,7 @@ export default {
         renamed: { class: 'list-group-item-warning' }
       }
 
-      const items = this.park.history
+      const items = this.park.histories
 
       return items.reverse().map(function (item) {
         return {
@@ -341,7 +349,7 @@ query ($parkSlug: String!, $locale: String!) {
             customCopyrightName
             customCopyrightUrl
         },
-        history {
+        histories {
             id
             type { key }
             date { format, value }

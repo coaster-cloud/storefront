@@ -11,17 +11,15 @@
   <b-modal
     :id="`update-park-history-form-${historyId}`"
     size="xs"
-    :title="$t('modify.park_history')"
+    :title="$t('modify.history')"
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <select-input
       id="update-park-history-form-type"
       v-model="type"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === 'type').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[updateParkHistories][0][type]').map(v => v.message)"
       :options="typeOptions"
     />
 
@@ -30,7 +28,7 @@
       v-model="date"
       :label="$t('date')"
       :description="$t('input_hint.flex_date')"
-      :violations="violations.filter(v => v.field === 'date').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[updateParkHistories][0][date]').map(v => v.message)"
     />
 
     <text-input
@@ -38,7 +36,7 @@
       id="update-park-history-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[updateParkHistories][0][name]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -96,7 +94,7 @@ export default {
         query ($parkId: String!, $locale: String!){
           park(id: $parkId) {
             id
-            history { id, type { key }, date { value }, context { name } }
+            histories { id, type { key }, date { value }, context { name } }
           }
           parkHistoryTypes {
             key
@@ -112,7 +110,7 @@ export default {
       })
 
       if (result) {
-        const entry = result.park.history.filter(v => v.id === me.historyId)[0]
+        const entry = result.park.histories.filter(v => v.id === me.historyId)[0]
 
         me.type = entry.type.key
         me.date = entry.date.value
@@ -132,8 +130,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $historyId: String!, $locale: String!, $input: UpdateParkHistoryInput!){
-          updateParkHistory(park: $parkId, history: $historyId, input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -147,23 +145,30 @@ export default {
         }
       `
 
+      const input = {
+        id: me.historyId,
+        type: me.type,
+        date: me.date
+      }
+
+      if (me.hasNameField) {
+        input.name = me.name
+      }
+
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         parkId: me.parkId,
-        historyId: me.historyId,
         input: {
-          type: me.type,
-          date: me.date,
-          name: me.hasNameField ? me.name : null
+          updateParkHistories: [input]
         }
       })
 
-      me.violations = result.updateParkHistory.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.updateParkHistory.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

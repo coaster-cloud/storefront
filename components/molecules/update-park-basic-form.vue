@@ -15,20 +15,18 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="update-park-basic-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[name]').map(v => v.message)"
     />
 
     <select-input
       id="update-park-basic-form-categories"
       v-model="categories"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === 'categories').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[categories]').map(v => v.message)"
       :options="categoriesOptions"
       multiple
     />
@@ -37,7 +35,7 @@
       id="update-park-basic-form-state"
       v-model="state"
       :label="$t('state')"
-      :violations="violations.filter(v => v.field === 'state').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[state]').map(v => v.message)"
       :options="stateOptions"
     />
 
@@ -45,7 +43,7 @@
       id="update-park-basic-form-timezone"
       v-model="timezone"
       :label="$t('timezone')"
-      :violations="violations.filter(v => v.field === 'timezone').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[timezone]').map(v => v.message)"
       :options="timezoneOptions"
     />
 
@@ -53,7 +51,7 @@
       id="update-park-basic-form-web"
       v-model="web"
       :label="$t('web')"
-      :violations="violations.filter(v => v.field === 'web').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[web]').map(v => v.message)"
     />
 
     <text-input
@@ -61,7 +59,7 @@
       v-model="latitude"
       :label="$t('latitude')"
       :formatter="formatCoordinate"
-      :violations="violations.filter(v => v.field === 'latitude').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[latitude]').map(v => v.message)"
     />
 
     <text-input
@@ -69,7 +67,7 @@
       v-model="longitude"
       :label="$t('longitude')"
       :formatter="formatCoordinate"
-      :violations="violations.filter(v => v.field === 'longitude').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[longitude]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -182,8 +180,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkBasicInput!){
-          updateParkBasic(park: $parkId, input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -211,12 +209,12 @@ export default {
         }
       })
 
-      me.violations = result.updateParkBasic.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.updateParkBasic.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

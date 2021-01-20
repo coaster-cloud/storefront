@@ -15,27 +15,25 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="register-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[name]').map(v => v.message)"
     />
 
     <text-input
       id="register-form-email"
       v-model="email"
       :label="$t('email')"
-      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[email]').map(v => v.message)"
     />
 
     <text-input
       id="register-form-username"
       v-model="username"
       :label="$t('username')"
-      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[username]').map(v => v.message)"
     />
 
     <text-input
@@ -43,7 +41,7 @@
       v-model="password"
       type="password"
       :label="$t('password')"
-      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[password]').map(v => v.message)"
     />
 
     <switch-input
@@ -51,7 +49,7 @@
       v-model="termsAccepted"
       :label="$t('accept_terms_label')"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'termsAccepted').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[termsAccepted]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">

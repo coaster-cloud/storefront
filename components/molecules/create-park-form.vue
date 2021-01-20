@@ -15,20 +15,18 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="create-park-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="violations.filter(v => v.field === 'name').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[name]').map(v => v.message)"
     />
 
     <select-input
       id="create-park-form-categories"
       v-model="categories"
       :label="$t('type')"
-      :violations="violations.filter(v => v.field === 'categories').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[categories]').map(v => v.message)"
       :options="categoriesOptions"
       multiple
     />
@@ -37,7 +35,7 @@
       id="create-park-form-state"
       v-model="state"
       :label="$t('state')"
-      :violations="violations.filter(v => v.field === 'state').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[state]').map(v => v.message)"
       :options="stateOptions"
     />
 
@@ -109,8 +107,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($locale: String!, $input: CreateParkInput!){
-          createPark(input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -133,12 +131,12 @@ export default {
         }
       })
 
-      me.violations = result.createPark.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.createPark.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

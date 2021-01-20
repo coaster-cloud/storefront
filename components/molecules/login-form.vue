@@ -15,14 +15,12 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="login-form-username"
       v-model="username"
       :label="$t('username_and_email')"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'username').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[username]').map(v => v.message)"
     />
 
     <text-input
@@ -31,7 +29,7 @@
       type="password"
       :label="$t('password')"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'password').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[password]').map(v => v.message)"
     />
 
     <switch-input

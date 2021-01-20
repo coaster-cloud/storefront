@@ -14,8 +14,6 @@
     :title="$t('please_confirm')"
     no-stacking
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <p>{{ $t('confirm_delete') }}</p>
 
     <template v-slot:modal-footer="{ ok }">
@@ -56,8 +54,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $historyId: String!, $locale: String!){
-          deleteParkHistory(park: $parkId, history: $historyId) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -74,15 +72,17 @@ export default {
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
         parkId: me.parkId,
-        historyId: me.historyId
+        input: {
+          deleteParkHistories: [me.historyId]
+        }
       })
 
-      me.violations = result.deleteParkHistory.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.deleteParkHistory.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

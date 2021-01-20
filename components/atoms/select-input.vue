@@ -32,7 +32,7 @@ export default {
     },
 
     value: {
-      type: [String, Array],
+      type: [String, Array, Boolean, Number],
       default: null
     },
 
@@ -58,7 +58,7 @@ export default {
 
     labelCol: {
       type: Number,
-      default: 3
+      default: 4
     },
 
     multiple: {

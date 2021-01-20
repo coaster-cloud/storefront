@@ -15,14 +15,12 @@
     no-stacking
     @show="load"
   >
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <textarea-input
       id="update-park-short-description-form-en"
       v-model="en"
       :label="labelEnglish"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'en').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[shortDescription][en]').map(v => v.message)"
     />
 
     <textarea-input
@@ -30,7 +28,7 @@
       v-model="de"
       :label="labelGerman"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'de').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[shortDescription][de]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -96,8 +94,8 @@ export default {
       const me = this
 
       const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkShortDescriptionInput!){
-          updateParkShortDescription(park: $parkId, input: $input) {
+        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
+          updatePark(park: $parkId, input: $input) {
             violations {
               field
               message(locale: $locale)
@@ -115,17 +113,19 @@ export default {
         locale: me.$i18n.locale,
         parkId: me.parkId,
         input: {
-          en: me.en,
-          de: me.de
+          shortDescription: {
+            en: me.en,
+            de: me.de
+          }
         }
       })
 
-      me.violations = result.updateParkShortDescription.violations
+      me.violations = result.updatePark.violations
 
       if (me.violations.length === 0) {
         ok()
 
-        me.$emit('finish', result.updateParkShortDescription.park)
+        me.$emit('finish', result.updatePark.park)
       }
     }
   }

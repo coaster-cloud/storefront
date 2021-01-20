@@ -19,14 +19,12 @@
       {{ $t('reset_password_introduction') }}
     </div>
 
-    <alert-list :values="violations.filter(v => v.field === null).map(v => v.message)" />
-
     <text-input
       id="register-form-email"
       v-model="email"
       :label="$t('email')"
       :label-col="12"
-      :violations="violations.filter(v => v.field === 'email').map(v => v.message)"
+      :violations="violations.filter(v => v.field === '[email]').map(v => v.message)"
     />
 
     <template v-slot:modal-footer="{ ok }">
