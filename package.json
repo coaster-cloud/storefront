@@ -25,6 +25,7 @@
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.16.0",
+    "vue-cool-lightbox": "^2.7.0",
     "vue-flux": "^6.3.1",
     "vue-loading-overlay": "^3.4.2",
     "vue-number-animation": "^1.0.5",
