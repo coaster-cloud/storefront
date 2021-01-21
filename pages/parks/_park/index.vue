@@ -111,31 +111,11 @@
         </b-col>
 
         <b-col md="5" xl="4" order="1" order-md="2" class="mb-5 mb-md-0 left-separator">
-          <!-- Carousel -->
-          <template v-if="park.images.length > 0">
-            <template v-if="isClient">
-              <b-carousel v-model="slide" :interval="4000" controls img-width="512" img-height="288">
-                <template v-for="(image, index) in park.images">
-                  <NuxtLink :key="index" :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
-                    <b-carousel-slide :img-src="image.middle" />
-                  </NuxtLink>
-                </template>
-              </b-carousel>
-            </template>
-
-            <template v-else>
-              <NuxtLink :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
-                <img :src="park.images[0].middle" class="img-fluid">
-              </NuxtLink>
-            </template>
-          </template>
-
-          <!-- Fallback image -->
-          <template v-else>
-            <router-link :to="localePath({name: 'parks-park-images', params: {park: park.slug}})">
-              <img src="~/assets/images/placeholder.middle.jpg" class="img-fluid">
-            </router-link>
-          </template>
+          <!-- Image slider -->
+          <image-slider
+            :images="park.images"
+            :gallery-route="{name: 'parks-park-images', params: {park: park.slug}}"
+          />
 
           <!-- Park actions -->
           <div class="text-center mt-3">
@@ -163,9 +143,7 @@ export default {
 
   data () {
     return {
-      slide: 0,
-      park: null,
-      isClient: false
+      park: null
     }
   },
 
@@ -266,10 +244,6 @@ export default {
         }
       ]
     }
-  },
-
-  mounted () {
-    this.isClient = true
   },
 
   methods: {
