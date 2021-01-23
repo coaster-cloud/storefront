@@ -117,12 +117,13 @@
             <h5>{{ $t('ride_elements') }}</h5>
             <value-list :items="rideElements" />
 
-            <!--
             <div class="text-right">
-              <action-button modify-icon v-b-modal.attraction-ride-element-form>{{ $translate('modify.ride_elements') }}</action-button>
-              <form-modal id="attraction-ride-element-form" :title="$translate('modify.ride_elements')" :uri="$generateUrl('api_attraction_modifyelement', {'attraction': attraction.id})" @finish="onModification"></form-modal>
+              <action-button v-b-modal.update-attraction-elements-form modify-icon>
+                {{ $t('modify.ride_elements') }}
+              </action-button>
+
+              <update-attraction-elements-form :attraction-id="attraction.id" @finish="onModification" />
             </div>
-            -->
           </div>
 
           <!-- History -->
