@@ -63,6 +63,13 @@
     />
 
     <text-input
+      id="update-attraction-basic-form-onride"
+      v-model="onride"
+      :label="$t('onride')"
+      :violations="getFieldViolations('[onride]')"
+    />
+
+    <text-input
       id="update-attraction-basic-form-latitude"
       v-model="latitude"
       :label="$t('latitude')"
@@ -107,6 +114,7 @@ export default {
       manufacturers: [],
       state: null,
       zone: null,
+      onride: null,
       latitude: null,
       longitude: null,
       stateOptions: [],
@@ -136,6 +144,7 @@ export default {
             manufacturers { name }
             state { key }
             zone { id }
+            onride
             latitude
             longitude
             park {
@@ -173,6 +182,7 @@ export default {
         me.manufacturers = result.attraction.manufacturers.map(v => v.name)
         me.state = result.attraction.state.key
         me.zone = result.attraction.zone?.id
+        me.onride = result.attraction.onride
         me.latitude = result.attraction.latitude
         me.longitude = result.attraction.longitude
 
@@ -210,6 +220,7 @@ export default {
         manufacturers: this.manufacturers,
         state: this.state,
         zone: this.zone,
+        onride: this.onride,
         latitude: this.latitude,
         longitude: this.longitude
       }

@@ -127,23 +127,21 @@
             <value-list :items="reverseHistory">
               <template v-slot:action="props">
                 <b-button-group>
-                  <action-button v-b-modal="`update-park-history-form-${props.item.id}`" modify-icon icon-only />
-                  <action-button v-b-modal="`delete-park-history-form-${props.item.id}`" delete-icon icon-only />
+                  <action-button v-b-modal="`update-attraction-history-form-${props.item.id}`" modify-icon icon-only />
+                  <action-button v-b-modal="`delete-attraction-history-form-${props.item.id}`" delete-icon icon-only />
                 </b-button-group>
 
-                <update-park-history-form :park-id="park.id" :history-id="props.item.id" @finish="onModification" />
-                <delete-park-history-form :park-id="park.id" :history-id="props.item.id" @finish="onModification" />
+                <update-attraction-history-form :attraction-id="attraction.id" :history-id="props.item.id" @finish="onModification" />
+                <delete-attraction-history-form :attraction-id="attraction.id" :history-id="props.item.id" @finish="onModification" />
               </template>
             </value-list>
 
             <div class="text-right">
               <action-button v-b-modal.add-attraction-history-form add-icon>
-                {{ $t('add.park_history') }}
+                {{ $t('add.attraction_history') }}
               </action-button>
 
-              <!--
               <add-attraction-history-form :attraction-id="attraction.id" @finish="onModification" />
-              -->
             </div>
           </div>
 
