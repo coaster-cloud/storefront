@@ -58,7 +58,7 @@ export default {
   props: {
     safetyRegulation: {
       type: Object,
-      required: true
+      default: () => null
     }
   }
 }

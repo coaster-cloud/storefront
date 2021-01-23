@@ -28,7 +28,6 @@
       :label="$t('type')"
       :violations="getFieldViolations('[category]')"
       :options="categoryOptions"
-      multiple
     />
 
     <select-input
@@ -39,8 +38,21 @@
       :options="stateOptions"
     />
 
-    <!-- Types: Tag -->
-    <!-- Manufacturer: Tag -->
+    <tag-input
+      id="update-attraction-basic-form-types"
+      v-model="types"
+      :label="$t('type')"
+      :violations="getFieldViolations('[types]')"
+      :options="typeOptions"
+    />
+
+    <tag-input
+      id="update-attraction-basic-form-manufacturers"
+      v-model="manufacturers"
+      :label="$t('manufacturer')"
+      :violations="getFieldViolations('[manufacturers]')"
+      :options="manufacturerOptions"
+    />
 
     <select-input
       id="update-attraction-basic-form-zone"
@@ -91,13 +103,17 @@ export default {
     return {
       name: null,
       category: null,
+      types: [],
+      manufacturers: [],
       state: null,
       zone: null,
       latitude: null,
       longitude: null,
       stateOptions: [],
       categoryOptions: [],
-      zoneOptions: []
+      zoneOptions: [],
+      typeOptions: [],
+      manufacturerOptions: []
     }
   },
 
@@ -116,21 +132,31 @@ export default {
             name
             slug
             category { key }
+            types { name }
+            manufacturers { name }
             state { key }
             zone { id }
             latitude
             longitude
+            park {
+              zones { id, name }
+            }
           }
           attractionStates {
             key
             label(locale: $locale)
           }
-          attractionCategory {
+          attractionCategories {
             key
             label(locale: $locale)
+          },
+          attractionTypes {
+            id
+            name
           }
-          park {
-            zones { id, name }
+          manufacturers {
+            id
+            name
           }
         }
       `
@@ -143,6 +169,8 @@ export default {
       if (result) {
         me.name = result.attraction.name
         me.category = result.attraction.category.key
+        me.types = result.attraction.types.map(v => v.name)
+        me.manufacturers = result.attraction.manufacturers.map(v => v.name)
         me.state = result.attraction.state.key
         me.zone = result.attraction.zone?.id
         me.latitude = result.attraction.latitude
@@ -155,14 +183,17 @@ export default {
           }
         })
 
-        me.categoryOptions = result.attractionCategory.map(function (category) {
+        me.categoryOptions = result.attractionCategories.map(function (category) {
           return {
             value: category.key,
             text: category.label
           }
         })
 
-        me.zoneOptions = result.park.zones.map(function (zone) {
+        me.typeOptions = result.attractionTypes.map(v => v.name)
+        me.manufacturerOptions = result.manufacturers.map(v => v.name)
+
+        me.zoneOptions = result.attraction.park.zones.map(function (zone) {
           return {
             value: zone.id,
             text: zone.name
@@ -175,6 +206,8 @@ export default {
       const input = {
         name: this.name,
         category: this.category,
+        types: this.types,
+        manufacturers: this.manufacturers,
         state: this.state,
         zone: this.zone,
         latitude: this.latitude,

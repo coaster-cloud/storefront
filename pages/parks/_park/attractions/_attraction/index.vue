@@ -42,21 +42,20 @@
               </template>
             </key-value-list>
 
-            <!--
             <div class="text-right">
               <action-button v-b-modal.update-attraction-basic-form modify-icon>
                 {{ $t('modify.basic_data') }}
               </action-button>
 
+              <!--
               <action-button v-b-modal.update-attraction-short-description-form modify-icon>
                 {{ $t('modify.short_description') }}
               </action-button>
+              -->
 
-              <update-park-basic-form :park-id="park.id" @finish="onModification" />
-              <update-park-short-description-form :park-id="park.id" @finish="onModification" />
-              <update-park-address-form :park-id="park.id" @finish="onModification" />
+              <update-attraction-basic-form :attraction-id="attraction.id" @finish="onModification" />
+              <!--<update-attraction-short-description-form :attraction-id="attraction.id" @finish="onModification" />-->
             </div>
-            -->
           </div>
 
           <!-- Safety regulation -->
