@@ -9,16 +9,16 @@
 
 <template>
   <b-modal
-    id="update-park-attributes-form"
+    :id="`update-attraction-attributes-${category}-form`"
     size="xs"
-    :title="$t('modify.additional_information')"
+    :title="$t(`modify.${category}_information`)"
     no-stacking
     @show="load"
   >
-    <template v-for="(attribute, index) in parkAttributes">
+    <template v-for="(attribute, index) in attractionAttributes">
       <template v-if="attribute.type === 'choice'">
         <select-input
-          :id="`update-park-attributes-form-${attribute.key}`"
+          :id="`update-attraction-attributes-${category}-form-${attribute.key}`"
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
@@ -29,7 +29,7 @@
 
       <template v-else-if="attribute.type === 'boolean'">
         <select-input
-          :id="`update-park-attributes-form-${attribute.key}`"
+          :id="`update-attraction-attributes-${category}-form-${attribute.key}`"
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
@@ -40,7 +40,7 @@
 
       <template v-else>
         <text-input
-          :id="`update-park-attributes-form-${attribute.key}`"
+          :id="`update-attraction-attributes-${category}-form-${attribute.key}`"
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
@@ -59,13 +59,18 @@
 </template>
 
 <script>
-import ParkUpdateForm from '~/components/mixins/park-update-form'
+import AttractionUpdateForm from '~/components/mixins/attraction-update-form'
 
 export default {
-  mixins: [ParkUpdateForm],
+  mixins: [AttractionUpdateForm],
 
   props: {
-    parkId: {
+    attractionId: {
+      type: String,
+      required: true
+    },
+
+    category: {
       type: String,
       required: true
     }
@@ -73,7 +78,7 @@ export default {
 
   data () {
     return {
-      parkAttributes: []
+      attractionAttributes: []
     }
   },
 
@@ -98,8 +103,8 @@ export default {
       const me = this
 
       const query = `
-        query ($locale: String!, $parkId: String!){
-          park(id: $parkId) {
+        query ($locale: String!, $attractionId: String!){
+          attraction(id: $attractionId) {
             id
             attributes {
                 type {
@@ -108,7 +113,7 @@ export default {
                 value
             }
           }
-          parkAttributeTypes {
+          attractionAttributeTypes {
               key
               type
               category
@@ -121,26 +126,28 @@ export default {
 
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
-        parkId: me.parkId
+        attractionId: me.attractionId
       })
 
       if (result) {
         const values = {}
 
-        result.park.attributes.forEach(function (item) {
+        result.attraction.attributes.forEach(function (item) {
           values[item.type.key] = item.value
         })
 
-        me.parkAttributes = result.parkAttributeTypes.map(function (type) {
-          return { ...type, ...{ value: values[type.key] ?? null } }
-        })
+        me.attractionAttributes = result.attractionAttributeTypes
+          .filter(type => type.category === this.category)
+          .map(function (type) {
+            return { ...type, ...{ value: values[type.key] ?? null } }
+          })
       }
     },
 
     async save (ok) {
       const attributes = []
 
-      this.parkAttributes.forEach(function (item) {
+      this.attractionAttributes.forEach(function (item) {
         let value = item.value
 
         if (item.type === 'number' && item.scale > 0) {
@@ -161,7 +168,7 @@ export default {
         })
       })
 
-      await this.updatePark(this.parkId, { setAttributes: attributes }, ok)
+      await this.updateAttraction(this.attractionId, { setAttributes: attributes }, ok)
     }
   }
 }

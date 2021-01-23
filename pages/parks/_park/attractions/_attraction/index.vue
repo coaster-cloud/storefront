@@ -75,12 +75,13 @@
             <h5>{{ $t('technical_information') }}</h5>
             <key-value-list :items="technicalAttributes" />
 
-            <!--
             <div class="text-right">
-              <action-button modify-icon v-b-modal.attraction-technical-information-form>{{ $translate('modify.technical_information') }}</action-button>
-              <form-modal id="attraction-technical-information-form" :title="$translate('modify.technical_information')" :uri="$generateUrl('api_attraction_modifyattributes', {'attraction': attraction.id, 'category': 'technical'})" @finish="onModification"></form-modal>
+              <action-button v-b-modal.update-attraction-attributes-technical-form add-icon>
+                {{ $t('modify.technical_information') }}
+              </action-button>
+
+              <update-attraction-attributes-form :attraction-id="attraction.id" category="technical" @finish="onModification" />
             </div>
-            -->
           </div>
 
           <!-- Trains information -->
@@ -88,12 +89,13 @@
             <h5>{{ $t('trains_information') }}</h5>
             <key-value-list :items="trainAttributes" />
 
-            <!--
             <div class="text-right">
-              <action-button modify-icon v-b-modal.attraction-trains-information-form>{{ $translate('modify.trains_information') }}</action-button>
-              <form-modal id="attraction-trains-information-form" :title="$translate('modify.trains_information')" :uri="$generateUrl('api_attraction_modifyattributes', {'attraction': attraction.id, 'category': 'trains'})" @finish="onModification"></form-modal>
+              <action-button v-b-modal.update-attraction-attributes-trains-form add-icon>
+                {{ $t('modify.trains_information') }}
+              </action-button>
+
+              <update-attraction-attributes-form :attraction-id="attraction.id" category="trains" @finish="onModification" />
             </div>
-            -->
           </div>
 
           <!-- Additional information -->
@@ -101,12 +103,13 @@
             <h5>{{ $t('additional_information') }}</h5>
             <key-value-list :items="additionalAttributes" />
 
-            <!--
             <div class="text-right">
-              <action-button modify-icon v-b-modal.attraction-additional-information-form>{{ $translate('modify.additional_information') }}</action-button>
-              <form-modal id="attraction-additional-information-form" :title="$translate('modify.additional_information')" :uri="$generateUrl('api_attraction_modifyattributes', {'attraction': attraction.id, 'category': 'additional'})" @finish="onModification"></form-modal>
+              <action-button v-b-modal.update-attraction-attributes-additional-form add-icon>
+                {{ $t('modify.additional_information') }}
+              </action-button>
+
+              <update-attraction-attributes-form :attraction-id="attraction.id" category="additional" @finish="onModification" />
             </div>
-            -->
           </div>
 
           <!-- Elements -->
