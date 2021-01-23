@@ -47,14 +47,12 @@
                 {{ $t('modify.basic_data') }}
               </action-button>
 
-              <!--
               <action-button v-b-modal.update-attraction-short-description-form modify-icon>
                 {{ $t('modify.short_description') }}
               </action-button>
-              -->
 
               <update-attraction-basic-form :attraction-id="attraction.id" @finish="onModification" />
-              <!--<update-attraction-short-description-form :attraction-id="attraction.id" @finish="onModification" />-->
+              <update-attraction-short-description-form :attraction-id="attraction.id" @finish="onModification" />
             </div>
           </div>
 
