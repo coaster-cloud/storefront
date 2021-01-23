@@ -61,12 +61,13 @@
             <h5>{{ $t('safety_regulation') }}</h5>
             <safety-regulation :safety-regulation="safetyRegulation" />
 
-            <!--
             <div class="text-right">
-              <action-button modify-icon  v-b-modal.attraction-safety-regulation-form>{{ $translate('modify.safety_regulation') }}</action-button>
-              <form-modal id="attraction-safety-regulation-form" :title="$translate('modify.safety_regulation')" :uri="$generateUrl('api_attraction_modifysafetyregulation', {'attraction': attraction.id})" @finish="onModification"></form-modal>
+              <action-button v-b-modal.update-attraction-safety-regulation-form modify-icon>
+                {{ $t('modify.safety_regulation') }}
+              </action-button>
+
+              <update-attraction-safety-regulation-form :attraction-id="attraction.id" @finish="onModification" />
             </div>
-            -->
           </div>
 
           <!-- Technical attributes -->

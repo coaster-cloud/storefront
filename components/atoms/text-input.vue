@@ -69,6 +69,10 @@ export default {
       },
 
       set (value) {
+        if (typeof value === 'string' && value.trim().length === 0) {
+          value = null
+        }
+
         this.$emit('input', value)
       }
     }
