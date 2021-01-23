@@ -35,12 +35,12 @@
           </div>
 
           <!-- Additional information -->
-          <div v-if="attributes.length > 0" class="content-block">
+          <div v-if="attributes.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('additional_information') }}</h5>
             <key-value-list :items="attributes" />
 
             <div class="text-right">
-              <action-button v-b-modal.update-park-attributes-form add-icon>
+              <action-button v-b-modal.update-park-attributes-form modify-icon>
                 {{ $t('modify.additional_information') }}
               </action-button>
 

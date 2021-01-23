@@ -22,6 +22,7 @@
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
+          :description="attribute.description"
           :violations="violations.filter(v => v.field === `[setAttributes][${index}][value]`).map(v => v.message)"
           :options="attribute.choices.map(i => ({value: i.key, text: i.label}))"
         />
@@ -33,6 +34,7 @@
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
+          :description="attribute.description"
           :violations="violations.filter(v => v.field === `[setAttributes][${index}][value]`).map(v => v.message)"
           :options="[{value: true, text: $t('yes')}, {value: false, text: $t('no')}]"
         />
@@ -44,6 +46,7 @@
           :key="index"
           v-model="attribute.value"
           :label="attribute.label"
+          :description="attribute.description"
           :formatter="getTextFormatter(attribute)"
           :violations="violations.filter(v => v.field === `[setAttributes][${index}][value]`).map(v => v.message)"
         />
@@ -120,6 +123,7 @@ export default {
               label(locale: $locale)
               scale
               choices { key, label(locale: $locale) }
+              unit { key }
           }
         }
       `
@@ -139,7 +143,13 @@ export default {
         me.attractionAttributes = result.attractionAttributeTypes
           .filter(type => type.category === this.category)
           .map(function (type) {
-            return { ...type, ...{ value: values[type.key] ?? null } }
+            return {
+              ...type,
+              ...{
+                value: values[type.key] ?? null,
+                description: type.unit ? me.$t(`input_hint.${type.unit.key}`) : null
+              }
+            }
           })
       }
     },

@@ -20,6 +20,7 @@
       id="update-attraction-safety-regulation-form-solo-min-height"
       v-model="soloMinHeight"
       :label="$t('safety_regulation.min_height')"
+      :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMinHeight]')"
     />
@@ -28,6 +29,7 @@
       id="update-attraction-safety-regulation-form-solo-max-height"
       v-model="soloMaxHeight"
       :label="$t('safety_regulation.max_height')"
+      :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMaxHeight]')"
     />
@@ -36,6 +38,7 @@
       id="update-attraction-safety-regulation-form-solo-min-age"
       v-model="soloMinAge"
       :label="$t('safety_regulation.min_age')"
+      :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMinAge]')"
     />
@@ -44,6 +47,7 @@
       id="update-attraction-safety-regulation-form-solo-max-age"
       v-model="soloMaxAge"
       :label="$t('safety_regulation.max_age')"
+      :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMaxAge]')"
     />
@@ -53,6 +57,7 @@
       id="update-attraction-safety-regulation-form-accompanied-min-height"
       v-model="accompaniedMinHeight"
       :label="$t('safety_regulation.min_height')"
+      :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinHeight]')"
     />
@@ -61,6 +66,7 @@
       id="update-attraction-safety-regulation-form-accompanied-min-age"
       v-model="accompaniedMinAge"
       :label="$t('safety_regulation.min_age')"
+      :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinAge]')"
     />

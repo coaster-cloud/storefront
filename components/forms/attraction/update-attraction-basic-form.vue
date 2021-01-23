@@ -66,6 +66,7 @@
       id="update-attraction-basic-form-onride"
       v-model="onride"
       :label="$t('onride')"
+      :description="$t('input_hint.youtube')"
       :violations="getFieldViolations('[onride]')"
     />
 
