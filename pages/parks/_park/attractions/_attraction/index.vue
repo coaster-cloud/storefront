@@ -182,6 +182,29 @@
               <b-icon icon="images" aria-hidden="true" /> {{ $t('image_gallery') }}
             </NuxtLink>
           </div>
+
+          <client-only>
+            <!-- Rides and Custom Definition -->
+            <set-rides-form
+              :attraction-id="attraction.id"
+              :attraction-name="attraction.name"
+              :count-date="countDate"
+              :custom-definitions="customDefinitions"
+              :my-custom-definition="myCustomDefinition"
+              :my-rides="myRides"
+              @count-date-changed="countDateChanged"
+              @rides-changed="ridesChanged"
+              @custom-definition-changed="customDefinitionChanged"
+            />
+
+            <!-- Rating -->
+            <set-rating-form
+              :key="`rating-input-${attraction.id}`"
+              :attraction="attraction.id"
+              :rating="myRating"
+              @changed="ratingChanged"
+            />
+          </client-only>
         </b-col>
       </b-row>
     </div>
@@ -190,6 +213,7 @@
 
 <script>
 import _ from 'lodash'
+import Moment from 'moment'
 
 export default {
   async fetch () {
@@ -199,11 +223,31 @@ export default {
   data () {
     return {
       park: null,
-      attraction: null
+      attraction: null,
+      attractionCategories: [],
+      countDate: Moment().format('YYYY-MM-DD')
     }
   },
 
   computed: {
+    customDefinitions () {
+      return {
+        categories: this.attractionCategories.map(v => ({ value: v.key, text: v.label }))
+      }
+    },
+
+    myRides () {
+      return this.attraction.myRides ?? { totalBasicRides: 0, totalVirtualRealityRides: 0 }
+    },
+
+    myCustomDefinition () {
+      return this.attraction.myCustomDefinition ?? { category: null }
+    },
+
+    myRating () {
+      return this.attraction.myRating ?? { fun: null, thrill: null, theme: null }
+    },
+
     basicData () {
       const data = []
 
@@ -359,13 +403,23 @@ export default {
     }
   },
 
+  mounted () {
+    // Reload complete attraction data if log / logout because of user data for rides, rating etc.
+    this.$watch(
+      () => this.$store.getters['account/hasToken'],
+      () => this.loadAttraction()
+    )
+  },
+
   methods: {
     async loadAttraction () {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
         attractionSlug: me.$route.params.park + '/' + me.$route.params.attraction,
-        locale: me.$i18n.locale
+        locale: me.$i18n.locale,
+        isAuthenticated: me.$store.getters['account/hasToken'],
+        countDate: me.countDate
       })
 
       if (!result.attraction) {
@@ -376,6 +430,7 @@ export default {
 
       this.park = result.attraction.park
       this.attraction = result.attraction
+      this.attractionCategories = result.attractionCategories
     },
 
     onModification (attraction) {
@@ -391,6 +446,25 @@ export default {
       }
 
       this.loadAttraction()
+    },
+
+    ratingChanged (attraction) {
+      this.attraction.ratings = attraction.ratings
+      this.attraction.myRating = attraction.myRating
+    },
+
+    // Set date and reload attraction data
+    countDateChanged (date) {
+      this.countDate = date
+      this.loadAttraction()
+    },
+
+    ridesChanged (attraction) {
+      this.attraction.myRides = attraction.myRides
+    },
+
+    customDefinitionChanged (attraction) {
+      this.attraction.myCustomDefinition = attraction.myCustomDefinition
     }
   },
 
@@ -404,7 +478,11 @@ export default {
 </script>
 
 <query>
-query ($attractionSlug: String!, $locale: String!) {
+query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $countDate: String!) {
+    attractionCategories {
+        key
+        label(locale: $locale)
+    },
     attraction(id: $attractionSlug) {
         id
         name
@@ -465,6 +543,18 @@ query ($attractionSlug: String!, $locale: String!) {
           }
           customCopyrightName
           customCopyrightUrl
+        }
+        myRating @include(if: $isAuthenticated) {
+          fun
+          thrill
+          theme
+        }
+        myRides(date: $countDate) @include(if: $isAuthenticated) {
+          totalBasicRides
+          totalVirtualRealityRides
+        }
+        myCustomDefinition @include(if: $isAuthenticated) {
+          category
         }
     }
 }
