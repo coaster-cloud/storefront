@@ -60,9 +60,81 @@
               />
             </div>
           </client-only>
+
+          <!-- Summary -->
         </b-col>
 
-        <b-col md="4" />
+        <b-col md="4" class="left-separator">
+          <!-- Attractions -->
+          <div class="content-block">
+            <h5>{{ $t('attractions') }}</h5>
+            <p>{{ $t('counted_attractions') }}</p>
+
+            <template v-if="account.rideStatistic.attractionRides.items.length === 0">
+              <no-data />
+            </template>
+
+            <template v-else>
+              <b-list-group flush>
+                <template v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items">
+                  <b-list-group-item :key="index" class="d-flex justify-content-between align-items-center">
+                    <NuxtLink :to="localePath({name: 'parks-park-attractions-attraction', params: {park: attractionRide.attraction.park.slug, attraction: attractionRide.attraction.slug}})">
+                      {{ attractionRide.attraction.name }}
+                    </NuxtLink>
+
+                    <span class="t-font-boldest">{{ attractionRide.rides }}</span>
+                  </b-list-group-item>
+                </template>
+              </b-list-group>
+
+              <b-pagination
+                v-if="account.rideStatistic.attractionRides.pagination.totalItems > itemsPerPage"
+                v-model="attractionPage"
+                :limit="3"
+                align="center"
+                class="align-items-center"
+                :total-rows="account.rideStatistic.attractionRides.pagination.totalItems"
+                :per-page="itemsPerPage"
+              />
+            </template>
+          </div>
+
+          <div class="bottom-separator mb-4 mt-4" />
+
+          <!-- Parks -->
+          <div class="content-block">
+            <h5>{{ $t('parks') }}</h5>
+            <p>{{ $t('counted_parks') }}</p>
+
+            <template v-if="account.rideStatistic.parkVisits.items.length === 0">
+              <no-data />
+            </template>
+
+            <template v-else>
+              <b-list-group flush>
+                <template v-for="(parkVisits, index) in account.rideStatistic.parkVisits.items">
+                  <b-list-group-item :key="index" class="d-flex justify-content-between align-items-center">
+                    <NuxtLink :to="localePath({name: 'parks-park', params: {park: parkVisits.park.slug}})">
+                      {{ parkVisits.park.name }}
+                    </NuxtLink>
+
+                    <span class="t-font-boldest">{{ parkVisits.visits }}</span>
+                  </b-list-group-item>
+                </template>
+              </b-list-group>
+
+              <b-pagination
+                v-if="account.rideStatistic.parkVisits.pagination.totalItems > itemsPerPage"
+                v-model="parkPage"
+                :limit="3"
+                align="center"
+                class="align-items-center"
+                :total-rows="account.rideStatistic.parkVisits.pagination.totalItems"
+                :per-page="itemsPerPage"
+              />
+            </template>
+          </div>
+        </b-col>
       </b-row>
     </div>
   </div>
@@ -79,6 +151,7 @@ export default {
 
   data () {
     return {
+      itemsPerPage: 10,
       account: null,
       showFilter: Object.keys(this.$route.query).length > 0,
       dateOptions: [],
@@ -115,6 +188,26 @@ export default {
 
       set (value) {
         this.updateRoute({ park: value })
+      }
+    },
+
+    attractionPage: {
+      get () {
+        return _.get(this.$route.query, 'apage', 1)
+      },
+
+      set (value) {
+        this.updateRoute({ apage: value === 1 ? null : value })
+      }
+    },
+
+    parkPage: {
+      get () {
+        return _.get(this.$route.query, 'ppage', 1)
+      },
+
+      set (value) {
+        this.updateRoute({ ppage: value === 1 ? null : value })
       }
     },
 
@@ -178,6 +271,9 @@ export default {
       const result = await me.$graphql(me.$options.__query, {
         username: me.$route.params.username,
         locale: me.$i18n.locale,
+        attractionPage: me.attractionPage,
+        parkPage: me.parkPage,
+        itemsPerPage: me.itemsPerPage,
         filter: {
           date: me.selectedDate,
           category: me.selectedCategory,
@@ -216,7 +312,7 @@ export default {
 </script>
 
 <query>
-query ($username: String!, $locale: String!, $filter: RideStatisticFilter!) {
+query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $itemsPerPage: Int!, $attractionPage: Int!, $parkPage: Int!) {
   account(id: $username) {
     username
     rideStatistic(filter: $filter) {
@@ -242,6 +338,29 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!) {
             id
             name
           }
+        }
+      }
+      parkVisits(page: $parkPage, itemsPerPage: $itemsPerPage) {
+        pagination { totalItems }
+        items {
+          park {
+            id
+            name
+            slug
+          }
+          visits
+        }
+      }
+      attractionRides(page: $attractionPage, itemsPerPage: $itemsPerPage) {
+        pagination { totalItems }
+        items {
+          attraction {
+            id
+            name
+            slug
+            park { slug }
+          }
+          rides
         }
       }
     }
