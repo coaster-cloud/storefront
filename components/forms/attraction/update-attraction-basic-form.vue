@@ -25,7 +25,7 @@
     <select-input
       id="update-attraction-basic-form-category"
       v-model="category"
-      :label="$t('type')"
+      :label="$t('category')"
       :violations="getFieldViolations('[category]')"
       :options="categoryOptions"
     />
@@ -36,14 +36,6 @@
       :label="$t('state')"
       :violations="getFieldViolations('[state]')"
       :options="stateOptions"
-    />
-
-    <tag-input
-      id="update-attraction-basic-form-types"
-      v-model="types"
-      :label="$t('type')"
-      :violations="getFieldViolations('[types]')"
-      :options="typeOptions"
     />
 
     <tag-input
@@ -111,7 +103,6 @@ export default {
     return {
       name: null,
       category: null,
-      types: [],
       manufacturers: [],
       state: null,
       zone: null,
@@ -141,7 +132,6 @@ export default {
             name
             slug
             category { key }
-            types { name }
             manufacturers { name }
             state { key }
             zone { id }
@@ -160,10 +150,6 @@ export default {
             key
             label(locale: $locale)
           },
-          attractionTypes {
-            id
-            name
-          }
           manufacturers {
             id
             name
@@ -179,7 +165,6 @@ export default {
       if (result) {
         me.name = result.attraction.name
         me.category = result.attraction.category.key
-        me.types = result.attraction.types.map(v => v.name)
         me.manufacturers = result.attraction.manufacturers.map(v => v.name)
         me.state = result.attraction.state.key
         me.zone = result.attraction.zone?.id
@@ -201,7 +186,6 @@ export default {
           }
         })
 
-        me.typeOptions = result.attractionTypes.map(v => v.name)
         me.manufacturerOptions = result.manufacturers.map(v => v.name)
 
         me.zoneOptions = result.attraction.park.zones.map(function (zone) {
@@ -217,7 +201,6 @@ export default {
       const input = {
         name: this.name,
         category: this.category,
-        types: this.types,
         manufacturers: this.manufacturers,
         state: this.state,
         zone: this.zone,

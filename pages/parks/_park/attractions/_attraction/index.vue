@@ -272,12 +272,6 @@ export default {
       })
 
       data.push({
-        label: this.$t('type'),
-        type: 'list',
-        value: this.attraction.types.map(v => v.name)
-      })
-
-      data.push({
         label: this.$t('manufacturer'),
         type: 'route-list',
         value: this.attraction.manufacturers.map(function (value) {
@@ -490,7 +484,6 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
         slug
         category { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
-        types { name }
         manufacturers { name }
         zone { id, name }
         latitude
