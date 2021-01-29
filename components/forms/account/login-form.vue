@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('login')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input

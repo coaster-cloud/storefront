@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.park_zone')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input

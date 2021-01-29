@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('change_password')"
     no-stacking
+    scrollable
     @show="load"
   >
     <div class="text-muted text-small">

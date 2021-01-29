@@ -10,13 +10,7 @@
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
     <template v-if="multiple">
-      <b-form-checkbox-group :id="id" v-model="modelValue" stacked :options="options" :state="violations.length === 0 ? null : false">
-        <template v-slot:first>
-          <b-form-select-option :value="null">
-            -
-          </b-form-select-option>
-        </template>
-      </b-form-checkbox-group>
+      <b-form-checkbox-group :id="id" v-model="modelValue" stacked :options="options" :state="violations.length === 0 ? null : false" />
     </template>
 
     <template v-else>

@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.additional_information')"
     no-stacking
+    scrollable
     @show="load"
   >
     <template v-for="(attribute, index) in parkAttributes">

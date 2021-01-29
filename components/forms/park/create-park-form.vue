@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('add.park')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input
@@ -25,7 +26,7 @@
     <select-input
       id="create-park-form-categories"
       v-model="categories"
-      :label="$t('type')"
+      :label="$t('category')"
       :violations="getFieldViolations('[categories]')"
       :options="categoriesOptions"
       multiple

@@ -13,6 +13,7 @@
     size="sm"
     :title="$t('please_confirm')"
     no-stacking
+    scrollable
   >
     <p>{{ $t('confirm_delete') }}</p>
 

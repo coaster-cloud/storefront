@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.safety_regulation')"
     no-stacking
+    scrollable
     @show="load"
   >
     <h5>{{ $t('safety_regulation.solo') }}</h5>

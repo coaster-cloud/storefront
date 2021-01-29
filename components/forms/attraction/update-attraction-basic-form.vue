@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.basic_data')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input
@@ -43,7 +44,7 @@
       v-model="manufacturers"
       :label="$t('manufacturer')"
       :violations="getFieldViolations('[manufacturers]')"
-      :options="manufacturerOptions"
+      :options="manufacturerOptions.map(v => v.name)"
     />
 
     <select-input
@@ -186,7 +187,7 @@ export default {
           }
         })
 
-        me.manufacturerOptions = result.manufacturers.map(v => v.name)
+        me.manufacturerOptions = result.manufacturers
 
         me.zoneOptions = result.attraction.park.zones.map(function (zone) {
           return {
@@ -198,18 +199,27 @@ export default {
     },
 
     async save (ok) {
+      const me = this
+
+      const manufacturers = []
+      me.manufacturerOptions.forEach(function (manufacturer) {
+        if (me.manufacturers.includes(manufacturer.name)) {
+          manufacturers.push(manufacturer.id)
+        }
+      })
+
       const input = {
-        name: this.name,
-        category: this.category,
-        manufacturers: this.manufacturers,
-        state: this.state,
-        zone: this.zone,
-        onride: this.onride,
-        latitude: this.latitude,
-        longitude: this.longitude
+        name: me.name,
+        category: me.category,
+        manufacturers,
+        state: me.state,
+        zone: me.zone,
+        onride: me.onride,
+        latitude: me.latitude,
+        longitude: me.longitude
       }
 
-      await this.updateAttraction(this.attractionId, input, ok)
+      await me.updateAttraction(me.attractionId, input, ok)
     }
   }
 }

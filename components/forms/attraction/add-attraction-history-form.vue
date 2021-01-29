@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('add.attraction_history')"
     no-stacking
+    scrollable
     @show="load"
   >
     <select-input

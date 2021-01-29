@@ -14,6 +14,7 @@
     size="xs"
     :title="$t('settings')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input

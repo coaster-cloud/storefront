@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.address')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input

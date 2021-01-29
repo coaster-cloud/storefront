@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.ride_elements')"
     no-stacking
+    scrollable
     @show="load"
   >
     <template v-for="(element, index) in attractionElements">

@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('add.attraction')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input

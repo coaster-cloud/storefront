@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.short_description')"
     no-stacking
+    scrollable
     @show="load"
   >
     <textarea-input

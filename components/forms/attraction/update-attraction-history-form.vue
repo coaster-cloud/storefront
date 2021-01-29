@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.history')"
     no-stacking
+    scrollable
     @show="load"
   >
     <select-input

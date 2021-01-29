@@ -47,17 +47,20 @@
               />
             </b-form-group>
           </b-dropdown-form>
-          <b-dropdown-divider />
-          <b-dropdown-item-button
-            v-for="option in availableOptions.slice(0,10)"
-            :key="option"
-            @click="onOptionClick({ option, addTag })"
-          >
-            {{ option }}
-          </b-dropdown-item-button>
-          <b-dropdown-text v-if="availableOptions.length === 0">
-            {{ $t('no_choices') }}
-          </b-dropdown-text>
+
+          <template v-if="search.length >= 3">
+            <b-dropdown-divider />
+            <b-dropdown-item-button
+              v-for="option in availableOptions.slice(0,10)"
+              :key="option"
+              @click="onOptionClick({ option, addTag })"
+            >
+              {{ option }}
+            </b-dropdown-item-button>
+            <b-dropdown-text v-if="availableOptions.length === 0">
+              {{ $t('no_choices') }}
+            </b-dropdown-text>
+          </template>
         </b-dropdown>
       </template>
     </b-form-tags>

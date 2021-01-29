@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('modify.basic_data')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input
@@ -25,7 +26,7 @@
     <select-input
       id="update-park-basic-form-categories"
       v-model="categories"
-      :label="$t('type')"
+      :label="$t('category')"
       :violations="getFieldViolations('[categories]')"
       :options="categoriesOptions"
       multiple

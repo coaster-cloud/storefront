@@ -13,6 +13,7 @@
     size="xs"
     :title="$t(`modify.${category}_information`)"
     no-stacking
+    scrollable
     @show="load"
   >
     <template v-for="(attribute, index) in attractionAttributes">

@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('add.park_history')"
     no-stacking
+    scrollable
     @show="load"
   >
     <select-input

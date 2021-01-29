@@ -13,6 +13,7 @@
     size="xs"
     :title="$t('register')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input
