@@ -151,9 +151,11 @@ export default {
             key
             label(locale: $locale)
           },
-          manufacturers {
-            id
-            name
+          manufacturers(itemsPerPage: 500) {
+            items {
+              id
+              name
+            }
           }
         }
       `
@@ -187,7 +189,7 @@ export default {
           }
         })
 
-        me.manufacturerOptions = result.manufacturers
+        me.manufacturerOptions = result.manufacturers.items
 
         me.zoneOptions = result.attraction.park.zones.map(function (zone) {
           return {
