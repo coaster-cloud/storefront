@@ -9,17 +9,18 @@
 
 <template>
   <b-modal
-    id="add-park-zone-form"
+    :id="`update-park-zone-form-${zoneId}`"
     size="xs"
-    :title="$t('add.park_zone')"
+    :title="$t('modify.park_zone')"
     no-stacking
+    scrollable
     @show="load"
   >
     <text-input
-      id="add-park-zone-form-name"
+      id="update-park-zone-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="getFieldViolations('[addParkZones][0][name]')"
+      :violations="getFieldViolations('[updateParkZones][0][name]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -40,6 +41,11 @@ export default {
     parkId: {
       type: String,
       required: true
+    },
+
+    zoneId: {
+      type: String,
+      required: true
     }
   },
 
@@ -50,14 +56,29 @@ export default {
   },
 
   methods: {
-    load () {
+    async load () {
       const me = this
 
-      me.name = null
+      const query = `
+        query ($parkId: String!){
+          park(id: $parkId) {
+            id
+            zones { id, name }
+          }
+        }
+      `
+
+      const result = await me.$graphql(query, {
+        parkId: me.parkId
+      })
+
+      if (result) {
+        me.name = result.park.zones.filter(v => v.id === me.zoneId)[0].name
+      }
     },
 
     async save (ok) {
-      await this.updatePark(this.parkId, { addParkZones: [{ name: this.name }] }, ok)
+      await this.updatePark(this.parkId, { updateParkZones: [{ id: this.zoneId, name: this.name }] }, ok)
     }
   }
 }

@@ -5,12 +5,16 @@ Vue.prototype.$graphql = async function (query, variables = {}) {
   const me = this
   let result = null
 
+  const loading = _.get(variables, 'loading', function (state) {
+    me.$store.commit('common/setLoading', state)
+  })
+
   const headers = {}
   if (me.$store.getters['account/hasToken']) {
     headers['X-AUTH-TOKEN'] = me.$store.getters['account/getToken']
   }
 
-  me.$store.commit('common/setLoading', true)
+  loading(true)
 
   try {
     const response = await me.$axios.post(
@@ -33,7 +37,7 @@ Vue.prototype.$graphql = async function (query, variables = {}) {
   } catch (error) {
     me.$sentry.captureException(error)
   } finally {
-    me.$store.commit('common/setLoading', false)
+    loading(false)
   }
 
   return result

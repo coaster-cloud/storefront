@@ -9,7 +9,8 @@
 
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-    <b-form-input :id="id" v-model.trim="modelValue" :type="type" :state="violations.length === 0 ? null : false" :formatter="formatter" />
+    <b-form-spinbutton :id="id" v-model="modelValue" :min="min" :max="max" :state="violations.length === 0 ? null : false" />
+
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
     </b-form-invalid-feedback>
@@ -25,7 +26,7 @@ export default {
     },
 
     value: {
-      type: [String, Number],
+      type: [String, Array, Boolean, Number],
       default: null
     },
 
@@ -39,11 +40,6 @@ export default {
       default: null
     },
 
-    type: {
-      type: String,
-      default: 'text'
-    },
-
     violations: {
       type: Array,
       default: () => []
@@ -54,11 +50,14 @@ export default {
       default: 4
     },
 
-    formatter: {
-      type: Function,
-      default () {
-        return value => value
-      }
+    min: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: 20
     }
   },
 
@@ -69,10 +68,6 @@ export default {
       },
 
       set (value) {
-        if (typeof value === 'string' && value.trim().length === 0) {
-          value = null
-        }
-
         this.$emit('input', value)
       }
     }

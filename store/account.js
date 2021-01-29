@@ -20,7 +20,7 @@ export default {
 
       const decodedToken = JwtDecode(token)
       if (decodedToken.exp <= (new Date().getTime() / 1000)) {
-        this.$cookies.remove('_token')
+        this.$cookies.remove('_token', { sameSite: true })
 
         return
       }
@@ -55,7 +55,7 @@ export default {
       state.username = null
       state.roles = []
 
-      this.$cookies.remove('_token')
+      this.$cookies.remove('_token', { sameSite: true })
     }
   },
   getters: {

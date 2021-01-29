@@ -9,10 +9,11 @@
 
 <template>
   <b-modal
-    :id="`delete-park-history-form-${historyId}`"
+    :id="`delete-attraction-history-form-${historyId}`"
     size="sm"
     :title="$t('please_confirm')"
     no-stacking
+    scrollable
   >
     <p>{{ $t('confirm_delete') }}</p>
 
@@ -29,13 +30,13 @@
 </template>
 
 <script>
-import ParkUpdateForm from '~/components/mixins/park-update-form'
+import AttractionUpdateForm from '~/components/mixins/attraction-update-form'
 
 export default {
-  mixins: [ParkUpdateForm],
+  mixins: [AttractionUpdateForm],
 
   props: {
-    parkId: {
+    attractionId: {
       type: String,
       required: true
     },
@@ -54,7 +55,7 @@ export default {
 
   methods: {
     async save (ok) {
-      await this.updatePark(this.parkId, { deleteParkHistories: [this.historyId] }, ok)
+      await this.updateAttraction(this.attractionId, { deleteAttractionHistories: [this.historyId] }, ok)
     }
   }
 }

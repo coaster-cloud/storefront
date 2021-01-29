@@ -86,6 +86,8 @@
             </template>
           </dd>
         </template>
+
+        <slot />
       </dl>
     </template>
   </div>
@@ -110,7 +112,7 @@ export default {
   computed: {
     normalizedItems () {
       return this.items
-        .filter(item => Array.isArray(item.value) ? item.value.length > 0 : item.value !== null)
+        .filter(item => Array.isArray(item.value) ? item.value.length > 0 : (item.value !== null && item.value !== undefined))
         .map(item => ({
           label: item.label,
           type: item.type.toLowerCase(),

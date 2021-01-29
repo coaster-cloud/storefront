@@ -9,10 +9,11 @@
 
 <template>
   <b-modal
-    :id="`delete-park-zone-form-${zoneId}`"
+    :id="`delete-park-history-form-${historyId}`"
     size="sm"
     :title="$t('please_confirm')"
     no-stacking
+    scrollable
   >
     <p>{{ $t('confirm_delete') }}</p>
 
@@ -40,7 +41,7 @@ export default {
       required: true
     },
 
-    zoneId: {
+    historyId: {
       type: String,
       required: true
     }
@@ -54,7 +55,7 @@ export default {
 
   methods: {
     async save (ok) {
-      await this.updatePark(this.parkId, { deleteParkZones: [this.zoneId] }, ok)
+      await this.updatePark(this.parkId, { deleteParkHistories: [this.historyId] }, ok)
     }
   }
 }

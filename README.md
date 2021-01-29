@@ -11,7 +11,7 @@ Simply run the following tasks:
 
 * Copy `.env.dist` to `.env` and add credentials
 * Install dependencies with `npm install`
-* Compile and start server with `npm dev`
+* Compile and start server with `npm run dev`
 
 The app is then accessible via http://localhost:3000.
 

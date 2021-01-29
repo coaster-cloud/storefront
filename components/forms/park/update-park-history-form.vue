@@ -9,34 +9,35 @@
 
 <template>
   <b-modal
-    id="add-park-history-form"
+    :id="`update-park-history-form-${historyId}`"
     size="xs"
-    :title="$t('add.park_history')"
+    :title="$t('modify.history')"
     no-stacking
+    scrollable
     @show="load"
   >
     <select-input
-      id="add-park-history-form-type"
+      id="update-park-history-form-type"
       v-model="type"
       :label="$t('type')"
-      :violations="getFieldViolations('[addParkHistories][0][type]')"
+      :violations="getFieldViolations('[updateParkHistories][0][type]')"
       :options="typeOptions"
     />
 
     <text-input
-      id="add-park-history-form-date"
+      id="update-park-history-form-date"
       v-model="date"
       :label="$t('date')"
       :description="$t('input_hint.flex_date')"
-      :violations="getFieldViolations('[addParkHistories][0][date]')"
+      :violations="getFieldViolations('[updateParkHistories][0][date]')"
     />
 
     <text-input
       v-if="hasNameField"
-      id="add-park-history-form-name"
+      id="update-park-history-form-name"
       v-model="name"
       :label="$t('name')"
-      :violations="getFieldViolations('[addParkHistories][0][name]')"
+      :violations="getFieldViolations('[updateParkHistories][0][name]')"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -55,6 +56,11 @@ export default {
 
   props: {
     parkId: {
+      type: String,
+      required: true
+    },
+
+    historyId: {
       type: String,
       required: true
     }
@@ -89,7 +95,11 @@ export default {
       const me = this
 
       const query = `
-        query ($locale: String!){
+        query ($parkId: String!, $locale: String!){
+          park(id: $parkId) {
+            id
+            histories { id, type { key }, date { value }, context { name } }
+          }
           parkHistoryTypes {
             key
             label(locale: $locale)
@@ -98,16 +108,18 @@ export default {
         }
       `
 
-      this.type = null
-      this.date = null
-      this.name = null
-      this.violations = []
-
       const result = await me.$graphql(query, {
+        parkId: me.parkId,
         locale: me.$i18n.locale
       })
 
       if (result) {
+        const entry = result.park.histories.filter(v => v.id === me.historyId)[0]
+
+        me.type = entry.type.key
+        me.date = entry.date.value
+        me.name = entry.context.name
+
         me.typeOptions = result.parkHistoryTypes.map(function (type) {
           return {
             value: type.key,
@@ -120,6 +132,7 @@ export default {
 
     async save (ok) {
       const input = {
+        id: this.historyId,
         type: this.type,
         date: this.date
       }
@@ -128,7 +141,7 @@ export default {
         input.name = this.name
       }
 
-      await this.updatePark(this.parkId, { addParkHistories: [input] }, ok)
+      await this.updatePark(this.parkId, { updateParkHistories: [input] }, ok)
     }
   }
 }

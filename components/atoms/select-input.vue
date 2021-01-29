@@ -14,7 +14,13 @@
     </template>
 
     <template v-else>
-      <b-form-select :id="id" v-model="modelValue" :multiple="false" :options="options" :state="violations.length === 0 ? null : false" />
+      <b-form-select :id="id" v-model="modelValue" :multiple="false" :options="options" :state="violations.length === 0 ? null : false">
+        <template v-slot:first>
+          <b-form-select-option :value="null">
+            -
+          </b-form-select-option>
+        </template>
+      </b-form-select>
     </template>
 
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">

@@ -3,6 +3,15 @@
     <div v-if="park" class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
+      <!-- Attraction add -->
+      <div class="text-center mb-3">
+        <action-button v-b-modal.create-attraction-form add-icon>
+          {{ $t('add.attraction') }}
+        </action-button>
+
+        <create-attraction-form :park-id="park.id" @finish="onAttractionCreated" />
+      </div>
+
       <attractions :park-id="park.id" @refreshed="afterRefresh" />
     </div>
   </div>
@@ -71,6 +80,14 @@ export default {
       if (!result.initial) {
         me.$scrollTo('.breadcrumb')
       }
+    },
+
+    onAttractionCreated (attraction) {
+      // this.$trackEvent('Park created');
+      this.$router.push(this.localePath({
+        name: 'parks-park-attractions-attraction',
+        params: { attraction: attraction.slug, park: attraction.park.slug }
+      }))
     }
   },
 

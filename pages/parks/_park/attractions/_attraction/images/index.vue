@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div v-if="park" class="main-content">
+    <div v-if="attraction" class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
-      <div v-if="park.images.length === 0">
+      <div v-if="attraction.images.length === 0">
         <no-data />
       </div>
 
       <b-row v-else>
-        <template v-for="(image, index) in park.images">
+        <template v-for="(image, index) in attraction.images">
           <b-col :key="index" md="6" xl="4" class="mb-3">
             <b-card no-body class="card-list">
               <b-card-img :src="image.middle" top class="pointer" @click="currentImage = index" />
@@ -33,7 +33,7 @@
 
         <client-only>
           <CoolLightBox
-            :items="park.images.map(item => ({thumb: item.middle, src: item.large, description: buildCopyrightNotice(item)}))"
+            :items="attraction.images.map(item => ({thumb: item.middle, src: item.large, description: buildCopyrightNotice(item)}))"
             :index="currentImage"
             loop
             @close="currentImage = null"
@@ -53,12 +53,13 @@ export default {
   components: { CoolLightBox },
 
   async fetch () {
-    await this.loadPark()
+    await this.loadAttraction()
   },
 
   data () {
     return {
       park: null,
+      attraction: null,
       currentImage: null
     }
   },
@@ -79,6 +80,14 @@ export default {
           route: { name: 'parks-park', params: { park: this.park.slug } }
         },
         {
+          label: this.$t('attractions'),
+          route: { name: 'parks-park-attractions', params: { park: this.park.slug } }
+        },
+        {
+          label: this.attraction.name,
+          route: { name: 'parks-park-attractions-attraction', params: { attraction: this.attraction.slug, park: this.park.slug } }
+        },
+        {
           label: this.$t('image_gallery')
         }
       ]
@@ -86,21 +95,22 @@ export default {
   },
 
   methods: {
-    async loadPark () {
+    async loadAttraction () {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
-        parkSlug: me.$route.params.park,
+        attractionSlug: me.$route.params.park + '/' + me.$route.params.attraction,
         locale: me.$i18n.locale
       })
 
-      if (!result.park) {
+      if (!result.attraction) {
         me.$nuxt.error({ statusCode: 404 })
 
         return
       }
 
-      this.park = result.park
+      this.park = result.attraction.park
+      this.attraction = result.attraction
     },
 
     buildCopyrightNotice (image) {
@@ -135,20 +145,25 @@ export default {
 
   head () {
     return this.$createHead({
-      title: _.get(this.park, 'name', null),
-      description: _.get(this.park, 'shortDescription', null)
+      title: _.get(this.attraction, 'name', null),
+      description: _.get(this.attraction, 'shortDescription', null)
     })
   }
 }
 </script>
 
 <query>
-query ($parkSlug: String!, $locale: String!) {
-    park(id: $parkSlug) {
+query ($attractionSlug: String!, $locale: String!) {
+    attraction(id: $attractionSlug) {
         id
         name
         shortDescription(locale: $locale)
         slug
+        park {
+          id
+          name
+          slug
+        }
         images {
           fileId
           middle: url(size: MIDDLE)
