@@ -142,6 +142,44 @@
                 </template>
               </div>
             </b-col>
+
+            <!-- Manufacturers -->
+            <b-col lg="6">
+              <div class="content-block">
+                <h5>{{ $t('manufacturers') }}</h5>
+                <p>{{ $t('counted_manufacturers') }}</p>
+
+                <template v-if="account.rideStatistic.parkVisits.items.length === 0">
+                  <no-data />
+                </template>
+
+                <template v-else>
+                  <b-list-group flush>
+                    <template v-for="(manufacturerRide, index) in account.rideStatistic.manufacturerRides.items">
+                      <b-list-group-item :key="index" class="flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                          <NuxtLink class="text-truncate" :to="localePath({ name: 'attractions', query: { manufacturer: manufacturerRide.manufacturer.id } })">
+                            {{ manufacturerRide.manufacturer.name }}
+                          </NuxtLink>
+                        </div>
+
+                        <small>{{ $tc('n_rides', manufacturerRide.totalRides, {'count': manufacturerRide.totalRides}) }}</small>
+                      </b-list-group-item>
+                    </template>
+                  </b-list-group>
+
+                  <b-pagination
+                    v-if="account.rideStatistic.manufacturerRides.pagination.totalItems > itemsPerPage"
+                    v-model="manufacturerPage"
+                    :limit="3"
+                    align="center"
+                    class="align-items-center"
+                    :total-rows="account.rideStatistic.manufacturerRides.pagination.totalItems"
+                    :per-page="itemsPerPage"
+                  />
+                </template>
+              </div>
+            </b-col>
           </b-row>
         </b-col>
 
@@ -162,7 +200,7 @@ export default {
 
   data () {
     return {
-      itemsPerPage: 10,
+      itemsPerPage: 5,
       account: null,
       showFilter: Object.keys(this.$route.query).length > 0,
       dateOptions: [],
@@ -219,6 +257,16 @@ export default {
 
       set (value) {
         this.updateRoute({ ppage: value === 1 ? null : value })
+      }
+    },
+
+    manufacturerPage: {
+      get () {
+        return _.get(this.$route.query, 'mpage', 1)
+      },
+
+      set (value) {
+        this.updateRoute({ mpage: value === 1 ? null : value })
       }
     },
 
@@ -284,6 +332,7 @@ export default {
         locale: me.$i18n.locale,
         attractionPage: me.attractionPage,
         parkPage: me.parkPage,
+        manufacturerPage: me.manufacturerPage,
         itemsPerPage: me.itemsPerPage,
         filter: {
           date: me.selectedDate,
@@ -323,7 +372,7 @@ export default {
 </script>
 
 <query>
-query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $itemsPerPage: Int!, $attractionPage: Int!, $parkPage: Int!) {
+query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $itemsPerPage: Int!, $attractionPage: Int!, $parkPage: Int!, $manufacturerPage: Int!) {
   account(id: $username) {
     username
     rideStatistic(filter: $filter) {
@@ -372,6 +421,17 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
             park { slug }
           }
           rides
+        }
+      }
+      manufacturerRides(page: $manufacturerPage, itemsPerPage: $itemsPerPage) {
+        pagination { totalItems }
+        items {
+          manufacturer {
+            id
+            name
+          }
+          totalRides
+          totalUniqueRides
         }
       }
     }
