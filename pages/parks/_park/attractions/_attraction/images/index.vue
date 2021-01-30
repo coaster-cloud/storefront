@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div v-if="!attraction" class="main-content">
+      <breadcrumb :items="[{label: $t('loading')}]" />
+      <skeleton-card-list />
+    </div>
+
     <div v-if="attraction" class="main-content">
       <breadcrumb :items="breadcrumbs" />
 

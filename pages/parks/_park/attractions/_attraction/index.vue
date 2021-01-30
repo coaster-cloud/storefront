@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="attraction" class="main-content">
+    <div v-if="!attraction" class="main-content">
+      <breadcrumb :items="[{label: $t('loading')}]" />
+      <skeleton-content />
+    </div>
+
+    <div v-else class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
       <b-row>

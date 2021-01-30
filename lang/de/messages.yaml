@@ -230,3 +230,4 @@ image_copyright: '© {year} Bild von <a href="{profileUrl}">{profileName}</a> / 
 search: 'Suche'
 choice: 'Auswählen'
 no_choices: 'Keine passende Einträge gefunden.'
+loading: 'Lade ...'

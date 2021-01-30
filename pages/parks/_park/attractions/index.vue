@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="park" class="main-content">
+    <div v-if="!park" class="main-content">
+      <breadcrumb :items="[{label: $t('loading')}]" />
+      <skeleton-card-list />
+    </div>
+
+    <div v-else class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
       <!-- Attraction add -->

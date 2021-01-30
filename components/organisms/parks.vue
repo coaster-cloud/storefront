@@ -41,9 +41,14 @@
     </client-only>
 
     <!-- Listing -->
-    <div v-if="normalizedParks.length === 0">
+    <div v-if="$store.getters['common/isLoading']">
+      <skeleton-card-list />
+    </div>
+
+    <div v-else-if="normalizedParks.length === 0">
       <no-data />
     </div>
+
     <b-row v-else>
       <template v-for="(park, index) in normalizedParks">
         <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
