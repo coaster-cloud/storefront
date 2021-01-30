@@ -113,7 +113,7 @@ export default {
         return this.$t('count_this_ride')
       }
 
-      return this.$t('n_rides', { value })
+      return this.$tc('n_rides', value, { count: value })
     },
 
     async updateRides (field, quantity) {
