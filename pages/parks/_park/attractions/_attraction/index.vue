@@ -281,7 +281,7 @@ export default {
         type: 'route-list',
         value: this.attraction.manufacturers.map(function (value) {
           return {
-            route: { name: 'attractions', query: { manufacturer: value.name } },
+            route: { name: 'attractions', query: { manufacturer: value.id } },
             label: value.name
           }
         })
@@ -489,7 +489,7 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
         slug
         category { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
-        manufacturers { name }
+        manufacturers { id, name }
         zone { id, name }
         latitude
         longitude
@@ -533,7 +533,7 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
           totalContributions
         }
         images {
-            fileId
+            id
             middle: url(size: MIDDLE)
             large: url(size: LARGE)
             contributor {

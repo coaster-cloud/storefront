@@ -8,6 +8,15 @@
     <div v-if="attraction" class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
+      <!-- Image add -->
+      <div class="text-center mb-3">
+        <action-button v-b-modal.add-attraction-image-form add-icon>
+          {{ $t('upload_image') }}
+        </action-button>
+
+        <add-attraction-image-form :attraction-id="attraction.id" @finish="loadAttraction" />
+      </div>
+
       <div v-if="attraction.images.length === 0">
         <no-data />
       </div>
@@ -170,7 +179,7 @@ query ($attractionSlug: String!, $locale: String!) {
           slug
         }
         images {
-          fileId
+          id
           middle: url(size: MIDDLE)
           large: url(size: LARGE)
           contributor { username }

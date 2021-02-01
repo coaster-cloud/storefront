@@ -8,6 +8,15 @@
     <div v-else class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
+      <!-- Image add -->
+      <div class="text-center mb-3">
+        <action-button v-b-modal.add-park-image-form add-icon>
+          {{ $t('upload_image') }}
+        </action-button>
+
+        <add-park-image-form :park-id="park.id" @finish="loadPark" />
+      </div>
+
       <div v-if="park.images.length === 0">
         <no-data />
       </div>
@@ -155,7 +164,7 @@ query ($parkSlug: String!, $locale: String!) {
         shortDescription(locale: $locale)
         slug
         images {
-          fileId
+          id
           middle: url(size: MIDDLE)
           large: url(size: LARGE)
           contributor { username }

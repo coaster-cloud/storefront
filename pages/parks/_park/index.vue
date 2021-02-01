@@ -319,7 +319,7 @@ query ($parkSlug: String!, $locale: String!) {
         createdAt { format, value }
         updatedAt { format, value }
         images {
-            fileId
+            id
             middle: url(size: MIDDLE)
             large: url(size: LARGE)
             contributor {
