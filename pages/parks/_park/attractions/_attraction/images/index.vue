@@ -28,18 +28,22 @@
               <b-card-img :src="image.middle" top class="pointer" @click="currentImage = index" />
 
               <template v-slot:footer>
-                <template v-if="canDeleteImage(image)">
-                  <!--
-                  <b-button variant="link" @click="deleteImage(image)">
-                    {{ $translate('delete') }}
-                  </b-button>
-                  -->
-                </template>
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span class="text-small text-muted" v-html="buildCopyrightNotice(image)" />
 
-                <template v-else>
-                  <!-- eslint-disable-next-line vue/no-v-html -->
-                  <span class="text-small text-muted" v-html="buildCopyrightNotice(image)" />
-                </template>
+                <div v-if="canDeleteImage(image)" class="mt-3">
+                  <action-button v-b-modal="`delete-attraction-image-form-${image.id}`" delete-icon>
+                    {{ $t('delete') }}
+                  </action-button>
+
+                  <delete-attraction-image-form :attraction-id="attraction.id" :image-id="image.id" @finish="loadAttraction()" />
+                </div>
+
+                <div v-else class="mt-3">
+                  <action-button delete-icon disabled>
+                    {{ $t('delete') }}
+                  </action-button>
+                </div>
               </template>
             </b-card>
           </b-col>

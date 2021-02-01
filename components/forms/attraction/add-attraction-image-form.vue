@@ -29,7 +29,7 @@
       v-model="date"
       :label="$t('photo_taken')"
       :description="$t('photo_taken.help')"
-      :violations="getFieldViolations('[addAttractionHistories][0][date]')"
+      :violations="getFieldViolations('[addAttractionImages][0][date]')"
     />
 
     <select-input
@@ -37,7 +37,7 @@
       v-model="license"
       :label="$t('license')"
       :description="$t('license.help')"
-      :violations="getFieldViolations('[addAttractionHistories][0][license]')"
+      :violations="getFieldViolations('[addAttractionImages][0][license]')"
       :options="licenseOptions"
     />
 

@@ -8,7 +8,7 @@
   -->
 
 <template>
-  <b-button v-show="$store.state.common.editMode" size="sm" variant="light" class="mb-1" :disabled="$store.getters['account/hasToken'] === false">
+  <b-button v-show="$store.state.common.editMode" size="sm" variant="light" class="mb-1" :disabled="disabled === true || $store.getters['account/hasToken'] === false">
     <b-icon v-if="addIcon" icon="plus-square" aria-hidden="true" />
     <b-icon v-if="modifyIcon" icon="pencil-square" aria-hidden="true" />
     <b-icon v-if="deleteIcon" icon="x-square" aria-hidden="true" />
@@ -38,6 +38,11 @@ export default {
     },
 
     iconOnly: {
+      type: Boolean,
+      default: false
+    },
+
+    disabled: {
       type: Boolean,
       default: false
     }
