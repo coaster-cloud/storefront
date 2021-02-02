@@ -9,12 +9,7 @@
 
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-    <b-form-datepicker
-      :value="modelValue"
-      :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit', weekday: 'short' }"
-      :locale="$store.state.account.locale"
-    />
-
+    <b-form-file :id="id" v-model="modelValue" :state="violations.length === 0 ? null : false" drop-placeholder="Drop file here..." />
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
     </b-form-invalid-feedback>
@@ -30,8 +25,8 @@ export default {
     },
 
     value: {
-      type: [String, Number],
-      default: null
+      type: Object,
+      default: () => null
     },
 
     label: {

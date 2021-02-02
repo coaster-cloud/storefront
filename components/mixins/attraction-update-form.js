@@ -50,7 +50,7 @@ export default {
       }
     },
 
-    async updateAttraction (attractionId, input, onSuccess = null) {
+    async updateAttraction (attractionId, input, onSuccess = null, files = {}) {
       const me = this
 
       const query = `
@@ -76,9 +76,9 @@ export default {
 
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
-        attractionId: me.attractionId,
+        attractionId,
         input
-      })
+      }, files)
 
       me.violations = result.updateAttraction.violations
 

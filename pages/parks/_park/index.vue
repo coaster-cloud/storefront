@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="park" class="main-content">
+    <div v-if="!park" class="main-content">
+      <breadcrumb :items="[{label: $t('loading')}]" />
+      <skeleton-content />
+    </div>
+
+    <div v-else class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
       <b-row>
@@ -314,7 +319,7 @@ query ($parkSlug: String!, $locale: String!) {
         createdAt { format, value }
         updatedAt { format, value }
         images {
-            fileId
+            id
             middle: url(size: MIDDLE)
             large: url(size: LARGE)
             contributor {

@@ -45,7 +45,7 @@ export default {
       }
     },
 
-    async updatePark (parkId, input, onSuccess = null) {
+    async updatePark (parkId, input, onSuccess = null, files = {}) {
       const me = this
 
       const query = `
@@ -66,9 +66,9 @@ export default {
 
       const result = await me.$graphql(query, {
         locale: me.$i18n.locale,
-        parkId: me.parkId,
+        parkId,
         input
-      })
+      }, files)
 
       me.violations = result.updatePark.violations
 

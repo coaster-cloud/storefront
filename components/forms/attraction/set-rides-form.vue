@@ -11,9 +11,7 @@
   <div class="action-box mt-5 text-center">
     <h5>{{ $t('count_your_rides') }}</h5>
 
-    <b-form-group :label="$t('select_day')">
-      <date-input id="count-ride-date" v-model="countDateMutable" />
-    </b-form-group>
+    <date-input id="count-ride-date" v-model="countDateMutable" :label="$t('select_day')" :label-col="12" />
 
     <b-form-group :label="attractionName">
       <b-form-spinbutton
@@ -113,7 +111,7 @@ export default {
         return this.$t('count_this_ride')
       }
 
-      return this.$t('n_rides', { value })
+      return this.$tc('n_rides', value, { count: value })
     },
 
     async updateRides (field, quantity) {

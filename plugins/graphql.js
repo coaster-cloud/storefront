@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import _ from 'lodash'
 
-Vue.prototype.$graphql = async function (query, variables = {}) {
+Vue.prototype.$graphql = async function (query, variables = {}, files = {}) {
   const me = this
   let result = null
 
@@ -16,17 +16,26 @@ Vue.prototype.$graphql = async function (query, variables = {}) {
 
   loading(true)
 
+  let formData = null
+  if (Object.keys(files).length > 0) {
+    headers['Content-Type'] = 'multipart/form-data'
+
+    formData = new FormData()
+    formData.append('query', query)
+    formData.append('variables', JSON.stringify(variables))
+
+    Object.keys(files).forEach(function (field) {
+      formData.append(field, files[field])
+    })
+  } else {
+    formData = {
+      query,
+      variables
+    }
+  }
+
   try {
-    const response = await me.$axios.post(
-      me.$config.dataServiceUrl,
-      {
-        query,
-        variables
-      },
-      {
-        headers
-      }
-    )
+    const response = await me.$axios.post(me.$config.dataServiceUrl, formData, { headers })
 
     const errors = _.get(response, 'data.errors', [])
     if (errors.length > 0) {
