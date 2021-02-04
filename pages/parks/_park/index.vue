@@ -112,6 +112,11 @@
                 ({{ item.totalContributions }})
               </li>
             </ul>
+            <div>
+              <NuxtLink :to="localePath({name: 'activities', query: {reference: park.id}})" tag="button" class="btn btn-light btn-sm">
+                {{ $t('show_contributions') }}
+              </NuxtLink>
+            </div>
           </div>
         </b-col>
 
