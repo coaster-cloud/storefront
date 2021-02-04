@@ -28,7 +28,8 @@ export default {
     '~/plugins/markdown.js',
     '~/plugins/vue-scroll-to.js',
     '~/plugins/graphql.js',
-    '~/plugins/create-head.js'
+    '~/plugins/create-head.js',
+    '~/plugins/timestamp.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
