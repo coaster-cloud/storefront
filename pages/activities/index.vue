@@ -4,94 +4,107 @@
       <breadcrumb :items="breadcrumbs" />
 
       <b-row>
-        <b-col md="8">
-          <b-skeleton-table v-if="$store.getters['common/isLoading']" :rows="20" :columns="4" />
+        <template v-if="$store.getters['common/isLoading']">
+          <b-skeleton-table :table-props="{ borderless: true }" :rows="20" :columns="5" />
+        </template>
 
-          <no-data v-else-if="items.length === 0" />
+        <template v-else>
+          <b-col md="8" order="2" order-md="1">
+            <div class="text-center">
+              <h5>{{ $t('last_changes') }}</h5>
+            </div>
 
-          <b-table
-            v-else
-            :fields="tableFields"
-            borderless
-            small
-            responsive="sm"
-            :items="items"
-          >
-            <template #cell(date)="data">
-              {{ data.value | timestamp($i18n.locale) }}
-            </template>
+            <no-data v-if="items.length === 0" />
 
-            <template #cell(resource)="data">
-              <div>
-                <NuxtLink
-                  v-if="data.item.event.resource.__typename === 'Attraction'"
-                  :to="localePath({name: 'parks-park-attractions-attraction', params: {attraction: data.item.event.resource.slug, park: data.item.event.resource.park.slug}})"
-                >
-                  {{ data.item.event.resource.name }}
+            <b-table
+              v-else
+              :fields="tableFields"
+              borderless
+              small
+              responsive="sm"
+              :items="items"
+            >
+              <template #cell(date)="data">
+                {{ data.value | timestamp($i18n.locale) }}
+              </template>
+
+              <template #cell(resource)="data">
+                <div>
+                  <NuxtLink
+                    v-if="data.item.event.resource.__typename === 'Attraction'"
+                    :to="localePath({name: 'parks-park-attractions-attraction', params: {attraction: data.item.event.resource.slug, park: data.item.event.resource.park.slug}})"
+                  >
+                    {{ data.item.event.resource.name }}
+                  </NuxtLink>
+
+                  <NuxtLink
+                    v-if="data.item.event.resource.__typename === 'Park'"
+                    :to="localePath({name: 'parks-park', params: {park: data.item.event.resource.slug}})"
+                  >
+                    {{ data.item.event.resource.name }}
+                  </NuxtLink>
+
+                  <div v-if="data.item.event.resource.__typename === 'Manufacturer'">
+                    {{ data.item.event.resource.name }}
+                  </div>
+                </div>
+
+                <div>
+                  <small>{{ $t(eventMapping[data.item.event.type].text) }}</small>
+                </div>
+              </template>
+
+              <template #cell(contributor)="data">
+                <NuxtLink :to="localePath({name: 'profile-username', params: {username: data.value}})">
+                  {{ data.value }}
                 </NuxtLink>
+              </template>
 
-                <NuxtLink
-                  v-if="data.item.event.resource.__typename === 'Park'"
-                  :to="localePath({name: 'parks-park', params: {park: data.item.event.resource.slug}})"
-                >
-                  {{ data.item.event.resource.name }}
-                </NuxtLink>
+              <template #cell(actions)="data">
+                <b-button size="sm" variant="light" @click="data.toggleDetails">
+                  {{ data.detailsShowing ? $t('hide_details') : $t('show_details') }}
+                </b-button>
+              </template>
 
-                <div v-if="data.item.event.resource.__typename === 'Manufacturer'">
-                  {{ data.item.event.resource.name }}
+              <template #row-details="data">
+                <b-card>
+                  <pre class="m-0">{{ JSON.stringify(JSON.parse(data.item.event.payload), null, 2) }}</pre>
+                </b-card>
+              </template>
+            </b-table>
+
+            <b-col cols="12">
+              <b-pagination
+                v-model="selectedPage"
+                :limit="3"
+                align="center"
+                class="align-items-center"
+                :total-rows="totalEvents"
+                :per-page="itemsPerPage"
+              />
+            </b-col>
+          </b-col>
+
+          <b-col md="4" order="1" order-md="2" class="mb-5 mb-md-0 left-separator">
+            <div class="content-block">
+              <div class="text-center">
+                <h5>{{ $t('top_contributor') }}</h5>
+              </div>
+
+              <div class="list-group">
+                <div v-for="(contributor, index) in contributors" :key="index" class="list-group-item d-flex justify-content-between align-items-center no-border">
+                  <div>
+                    {{ index + 1 }}.
+                    <NuxtLink :to="localePath({name: 'profile-username', params: {username: contributor.username}})">
+                      {{ contributor.username }}
+                    </NuxtLink>
+                  </div>
+                  <span class="badge badge-primary badge-pill">{{ contributor.totalContributions }}</span>
                 </div>
               </div>
-
-              <div>
-                <small>{{ $t(eventMapping[data.item.event.type].text) }}</small>
-              </div>
-            </template>
-
-            <template #cell(contributor)="data">
-              <NuxtLink :to="localePath({name: 'profile-username', params: {username: data.value}})">
-                {{ data.value }}
-              </NuxtLink>
-            </template>
-
-            <template #cell(actions)="data">
-              <b-button size="sm" variant="light" @click="data.toggleDetails">
-                {{ data.detailsShowing ? $t('hide_details') : $t('show_details') }}
-              </b-button>
-            </template>
-
-            <template #row-details="data">
-              <b-card>
-                <pre class="m-0">{{ JSON.stringify(JSON.parse(data.item.event.payload), null, 2) }}</pre>
-              </b-card>
-            </template>
-          </b-table>
-
-          <b-col cols="12">
-            <b-pagination
-              v-model="selectedPage"
-              :limit="3"
-              align="center"
-              class="align-items-center"
-              :total-rows="totalEvents"
-              :per-page="itemsPerPage"
-            />
-          </b-col>
-        </b-col>
-
-        <b-col md="4" class="mb-5 mb-md-0 left-separator">
-          <div class="content-block">
-            <h5>{{ $t('top_contributor') }}</h5>
-
-            <!--
-            <div class="list-group">
-              <div class="list-group-item d-flex justify-content-between align-items-center no-border" v-for="(contributor, index) in contributors" :key="index">
-                <router-link :to="{name: 'app_account_showprofile', params: {account: contributor.username.toLowerCase()}}">{{ contributor.username }}</router-link>
-                <span class="badge badge-primary badge-pill">{{ contributor.total }}</span>
-              </div>
             </div>
-            -->
-          </div>
-        </b-col>
+          </b-col>
+        </template>
       </b-row>
     </div>
   </div>
@@ -215,6 +228,7 @@ export default {
         filter
       })
 
+      this.contributors = result.accounts.items
       this.events = result.events.items
       this.totalEvents = result.events.pagination.totalItems
     }
@@ -228,6 +242,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.no-border {
+  border: none;
+}
+</style>
 
 <query>
 query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
@@ -256,6 +276,12 @@ query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
           name
         }
       }
+    }
+  }
+  accounts(sort: TOTAL_CONTRIBUTIONS_DESC, itemsPerPage: 20) {
+    items {
+      username
+      totalContributions
     }
   }
 }
