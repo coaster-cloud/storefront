@@ -31,6 +31,8 @@
           <b-nav-item key="nav-item-logout" @click="logout">
             {{ $t('logout') }}
           </b-nav-item>
+
+          <update-account-form />
         </template>
 
         <!-- Logged out -->
@@ -42,6 +44,10 @@
           <b-nav-item key="nav-item-register" v-b-modal.register-form>
             {{ $t('register') }}
           </b-nav-item>
+
+          <login-form />
+          <register-form />
+          <reset-password-form />
         </template>
       </b-navbar-nav>
 
@@ -67,11 +73,6 @@
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
-
-    <login-form />
-    <register-form />
-    <reset-password-form />
-    <update-account-form />
   </b-navbar>
 </template>
 
