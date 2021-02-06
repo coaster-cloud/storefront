@@ -9,7 +9,6 @@
 
 <template>
   <b-modal
-    v-if="$store.getters['account/hasToken']"
     id="update-account-form"
     size="xs"
     :title="$t('settings')"

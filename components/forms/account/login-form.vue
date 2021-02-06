@@ -102,6 +102,8 @@ export default {
       me.violations = result.login.violations
 
       if (result.login.token) {
+        ok()
+
         me.$store.commit('account/authenticate', result.login.token)
         me.$root.$bvToast.toast(this.$t('login_success'), {
           title: this.$t('login'),
@@ -109,8 +111,6 @@ export default {
           solid: true,
           toaster: 'b-toaster-top-center'
         })
-
-        ok()
       }
     }
   }
