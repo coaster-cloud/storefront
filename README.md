@@ -28,7 +28,4 @@ The project will later run with Docker. To test the app in production mode you n
 The app is then accessible via http://localhost:8020.
 
 ## License
-
-* The source code licensed under [MIT](./LICENSE)
-* All fonts under `./assets/fonts` licensed under [Open Font License](https://fonts.google.com/specimen/Nunito#license)
-* All images under `./assets/images` and `./static` are proprietary. Using the images outside of this project is not permitted.
+See the [licence file](./LICENSE.md) for exact licence information.

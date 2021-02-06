@@ -1,5 +1,24 @@
 Copyright (c) 2020 Michel Chowanski
 
+Images
+=======
+All images located in this repository are copyright by `coaster.cloud` and licensed proprietary. Using the images 
+outside of `https://coaster.cloud` is not permitted.
+The images are located at `./assets/images` and `./static`.
+
+Fonts
+=======
+We are using fonts which are licensed under the [Open Font License](https://fonts.google.com/specimen/Nunito#license).
+They are located at `./assets/fonts`.
+
+Source Code
+=======
+The complete source code, with the exception of the images and fonts (see above), is licensed under MIT.
+
+License text:
+```
+Copyright (c) 2020 Michel Chowanski
+
 **This licence applies only to the source code and does not apply to fonts and images.**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,3 +38,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
