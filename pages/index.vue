@@ -108,8 +108,10 @@
           <markdown-text :text="$t('home.teaser_community')" />
 
           <div class="text-right">
-            <NuxtLink tag="button" :to="localePath('activities')" class="btn btn-primary btn-sm">
-              {{ $t('goto_activity') }}
+            <NuxtLink v-slot="{ navigate }" :to="localePath('activities')" custom>
+              <b-button variant="primary" size="sm" @click="navigate">
+                {{ $t('goto_activity') }}
+              </b-button>
             </NuxtLink>
           </div>
         </b-media>
