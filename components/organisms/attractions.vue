@@ -324,10 +324,9 @@ export default {
           feature,
           image: _.get(attraction, 'images[0].url', PlaceholderImage),
           route: {
-            name: 'parks-park-attractions-attraction',
+            name: 'attractions-attraction',
             params: {
-              park: attraction.park.slug,
-              attraction: attraction.slug
+              attraction: attraction.fullSlug
             }
           }
         })
@@ -421,14 +420,13 @@ query ($locale: String, $facet: [AttractionFacet]!, $itemsPerPage: Int!, $page: 
         items {
             id
             name
-            slug
+            fullSlug
             images {
                 url(size: MIDDLE)
             }
             category {
                 label(locale: $locale)
             }
-            park { slug }
             length: attribute(key: "length") { valueAsString(locale: $locale) }
             height: attribute(key: "height") { valueAsString(locale: $locale) }
             ride_time: attribute(key: "ride_time") { valueAsString(locale: $locale) }

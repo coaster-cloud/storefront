@@ -23,7 +23,7 @@ export default {
             park {
               id
               name
-              slug
+              fullSlug
             }
           }
         }
@@ -58,7 +58,7 @@ export default {
             park {
               id
               name
-              slug
+              fullSlug
             }
           }
         }

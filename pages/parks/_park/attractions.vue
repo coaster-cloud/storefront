@@ -50,7 +50,7 @@ export default {
         },
         {
           label: this.park.name,
-          route: { name: 'parks-park', params: { park: this.park.slug } }
+          route: { name: 'parks-park', params: { park: this.park.fullSlug } }
         },
         {
           label: `${this.$t('overview')} (${this.totalAttractions})`
@@ -90,8 +90,8 @@ export default {
     onAttractionCreated (attraction) {
       // this.$trackEvent('Park created');
       this.$router.push(this.localePath({
-        name: 'parks-park-attractions-attraction',
-        params: { attraction: attraction.slug, park: attraction.park.slug }
+        name: 'attractions-attraction',
+        params: { attraction: attraction.fullSlug }
       }))
     }
   },
@@ -111,7 +111,7 @@ query ($parkSlug: String!, $locale: String!) {
         id
         name
         shortDescription(locale: $locale)
-        slug
+        fullSlug
     }
 }
 </query>

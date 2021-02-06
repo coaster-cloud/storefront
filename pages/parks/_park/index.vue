@@ -124,16 +124,16 @@
           <!-- Image slider -->
           <image-slider
             :images="park.images"
-            :gallery-route="{name: 'parks-park-images', params: {park: park.slug}}"
+            :gallery-route="{name: 'parks-park-images', params: {park: park.fullSlug}}"
           />
 
           <!-- Park actions -->
           <div class="text-center mt-3">
-            <NuxtLink tag="button" :to="localePath({name: 'parks-park-images', params: {park: park.slug}})" class="btn btn-primary btn-block mb-1 text-left">
+            <NuxtLink tag="button" :to="localePath({name: 'parks-park-images', params: {park: park.fullSlug}})" class="btn btn-primary btn-block mb-1 text-left">
               <b-icon icon="images" aria-hidden="true" /> {{ $t('image_gallery') }}
             </NuxtLink>
 
-            <NuxtLink tag="button" :to="localePath({name: 'parks-park-attractions', params: {park: park.slug}})" class="btn btn-primary btn-block mb-1 text-left">
+            <NuxtLink tag="button" :to="localePath({name: 'parks-park-attractions', params: {park: park.fullSlug}})" class="btn btn-primary btn-block mb-1 text-left">
               <b-icon icon="table" aria-hidden="true" /> {{ $t('attractions') }}
             </NuxtLink>
           </div>
@@ -277,10 +277,10 @@ export default {
     onModification (park) {
       // this.$trackEvent('Park modified');
 
-      if (park.slug !== this.$route.params.park) {
+      if (park.fullSlug !== this.$route.params.park) {
         this.$router.replace(this.localePath({
           name: 'parks-park',
-          params: { park: park.slug }
+          params: { park: park.fullSlug }
         }))
 
         return
@@ -305,7 +305,7 @@ query ($parkSlug: String!, $locale: String!) {
         id
         name
         shortDescription(locale: $locale)
-        slug
+        fullSlug
         categories { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
         web

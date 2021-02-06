@@ -95,15 +95,15 @@ export default {
         },
         {
           label: this.park.name,
-          route: { name: 'parks-park', params: { park: this.park.slug } }
+          route: { name: 'parks-park', params: { park: this.park.fullSlug } }
         },
         {
           label: this.$t('attractions'),
-          route: { name: 'parks-park-attractions', params: { park: this.park.slug } }
+          route: { name: 'parks-park-attractions', params: { park: this.park.fullSlug } }
         },
         {
           label: this.attraction.name,
-          route: { name: 'parks-park-attractions-attraction', params: { attraction: this.attraction.slug, park: this.park.slug } }
+          route: { name: 'attractions-attraction', params: { attraction: this.attraction.fullSlug } }
         },
         {
           label: this.$t('image_gallery')
@@ -117,7 +117,7 @@ export default {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
-        attractionSlug: me.$route.params.park + '/' + me.$route.params.attraction,
+        attractionSlug: me.$route.params.attraction,
         locale: me.$i18n.locale
       })
 
@@ -176,11 +176,11 @@ query ($attractionSlug: String!, $locale: String!) {
         id
         name
         shortDescription(locale: $locale)
-        slug
+        fullSlug
         park {
           id
           name
-          slug
+          fullSlug
         }
         images {
           id

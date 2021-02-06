@@ -32,14 +32,14 @@
                 <div>
                   <NuxtLink
                     v-if="data.item.event.resource.__typename === 'Attraction'"
-                    :to="localePath({name: 'parks-park-attractions-attraction', params: {attraction: data.item.event.resource.slug, park: data.item.event.resource.park.slug}})"
+                    :to="localePath({name: 'attractions-attraction', params: {attraction: data.item.event.resource.fullSlug}})"
                   >
                     {{ data.item.event.resource.name }}
                   </NuxtLink>
 
                   <NuxtLink
                     v-if="data.item.event.resource.__typename === 'Park'"
-                    :to="localePath({name: 'parks-park', params: {park: data.item.event.resource.slug}})"
+                    :to="localePath({name: 'parks-park', params: {park: data.item.event.resource.fullSlug}})"
                   >
                     {{ data.item.event.resource.name }}
                   </NuxtLink>
@@ -265,12 +265,11 @@ query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
         __typename
         ... on Park {
           name
-          slug
+          fullSlug
         }
         ... on Attraction {
           name
-          slug
-          park { slug }
+          fullSlug
         }
         ... on Manufacturer {
           name

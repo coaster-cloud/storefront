@@ -131,7 +131,7 @@ export default {
           attraction(id: $attractionId) {
             id
             name
-            slug
+            fullSlug
             category { key }
             manufacturers { name }
             state { key }

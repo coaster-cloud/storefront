@@ -82,7 +82,7 @@
                     <template v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <NuxtLink class="text-truncate" :to="localePath({name: 'parks-park-attractions-attraction', params: {park: attractionRide.attraction.park.slug, attraction: attractionRide.attraction.slug}})">
+                          <NuxtLink class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {park: attractionRide.attraction.park.fullSlug}})">
                             {{ attractionRide.attraction.name }}
                           </NuxtLink>
                         </div>
@@ -120,7 +120,7 @@
                     <template v-for="(parkVisits, index) in account.rideStatistic.parkVisits.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <NuxtLink class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.slug}})">
+                          <NuxtLink class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.fullSlug}})">
                             {{ parkVisits.park.name }}
                           </NuxtLink>
                         </div>
@@ -406,7 +406,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           park {
             id
             name
-            slug
+            fullSlug
           }
           visits
         }
@@ -417,8 +417,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           attraction {
             id
             name
-            slug
-            park { slug }
+            fullSlug
           }
           rides
         }

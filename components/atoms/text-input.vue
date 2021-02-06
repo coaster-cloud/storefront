@@ -56,9 +56,7 @@ export default {
 
     formatter: {
       type: Function,
-      default () {
-        return value => value
-      }
+      default: value => value
     }
   },
 

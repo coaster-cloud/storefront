@@ -211,7 +211,7 @@ export default {
           categories: categories.join(' / '),
           feature,
           image: _.get(park, 'images[0].url', PlaceholderImage),
-          route: { name: 'parks-park', params: { park: park.slug } }
+          route: { name: 'parks-park', params: { park: park.fullSlug } }
         })
       })
 
@@ -284,7 +284,7 @@ query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, 
         items {
             id
             name
-            slug
+            fullSlug
             images {
                 url(size: MIDDLE)
             }

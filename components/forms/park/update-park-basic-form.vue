@@ -120,7 +120,7 @@ export default {
           park(id: $parkId) {
             id
             name
-            slug
+            fullSlug
             categories { key }
             state { key }
             timezone { key }

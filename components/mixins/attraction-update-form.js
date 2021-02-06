@@ -23,11 +23,11 @@ export default {
             attraction {
               id
               name
-              slug
+              fullSlug
               park {
                 id
                 name
-                slug
+                fullSlug
               }
             }
           }
@@ -63,11 +63,11 @@ export default {
             attraction {
               id
               name
-              slug
+              fullSlug
               park {
                 id
                 name
-                slug
+                fullSlug
               }
             }
           }

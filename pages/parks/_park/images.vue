@@ -94,7 +94,7 @@ export default {
         },
         {
           label: this.park.name,
-          route: { name: 'parks-park', params: { park: this.park.slug } }
+          route: { name: 'parks-park', params: { park: this.park.fullSlug } }
         },
         {
           label: this.$t('image_gallery')
@@ -166,7 +166,7 @@ query ($parkSlug: String!, $locale: String!) {
         id
         name
         shortDescription(locale: $locale)
-        slug
+        fullSlug
         images {
           id
           middle: url(size: MIDDLE)

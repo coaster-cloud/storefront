@@ -138,7 +138,7 @@ export default {
         route: {
           name: 'parks-park',
           params: {
-            park: park.slug
+            park: park.fullSlug
           }
         },
         text: park.categories.map(type => type.label).join(' / ')
@@ -150,10 +150,9 @@ export default {
         name: attraction.name,
         image: attraction.images[0].url,
         route: {
-          name: 'parks-park-attractions-attraction',
+          name: 'attractions-attraction',
           params: {
-            park: attraction.park.slug,
-            attraction: attraction.slug
+            attraction: attraction.fullSlug
           }
         },
         text: attraction.category.label
@@ -190,7 +189,7 @@ export default {
       items {
         id
         name
-        slug
+        fullSlug
         categories { label(locale: $locale)}
         images { url(size: MIDDLE) }
       }
@@ -199,10 +198,9 @@ export default {
       items {
         id
         name
-        slug
+        fullSlug
         category { label(locale: $locale)}
         images { url(size: MIDDLE) }
-        park { slug }
       }
     }
   }

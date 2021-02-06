@@ -54,7 +54,7 @@ export default {
       // this.$trackEvent('Park created');
       this.$router.push(this.localePath({
         name: 'parks-park',
-        params: { park: park.slug }
+        params: { park: park.fullSlug }
       }))
     }
   },

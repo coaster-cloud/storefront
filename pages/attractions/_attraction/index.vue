@@ -177,7 +177,7 @@
           <!-- Image slider -->
           <image-slider
             :images="attraction.images"
-            :gallery-route="{name: 'parks-park-attractions-attraction-images', params: {attraction: attraction.slug, park: attraction.park.slug}}"
+            :gallery-route="{name: 'attractions-attraction-images', params: {attraction: attraction.fullSlug}}"
           />
 
           <!-- Youtube Onride -->
@@ -187,7 +187,7 @@
 
           <!-- Attraction actions -->
           <div class="text-center mt-3">
-            <NuxtLink tag="button" :to="localePath({name: 'parks-park-attractions-attraction-images', params: {attraction: attraction.slug, park: attraction.park.slug}})" class="btn btn-primary btn-block mb-1 text-left">
+            <NuxtLink tag="button" :to="localePath({name: 'attractions-attraction-images', params: {attraction: attraction.fullSlug}})" class="btn btn-primary btn-block mb-1 text-left">
               <b-icon icon="images" aria-hidden="true" /> {{ $t('image_gallery') }}
             </NuxtLink>
           </div>
@@ -264,7 +264,7 @@ export default {
         label: this.$t('park'),
         type: 'route',
         value: {
-          route: { name: 'parks-park', params: { park: this.park.slug } },
+          route: { name: 'parks-park', params: { park: this.park.fullSlug } },
           label: this.park.name
         }
       })
@@ -393,11 +393,11 @@ export default {
         },
         {
           label: this.park.name,
-          route: { name: 'parks-park', params: { park: this.park.slug } }
+          route: { name: 'parks-park', params: { park: this.park.fullSlug } }
         },
         {
           label: this.$t('attractions'),
-          route: { name: 'parks-park-attractions', params: { park: this.park.slug } }
+          route: { name: 'parks-park-attractions', params: { park: this.park.fullSlug } }
         },
         {
           label: this.attraction.name
@@ -419,7 +419,7 @@ export default {
       const me = this
 
       const result = await me.$graphql(me.$options.__query, {
-        attractionSlug: me.$route.params.park + '/' + me.$route.params.attraction,
+        attractionSlug: me.$route.params.attraction,
         locale: me.$i18n.locale,
         isAuthenticated: me.$store.getters['account/hasToken'],
         countDate: me.countDate
@@ -439,10 +439,10 @@ export default {
     onModification (attraction) {
       // this.$trackEvent('Attraction modified');
 
-      if (attraction.slug !== this.$route.params.attraction) {
+      if (attraction.fullSlug !== this.$route.params.attraction) {
         this.$router.replace(this.localePath({
-          name: 'parks-park-attractions-attraction',
-          params: { attraction: attraction.slug, park: attraction.park.slug }
+          name: 'attractions-attraction',
+          params: { attraction: attraction.fullSlug }
         }))
 
         return
@@ -490,7 +490,7 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
         id
         name
         shortDescription(locale: $locale)
-        slug
+        fullSlug
         category { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
         manufacturers { id, name }
@@ -501,7 +501,7 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
         park {
           id
           name
-          slug
+          fullSlug
         }
         safetyRegulation {
           soloLabel(locale: $locale)
