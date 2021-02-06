@@ -82,9 +82,9 @@
                     <template v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <NuxtLink class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {park: attractionRide.attraction.park.fullSlug}})">
+                          <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {park: attractionRide.attraction.park.fullSlug}})">
                             {{ attractionRide.attraction.name }}
-                          </NuxtLink>
+                          </nuxt-link>
                         </div>
 
                         <small>{{ $tc('n_rides', attractionRide.rides, {'count': attractionRide.rides}) }}</small>
@@ -120,9 +120,9 @@
                     <template v-for="(parkVisits, index) in account.rideStatistic.parkVisits.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <NuxtLink class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.fullSlug}})">
+                          <nuxt-link class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.fullSlug}})">
                             {{ parkVisits.park.name }}
-                          </NuxtLink>
+                          </nuxt-link>
                         </div>
 
                         <small>{{ $tc('n_visits', parkVisits.visits, {'count': parkVisits.visits}) }}</small>
@@ -158,9 +158,9 @@
                     <template v-for="(manufacturerRide, index) in account.rideStatistic.manufacturerRides.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <NuxtLink class="text-truncate" :to="localePath({ name: 'attractions', query: { manufacturer: manufacturerRide.manufacturer.id } })">
+                          <nuxt-link class="text-truncate" :to="localePath({ name: 'attractions', query: { manufacturer: manufacturerRide.manufacturer.id } })">
                             {{ manufacturerRide.manufacturer.name }}
-                          </NuxtLink>
+                          </nuxt-link>
                         </div>
 
                         <small>{{ $tc('n_rides', manufacturerRide.totalRides, {'count': manufacturerRide.totalRides}) }}</small>

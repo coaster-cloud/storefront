@@ -79,16 +79,16 @@
           class="mb-3"
         >
           <b-card class="card-list" no-body>
-            <NuxtLink :to="localePath(item.route)">
+            <nuxt-link :to="localePath(item.route)">
               <b-card-img :src="item.image" top />
-            </NuxtLink>
+            </nuxt-link>
 
             <div class="card-body">
-              <NuxtLink :to="localePath(item.route)" class="w-40 w-sm-100">
+              <nuxt-link :to="localePath(item.route)" class="w-40 w-sm-100">
                 <div class="item-title text-center text-truncate">
                   {{ item.name }}
                 </div>
-              </NuxtLink>
+              </nuxt-link>
 
               <div class="pt-2 text-muted text-small text-center">
                 {{ item.text }}
@@ -108,11 +108,11 @@
           <markdown-text :text="$t('home.teaser_community')" />
 
           <div class="text-right">
-            <NuxtLink v-slot="{ navigate }" :to="localePath('activities')" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath('activities')" custom>
               <b-button variant="primary" size="sm" @click="navigate">
                 {{ $t('goto_activity') }}
               </b-button>
-            </NuxtLink>
+            </nuxt-link>
           </div>
         </b-media>
       </div>

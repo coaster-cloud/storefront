@@ -13,17 +13,17 @@
       <template v-if="isClient">
         <b-carousel v-model="slide" :interval="4000" controls img-width="512" img-height="288">
           <template v-for="(image, index) in images">
-            <NuxtLink :key="index" :to="localePath(galleryRoute)">
+            <nuxt-link :key="index" :to="localePath(galleryRoute)">
               <b-carousel-slide :img-src="image.middle" />
-            </NuxtLink>
+            </nuxt-link>
           </template>
         </b-carousel>
       </template>
 
       <template v-else>
-        <NuxtLink :to="localePath(galleryRoute)">
+        <nuxt-link :to="localePath(galleryRoute)">
           <img :src="images[0].middle" class="img-fluid">
-        </NuxtLink>
+        </nuxt-link>
       </template>
     </template>
 

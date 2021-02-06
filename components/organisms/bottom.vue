@@ -12,20 +12,20 @@
           <div>
             <p class="m-0">
               &copy; {{ new Date().getFullYear() }} coaster.cloud |
-              <NuxtLink :to="localePath('activities')">
+              <nuxt-link :to="localePath('activities')">
                 {{ $t('activities') }}
-              </NuxtLink>
+              </nuxt-link>
             </p>
             <p class="m-0">
-              <NuxtLink :to="localePath('terms')">
+              <nuxt-link :to="localePath('terms')">
                 {{ $t('terms') }}
-              </NuxtLink> |
-              <NuxtLink :to="localePath('imprint')">
+              </nuxt-link> |
+              <nuxt-link :to="localePath('imprint')">
                 {{ $t('imprint') }}
-              </NuxtLink> |
-              <NuxtLink :to="localePath('privacy')">
+              </nuxt-link> |
+              <nuxt-link :to="localePath('privacy')">
                 {{ $t('privacy') }}
-              </NuxtLink>
+              </nuxt-link>
             </p>
           </div>
         </div>

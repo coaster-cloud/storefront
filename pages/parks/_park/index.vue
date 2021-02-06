@@ -106,18 +106,18 @@
             <h5>{{ $t('contributors') }}</h5>
             <ul class="contributors">
               <li v-for="(item, index) in park.contributors" :key="index">
-                <NuxtLink :to="localePath({name: 'profile-username', params: {username: item.account.username}})">
+                <nuxt-link :to="localePath({name: 'profile-username', params: {username: item.account.username}})">
                   {{ item.account.username }}
-                </NuxtLink>
+                </nuxt-link>
                 ({{ item.totalContributions }})
               </li>
             </ul>
             <div>
-              <NuxtLink v-slot="{ navigate }" :to="localePath({name: 'activities', query: {reference: park.id}})" custom>
+              <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'activities', query: {reference: park.id}})" custom>
                 <b-button variant="light" size="sm" @click="navigate">
                   {{ $t('show_contributions') }}
                 </b-button>
-              </NuxtLink>
+              </nuxt-link>
             </div>
           </div>
         </b-col>
@@ -131,19 +131,19 @@
 
           <!-- Park actions -->
           <div class="text-center mt-3">
-            <NuxtLink v-slot="{ navigate }" :to="localePath({name: 'parks-park-images', params: {park: park.fullSlug}})" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'parks-park-images', params: {park: park.fullSlug}})" custom>
               <b-button variant="primary" block class="mb-1 text-left" @click="navigate">
                 <b-icon icon="images" aria-hidden="true" />
                 {{ $t('image_gallery') }}
               </b-button>
-            </NuxtLink>
+            </nuxt-link>
 
-            <NuxtLink v-slot="{ navigate }" :to="localePath({name: 'parks-park-attractions', params: {park: park.fullSlug}})" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'parks-park-attractions', params: {park: park.fullSlug}})" custom>
               <b-button variant="primary" block class="mb-1 text-left" @click="navigate">
                 <b-icon icon="table" aria-hidden="true" />
                 {{ $t('attractions') }}
               </b-button>
-            </NuxtLink>
+            </nuxt-link>
           </div>
         </b-col>
       </b-row>

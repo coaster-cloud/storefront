@@ -160,18 +160,18 @@
             <h5>{{ $t('contributors') }}</h5>
             <ul class="contributors">
               <li v-for="(item, index) in attraction.contributors" :key="index">
-                <NuxtLink :to="localePath({name: 'profile-username', params: {username: item.account.username}})">
+                <nuxt-link :to="localePath({name: 'profile-username', params: {username: item.account.username}})">
                   {{ item.account.username }}
-                </NuxtLink>
+                </nuxt-link>
                 ({{ item.totalContributions }})
               </li>
             </ul>
 
-            <NuxtLink v-slot="{ navigate }" :to="localePath({name: 'activities', query: {reference: attraction.id}})" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'activities', query: {reference: attraction.id}})" custom>
               <b-button variant="light" size="sm" @click="navigate">
                 {{ $t('show_contributions') }}
               </b-button>
-            </NuxtLink>
+            </nuxt-link>
           </div>
         </b-col>
 
@@ -189,12 +189,12 @@
 
           <!-- Attraction actions -->
           <div class="text-center mt-3">
-            <NuxtLink v-slot="{ navigate }" :to="localePath({name: 'attractions-attraction-images', params: {attraction: attraction.fullSlug}})" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'attractions-attraction-images', params: {attraction: attraction.fullSlug}})" custom>
               <b-button variant="primary" block class="mb-1 text-left" @click="navigate">
                 <b-icon icon="images" aria-hidden="true" />
                 {{ $t('image_gallery') }}
               </b-button>
-            </NuxtLink>
+            </nuxt-link>
           </div>
 
           <client-only>

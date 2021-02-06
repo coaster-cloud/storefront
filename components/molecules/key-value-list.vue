@@ -61,17 +61,17 @@
 
             <!-- Internal Route -->
             <template v-else-if="row.type === 'route'">
-              <NuxtLink :to="localePath(row.value.route)">
+              <nuxt-link :to="localePath(row.value.route)">
                 {{ row.value.label }}
-              </NuxtLink>
+              </nuxt-link>
             </template>
 
             <!-- Internal Route List -->
             <template v-else-if="row.type === 'route-list'">
               <div v-for="(item, routeListIndex) in row.value" :key="routeListIndex">
-                <NuxtLink :to="localePath(item.route)">
+                <nuxt-link :to="localePath(item.route)">
                   {{ item.label }}
-                </NuxtLink>
+                </nuxt-link>
               </div>
             </template>
 

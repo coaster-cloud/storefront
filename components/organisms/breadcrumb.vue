@@ -6,9 +6,9 @@
         <ul>
           <li v-for="(item, index) in items.slice(0, items.length - 1)" :key="index">
             <template v-if="item.route">
-              <NuxtLink :to="localePath(item.route)">
+              <nuxt-link :to="localePath(item.route)">
                 {{ item.label }}
-              </NuxtLink>
+              </nuxt-link>
             </template>
             <template v-else>
               {{ item.label }}

@@ -53,16 +53,16 @@
       <template v-for="(park, index) in normalizedParks">
         <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
           <b-card class="card-list" no-body>
-            <NuxtLink :to="localePath(park.route)">
+            <nuxt-link :to="localePath(park.route)">
               <b-card-img :src="park.image" top />
-            </NuxtLink>
+            </nuxt-link>
 
             <div class="card-body">
-              <NuxtLink :to="localePath(park.route)" class="w-40 w-sm-100">
+              <nuxt-link :to="localePath(park.route)" class="w-40 w-sm-100">
                 <div class="item-title text-center text-truncate">
                   {{ park.name }}
                 </div>
-              </NuxtLink>
+              </nuxt-link>
 
               <div class="pt-2 text-muted text-small text-center">
                 {{ park.categories }}

@@ -30,19 +30,19 @@
 
               <template #cell(resource)="data">
                 <div>
-                  <NuxtLink
+                  <nuxt-link
                     v-if="data.item.event.resource.__typename === 'Attraction'"
                     :to="localePath({name: 'attractions-attraction', params: {attraction: data.item.event.resource.fullSlug}})"
                   >
                     {{ data.item.event.resource.name }}
-                  </NuxtLink>
+                  </nuxt-link>
 
-                  <NuxtLink
+                  <nuxt-link
                     v-if="data.item.event.resource.__typename === 'Park'"
                     :to="localePath({name: 'parks-park', params: {park: data.item.event.resource.fullSlug}})"
                   >
                     {{ data.item.event.resource.name }}
-                  </NuxtLink>
+                  </nuxt-link>
 
                   <div v-if="data.item.event.resource.__typename === 'Manufacturer'">
                     {{ data.item.event.resource.name }}
@@ -55,9 +55,9 @@
               </template>
 
               <template #cell(contributor)="data">
-                <NuxtLink :to="localePath({name: 'profile-username', params: {username: data.value}})">
+                <nuxt-link :to="localePath({name: 'profile-username', params: {username: data.value}})">
                   {{ data.value }}
-                </NuxtLink>
+                </nuxt-link>
               </template>
 
               <template #cell(actions)="data">
@@ -95,9 +95,9 @@
                 <div v-for="(contributor, index) in contributors" :key="index" class="list-group-item d-flex justify-content-between align-items-center no-border">
                   <div>
                     {{ index + 1 }}.
-                    <NuxtLink :to="localePath({name: 'profile-username', params: {username: contributor.username}})">
+                    <nuxt-link :to="localePath({name: 'profile-username', params: {username: contributor.username}})">
                       {{ contributor.username }}
-                    </NuxtLink>
+                    </nuxt-link>
                   </div>
                   <span class="badge badge-primary badge-pill">{{ contributor.totalContributions }}</span>
                 </div>
