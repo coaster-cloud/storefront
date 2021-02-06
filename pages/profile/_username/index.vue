@@ -82,7 +82,7 @@
                     <template v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items">
                       <b-list-group-item :key="index" class="flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                          <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {park: attractionRide.attraction.park.fullSlug}})">
+                          <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: attractionRide.attraction.fullSlug}})">
                             {{ attractionRide.attraction.name }}
                           </nuxt-link>
                         </div>
