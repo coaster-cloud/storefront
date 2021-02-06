@@ -1,5 +1,3 @@
-Copyright (c) 2020 Michel Chowanski
-
 Images
 =======
 All images located in this repository are copyright by `coaster.cloud` and licensed proprietary. Using the images 
@@ -15,11 +13,8 @@ Source Code
 =======
 The complete source code, with the exception of the images and fonts (see above), is licensed under MIT.
 
-License text:
 ```
 Copyright (c) 2020 Michel Chowanski
-
-**This licence applies only to the source code and does not apply to fonts and images.**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
