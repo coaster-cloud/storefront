@@ -101,7 +101,7 @@ export default {
 
       const result = await me.$graphql(query, { input })
 
-      // me.$trackEvent('Attraction rated');
+      me.$trackEvent('Attraction rated')
 
       me.$emit('changed', result.setRating.attraction)
     },

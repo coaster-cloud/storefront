@@ -147,6 +147,8 @@ export default {
 
       const result = await me.$graphql(query, { countDate: me.countDate, input })
 
+      me.$trackEvent('Attraction counted')
+
       me.$emit('rides-changed', result.setRides.attraction)
     },
 

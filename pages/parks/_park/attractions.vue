@@ -88,7 +88,7 @@ export default {
     },
 
     onAttractionCreated (attraction) {
-      // this.$trackEvent('Park created');
+      this.$trackEvent('Park created')
       this.$router.push(this.localePath({
         name: 'attractions-attraction',
         params: { attraction: attraction.fullSlug }

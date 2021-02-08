@@ -283,7 +283,7 @@ export default {
     },
 
     onModification (park) {
-      // this.$trackEvent('Park modified');
+      this.$trackEvent('Park modified')
 
       if (park.fullSlug !== this.$route.params.park) {
         this.$router.replace(this.localePath({

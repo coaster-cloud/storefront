@@ -12,7 +12,17 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [
+      {
+        hid: 'analytics',
+        src: "https://analytics.coaster.cloud/umami.js",
+        body: true,
+        async: true,
+        defer: true,
+        "data-website-id": "1ae093e7-52b5-4bec-9256-459723442ca3"
+      },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -29,7 +39,8 @@ export default {
     '~/plugins/vue-scroll-to.js',
     '~/plugins/graphql.js',
     '~/plugins/create-head.js',
-    '~/plugins/timestamp.js'
+    '~/plugins/timestamp.js',
+    '~/plugins/umami.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -111,7 +122,10 @@ export default {
     lazy: true,
     langDir: 'lang/',
     defaultLocale: 'en',
-    strategy: 'prefix'
+    strategy: 'prefix',
+    detectBrowserLanguage: {
+      onlyOnNoPrefix: true
+    }
   },
 
   // PWA

@@ -442,7 +442,7 @@ export default {
     },
 
     onModification (attraction) {
-      // this.$trackEvent('Attraction modified');
+      this.$trackEvent('Attraction modified')
 
       if (attraction.fullSlug !== this.$route.params.attraction) {
         this.$router.replace(this.localePath({
