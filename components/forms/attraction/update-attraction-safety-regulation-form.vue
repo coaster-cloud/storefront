@@ -24,6 +24,7 @@
       :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMinHeight]')"
+      :disabled="noRestrictions"
     />
 
     <text-input
@@ -33,6 +34,7 @@
       :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMaxHeight]')"
+      :disabled="noRestrictions"
     />
 
     <text-input
@@ -42,6 +44,7 @@
       :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMinAge]')"
+      :disabled="noRestrictions"
     />
 
     <text-input
@@ -51,6 +54,7 @@
       :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][soloMaxAge]')"
+      :disabled="noRestrictions"
     />
 
     <h5>{{ $t('safety_regulation.escort') }}</h5>
@@ -61,6 +65,7 @@
       :description="$t('input_hint.cm')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinHeight]')"
+      :disabled="noRestrictions"
     />
 
     <text-input
@@ -70,6 +75,14 @@
       :description="$t('input_hint.years')"
       :formatter="formatInteger"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinAge]')"
+      :disabled="noRestrictions"
+    />
+
+    <switch-input
+      id="update-attraction-safety-regulation-form-no-restrictions"
+      v-model="noRestrictions"
+      :label="$t('no_safety_regulation')"
+      :label-col="12"
     />
 
     <template v-slot:modal-footer="{ ok }">
@@ -101,6 +114,35 @@ export default {
       soloMaxAge: null,
       accompaniedMinHeight: null,
       accompaniedMinAge: null
+    }
+  },
+
+  computed: {
+    noRestrictions: {
+      get () {
+        const me = this
+
+        if (me.soloMinHeight === 0 && me.soloMinAge === 0) {
+          const optionalFields = [me.soloMaxHeight, me.soloMaxAge, me.accompaniedMinHeight, me.accompaniedMinAge]
+
+          if (optionalFields.filter(v => v !== null).length === 0) {
+            return true
+          }
+        }
+
+        return false
+      },
+
+      set (value) {
+        const me = this
+
+        me.soloMinHeight = value === true ? 0 : null
+        me.soloMinAge = value === true ? 0 : null
+        me.soloMaxHeight = null
+        me.soloMaxAge = null
+        me.accompaniedMinHeight = null
+        me.accompaniedMinAge = null
+      }
     }
   },
 
