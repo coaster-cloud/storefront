@@ -23,6 +23,29 @@
       :violations="getFieldViolations('[addParkZones][0][name]')"
     />
 
+    <text-input
+      id="add-park-zone-form-opened-at"
+      v-model="openedAt"
+      :label="$t('opening')"
+      :description="$t('input_hint.flex_date')"
+      :violations="getFieldViolations('[addParkZones][0][openedAt]')"
+    />
+
+    <text-input
+      id="add-park-zone-form-closed-at"
+      v-model="closedAt"
+      :label="$t('closing')"
+      :description="$t('input_hint.flex_date')"
+      :violations="getFieldViolations('[addParkZones][0][closedAt]')"
+    />
+
+    <tag-input
+      id="add-park-zone-form-former-names"
+      v-model="formerNames"
+      :label="$t('former_names')"
+      :violations="getFieldViolations('[addParkZones][0][formerNames]')"
+    />
+
     <template v-slot:modal-footer="{ ok }">
       <b-button variant="primary ml-auto" @click="save(ok)">
         {{ $t('save') }}
@@ -46,7 +69,10 @@ export default {
 
   data () {
     return {
-      name: null
+      name: null,
+      openedAt: null,
+      closedAt: null,
+      formerNames: []
     }
   },
 
@@ -55,10 +81,20 @@ export default {
       const me = this
 
       me.name = null
+      me.openedAt = null
+      me.closedAt = null
+      me.formerNames = []
     },
 
     async save (ok) {
-      await this.updatePark(this.parkId, { addParkZones: [{ name: this.name }] }, ok)
+      await this.updatePark(this.parkId, {
+        addParkZones: [{
+          name: this.name,
+          openedAt: this.openedAt,
+          closedAt: this.closedAt,
+          formerNames: this.formerNames
+        }]
+      }, ok)
     }
   }
 }

@@ -51,6 +51,11 @@
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
             <select-filter v-model="selectedTag" :placeholder="$t('any_tag')" :options="tagOptions" />
           </div>
+
+          <!-- Park zone -->
+          <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
+            <select-filter v-model="selectedZone" :placeholder="$t('any_zone')" :options="zoneOptions" />
+          </div>
         </div>
 
         <h5>{{ $t('safety_regulations') }}</h5>
@@ -161,6 +166,7 @@ export default {
       stateOptions: [],
       elementOptions: [],
       tagOptions: [],
+      zoneOptions: [],
       sortOptions: [
         { value: null, text: this.$t('standard_sorting'), attribute: null },
         { value: 'NAME_ASC'.toLowerCase(), text: this.$t('alphabetical'), attribute: null },
@@ -179,7 +185,8 @@ export default {
         STATE: 'stateOptions',
         THRILL: 'thrillOptions',
         ELEMENT: 'elementOptions',
-        TAG: 'tagOptions'
+        TAG: 'tagOptions',
+        ZONE: this.parkId ? 'zoneOptions' : null
       }
     }
   },
@@ -306,6 +313,16 @@ export default {
       }
     },
 
+    selectedZone: {
+      get () {
+        return _.get(this.$route.query, 'zone', null)
+      },
+
+      set (value) {
+        this.updateRoute({ zone: value, page: null })
+      }
+    },
+
     normalizedAttractions () {
       const list = []
       const me = this
@@ -366,9 +383,10 @@ export default {
         itemsPerPage: me.itemsPerPage,
         sort: me.selectedSort === null ? 'RELEVANCE' : me.selectedSort.toUpperCase(),
         locale: me.$i18n.locale,
-        facet: Object.keys(me.facetMap),
+        facet: Object.keys(me.facetMap).filter(key => me.facetMap[key] !== null),
         filter: _.omitBy({
           park: me.parkId,
+          zone: me.selectedZone,
           search: me.selectedName,
           category: me.selectedCategory,
           thrill: me.selectedThrill,

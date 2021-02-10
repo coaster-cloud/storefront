@@ -23,6 +23,29 @@
       :violations="getFieldViolations('[updateParkZones][0][name]')"
     />
 
+    <text-input
+      id="update-park-zone-form-opened-at"
+      v-model="openedAt"
+      :label="$t('opening')"
+      :description="$t('input_hint.flex_date')"
+      :violations="getFieldViolations('[updateParkZones][0][openedAt]')"
+    />
+
+    <text-input
+      id="update-park-zone-form-closed-at"
+      v-model="closedAt"
+      :label="$t('closing')"
+      :description="$t('input_hint.flex_date')"
+      :violations="getFieldViolations('[updateParkZones][0][closedAt]')"
+    />
+
+    <tag-input
+      id="update-park-zone-form-former-names"
+      v-model="formerNames"
+      :label="$t('former_names')"
+      :violations="getFieldViolations('[updateParkZones][0][formerNames]')"
+    />
+
     <template v-slot:modal-footer="{ ok }">
       <b-button variant="primary ml-auto" @click="save(ok)">
         {{ $t('save') }}
@@ -51,7 +74,10 @@ export default {
 
   data () {
     return {
-      name: null
+      name: null,
+      openedAt: null,
+      closedAt: null,
+      formerNames: []
     }
   },
 
@@ -63,7 +89,7 @@ export default {
         query ($parkId: String!){
           park(id: $parkId) {
             id
-            zones { id, name }
+            zones { id, name, openedAt { value }, closedAt { value }, formerNames }
           }
         }
       `
@@ -73,12 +99,25 @@ export default {
       })
 
       if (result) {
-        me.name = result.park.zones.filter(v => v.id === me.zoneId)[0].name
+        const zone = result.park.zones.filter(v => v.id === me.zoneId)[0]
+
+        me.name = zone.name
+        me.openedAt = zone.openedAt?.value
+        me.closedAt = zone.closedAt?.value
+        me.formerNames = zone.formerNames
       }
     },
 
     async save (ok) {
-      await this.updatePark(this.parkId, { updateParkZones: [{ id: this.zoneId, name: this.name }] }, ok)
+      await this.updatePark(this.parkId, {
+        updateParkZones: [{
+          id: this.zoneId,
+          name: this.name,
+          openedAt: this.openedAt,
+          closedAt: this.closedAt,
+          formerNames: this.formerNames
+        }]
+      }, ok)
     }
   }
 }

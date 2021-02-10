@@ -56,6 +56,101 @@
           <!-- Park zones -->
           <div v-if="zones.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('park_zones') }}</h5>
+
+            <!--
+            <b-row>
+              <b-col v-for="(zone, index) in park.zones" :key="index" md="6" class="mb-2">
+                <b-card
+                  border-variant="primary"
+                  align="center"
+                >
+                  <div>
+                    <b>{{ zone.name }}</b>
+                  </div>
+
+                  <div>
+                    {{ zone.totalAttractions }} attractions
+                  </div>
+
+                  <div v-if="$store.getters['common/getEditMode']">
+                    <action-button v-b-modal="`update-park-zone-form-${zone.id}`" modify-icon icon-only />
+                    <action-button v-b-modal="`delete-park-zone-form-${zone.id}`" delete-icon icon-only />
+                  </div>
+
+                  <update-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
+                  <delete-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
+                </b-card>
+              </b-col>
+            </b-row>
+            -->
+
+            <b-table-simple small bordered responsive="sm">
+              <b-thead>
+                <b-tr>
+                  <b-th class="table-light-th">
+                    {{ $t('name') }}
+                  </b-th>
+                  <b-th class="table-light-th text-center">
+                    {{ $t('opening') }}
+                  </b-th>
+                  <b-th class="table-light-th text-center">
+                    {{ $t('closing') }}
+                  </b-th>
+                  <b-th class="table-light-th text-center">
+                    {{ $t('attractions') }}
+                  </b-th>
+                  <b-th v-if="$store.getters['common/getEditMode']" class="table-light-th table-actions-th text-center">
+                    {{ $t('actions') }}
+                  </b-th>
+                </b-tr>
+              </b-thead>
+
+              <b-tbody>
+                <b-tr v-for="(zone, index) in park.zones" :key="index">
+                  <b-td class="align-middle">
+                    <div>
+                      {{ zone.name }}
+                    </div>
+
+                    <small v-if="zone.formerNames.length > 0">
+                      {{ $t('former_names') }}: {{ zone.formerNames.join(', ') }}
+                    </small>
+                  </b-td>
+                  <b-td class="text-center align-middle">
+                    <template v-if="zone.openedAt">
+                      {{ zone.openedAt | timestamp($i18n.locale) }}
+                    </template>
+                  </b-td>
+                  <b-td class="text-center align-middle">
+                    <template v-if="zone.closedAt">
+                      {{ zone.closedAt | timestamp($i18n.locale) }}
+                    </template>
+                  </b-td>
+                  <b-td class="text-center align-middle">
+                    <div v-if="zone.totalAttractions > 0">
+                      <nuxt-link :to="localePath({name: 'parks-park-attractions', params: {park: park.fullSlug}, query: {zone: zone.id}})">
+                        {{ zone.totalAttractions }}
+                        <b-icon icon="link45deg" />
+                      </nuxt-link>
+                    </div>
+                    <div v-else>
+                      -
+                    </div>
+                  </b-td>
+                  <b-td v-if="$store.getters['common/getEditMode']" class="text-center align-middle">
+                    <b-button-group>
+                      <action-button v-b-modal="`update-park-zone-form-${zone.id}`" modify-icon icon-only />
+                      <action-button v-b-modal="`delete-park-zone-form-${zone.id}`" delete-icon icon-only />
+                    </b-button-group>
+
+                    <update-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
+                    <delete-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
+                  </b-td>
+                </b-tr>
+              </b-tbody>
+            </b-table-simple>
+
+            <!--
             <value-list :items="zones">
               <template v-slot:action="props">
                 <b-button-group>
@@ -67,6 +162,7 @@
                 <delete-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
               </template>
             </value-list>
+            -->
 
             <div class="text-right">
               <action-button v-b-modal.add-park-zone-form add-icon>
@@ -307,6 +403,18 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.table-light-th {
+  color: #495057;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.table-actions-th {
+  width: 80px
+}
+</style>
+
 <query>
 query ($parkSlug: String!, $locale: String!) {
     park(id: $parkSlug) {
@@ -328,7 +436,7 @@ query ($parkSlug: String!, $locale: String!) {
             country { label(locale: $locale) }
         },
         timezone { label(locale: $locale) }
-        zones { id, name }
+        zones { id, name, openedAt { format, value }, closedAt { format, value }, formerNames, totalAttractions }
         createdAt { format, value }
         updatedAt { format, value }
         images {
