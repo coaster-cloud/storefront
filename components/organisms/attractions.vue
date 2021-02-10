@@ -53,7 +53,7 @@
           </div>
 
           <!-- Park zone -->
-          <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
+          <div v-if="zoneOptions.length > 0" class="col-md-6 col-lg-3 col-xl-3 mb-2">
             <select-filter v-model="selectedZone" :placeholder="$t('any_zone')" :options="zoneOptions" />
           </div>
         </div>
