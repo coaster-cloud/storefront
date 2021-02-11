@@ -75,12 +75,12 @@
           </div>
         </b-col>
 
-        <b-col v-for="(fact, index) in account.rideStatistic.summary" :key="index" lg="3" md="4" sm="6">
+        <b-col v-for="(rideFact, index) in account.rideStatistic.rideFacts" :key="index" lg="3" md="4" sm="6">
           <div class="text-center mt-4">
             <p class="mb-1">
-              {{ fact.label }}
+              {{ rideFact.label }}
             </p>
-            <span class="text-muted">{{ fact.value }}</span>
+            <span class="text-muted">{{ rideFact.valueAsString }}</span>
           </div>
         </b-col>
       </b-row>
@@ -448,7 +448,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           totalUniqueRides
         }
       }
-      summary { label, value }
+      rideFacts { label(locale: $locale), valueAsString(locale: $locale) }
     }
   }
 }
