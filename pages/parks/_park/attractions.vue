@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 export default {
   async fetch () {
     await this.loadPark()
@@ -97,10 +95,15 @@ export default {
   },
 
   head () {
-    return this.$createHead({
-      title: _.get(this.park, 'name', null),
-      description: _.get(this.park, 'shortDescription', null)
-    })
+    if (this.park) {
+      return this.$createHead({
+        title: this.park.name,
+        description: this.park.shortDescription ?? this.$t('generic_park_description', { park: this.park.name }),
+        image: this.park.images.length > 0 ? this.park.images[0].large : null
+      })
+    }
+
+    return {}
   }
 }
 </script>
@@ -112,6 +115,10 @@ query ($parkSlug: String!, $locale: String!) {
         name
         shortDescription(locale: $locale)
         fullSlug
+        images {
+          middle: url(size: MIDDLE)
+          large: url(size: LARGE)
+        }
     }
 }
 </query>

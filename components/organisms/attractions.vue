@@ -91,7 +91,7 @@
         <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
           <b-card class="card-list" no-body>
             <nuxt-link :to="localePath(attraction.route)">
-              <b-card-img :src="attraction.image" top />
+              <b-card-img :src="attraction.image" :alt="attraction.name" top />
             </nuxt-link>
 
             <div class="card-body">

@@ -237,7 +237,7 @@ export default {
   head () {
     return this.$createHead({
       title: this.$t('activities'),
-      description: null
+      description: this.$t('discover_features')
     })
   }
 }

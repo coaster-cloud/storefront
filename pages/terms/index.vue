@@ -27,7 +27,7 @@ export default {
   head () {
     return this.$createHead({
       title: this.$t('terms'),
-      description: this.$t('meta.description')
+      description: this.$t('discover_features')
     })
   }
 }

@@ -380,7 +380,9 @@ export default {
 
   head () {
     return this.$createHead({
-      title: this.account?.username ?? null
+      title: this.account?.username ?? null,
+      description: this.$t('discover_features'),
+      index: false
     })
   }
 }

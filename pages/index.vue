@@ -80,7 +80,7 @@
         >
           <b-card class="card-list" no-body>
             <nuxt-link :to="localePath(item.route)">
-              <b-card-img :src="item.image" top />
+              <b-card-img :src="item.image" :alt="item.name" top />
             </nuxt-link>
 
             <div class="card-body">
@@ -173,8 +173,8 @@ export default {
 
   head () {
     return this.$createHead({
-      title: this.$t('meta.title'),
-      description: this.$t('meta.description')
+      title: this.$t('themepark_companion'),
+      description: this.$t('discover_features')
     })
   }
 }

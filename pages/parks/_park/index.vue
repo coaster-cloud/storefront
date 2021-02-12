@@ -57,33 +57,6 @@
           <div v-if="zones.length > 0 || $store.getters['common/getEditMode']" class="content-block">
             <h5>{{ $t('park_zones') }}</h5>
 
-            <!--
-            <b-row>
-              <b-col v-for="(zone, index) in park.zones" :key="index" md="6" class="mb-2">
-                <b-card
-                  border-variant="primary"
-                  align="center"
-                >
-                  <div>
-                    <b>{{ zone.name }}</b>
-                  </div>
-
-                  <div>
-                    {{ zone.totalAttractions }} attractions
-                  </div>
-
-                  <div v-if="$store.getters['common/getEditMode']">
-                    <action-button v-b-modal="`update-park-zone-form-${zone.id}`" modify-icon icon-only />
-                    <action-button v-b-modal="`delete-park-zone-form-${zone.id}`" delete-icon icon-only />
-                  </div>
-
-                  <update-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
-                  <delete-park-zone-form :park-id="park.id" :zone-id="zone.id" @finish="onModification" />
-                </b-card>
-              </b-col>
-            </b-row>
-            -->
-
             <b-table-simple small bordered responsive="sm">
               <b-thead>
                 <b-tr>
@@ -150,20 +123,6 @@
               </b-tbody>
             </b-table-simple>
 
-            <!--
-            <value-list :items="zones">
-              <template v-slot:action="props">
-                <b-button-group>
-                  <action-button v-b-modal="`update-park-zone-form-${props.item.id}`" modify-icon icon-only />
-                  <action-button v-b-modal="`delete-park-zone-form-${props.item.id}`" delete-icon icon-only />
-                </b-button-group>
-
-                <update-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
-                <delete-park-zone-form :park-id="park.id" :zone-id="props.item.id" @finish="onModification" />
-              </template>
-            </value-list>
-            -->
-
             <div class="text-right">
               <action-button v-b-modal.add-park-zone-form add-icon>
                 {{ $t('add.park_zone') }}
@@ -222,6 +181,7 @@
           <!-- Image slider -->
           <image-slider
             :images="park.images"
+            :alt="park.name"
             :gallery-route="{name: 'parks-park-images', params: {park: park.fullSlug}}"
           />
 
@@ -248,8 +208,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 export default {
   async fetch () {
     await this.loadPark()
@@ -395,10 +353,15 @@ export default {
   },
 
   head () {
-    return this.$createHead({
-      title: _.get(this.park, 'name', null),
-      description: _.get(this.park, 'shortDescription', null)
-    })
+    if (this.park) {
+      return this.$createHead({
+        title: this.park.name,
+        description: this.park.shortDescription ?? this.$t('generic_park_description', { park: this.park.name }),
+        image: this.park.images.length > 0 ? this.park.images[0].large : null
+      })
+    }
+
+    return {}
   }
 }
 </script>

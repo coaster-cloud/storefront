@@ -28,7 +28,7 @@ export default {
   head () {
     return this.$createHead({
       title: this.$t('imprint'),
-      description: this.$t('meta.description')
+      description: this.$t('discover_features')
     })
   }
 }

@@ -179,6 +179,7 @@
           <!-- Image slider -->
           <image-slider
             :images="attraction.images"
+            :alt="attraction.name"
             :gallery-route="{name: 'attractions-attraction-images', params: {attraction: attraction.fullSlug}}"
           />
 
@@ -226,7 +227,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import Moment from 'moment'
 
 export default {
@@ -477,10 +477,18 @@ export default {
   },
 
   head () {
-    return this.$createHead({
-      title: _.get(this.attraction, 'name', null),
-      description: _.get(this.attraction, 'shortDescription', null)
-    })
+    if (this.attraction) {
+      return this.$createHead({
+        title: this.attraction.name,
+        description: this.attraction.shortDescription ?? this.$t('generic_attraction_description', {
+          park: this.park.name,
+          attraction: this.attraction.name
+        }),
+        image: this.attraction.images.length > 0 ? this.attraction.images[0].large : null
+      })
+    }
+
+    return {}
   }
 }
 </script>

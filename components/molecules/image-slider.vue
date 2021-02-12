@@ -14,7 +14,7 @@
         <b-carousel v-model="slide" :interval="4000" controls img-width="512" img-height="288">
           <template v-for="(image, index) in images">
             <nuxt-link :key="index" :to="localePath(galleryRoute)">
-              <b-carousel-slide :img-src="image.middle" />
+              <b-carousel-slide :img-src="image.middle" :img-alt="alt" />
             </nuxt-link>
           </template>
         </b-carousel>
@@ -47,6 +47,11 @@ export default {
     galleryRoute: {
       type: Object,
       required: true
+    },
+
+    alt: {
+      type: String,
+      default: null
     }
   },
 

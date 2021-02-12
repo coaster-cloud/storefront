@@ -54,7 +54,7 @@
         <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
           <b-card class="card-list" no-body>
             <nuxt-link :to="localePath(park.route)">
-              <b-card-img :src="park.image" top />
+              <b-card-img :src="park.image" :alt="park.name" top />
             </nuxt-link>
 
             <div class="card-body">

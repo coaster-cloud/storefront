@@ -25,7 +25,7 @@
         <template v-for="(image, index) in park.images">
           <b-col :key="index" md="6" xl="4" class="mb-3">
             <b-card no-body class="card-list">
-              <b-card-img :src="image.middle" top class="pointer" @click="currentImage = index" />
+              <b-card-img :alt="park.name" :src="image.middle" top class="pointer" @click="currentImage = index" />
 
               <template v-slot:footer>
                 <!-- eslint-disable-next-line vue/no-v-html -->
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 
@@ -152,10 +151,26 @@ export default {
   },
 
   head () {
-    return this.$createHead({
-      title: _.get(this.park, 'name', null),
-      description: _.get(this.park, 'shortDescription', null)
-    })
+    const me = this
+
+    if (me.park) {
+      return this.$createHead({
+        title: me.park.name,
+        description: me.park.shortDescription ?? me.$t('generic_park_description', { park: me.park.name }),
+        image: me.park.images.length > 0 ? me.park.images[0].large : null,
+        structuredData: me.park.images.map(function (image) {
+          return {
+            '@context': 'https://schema.org/',
+            '@type': 'ImageObject',
+            contentUrl: image.large,
+            license: image.license.url,
+            acquireLicensePage: me.$route.fullPath
+          }
+        })
+      })
+    }
+
+    return {}
   }
 }
 </script>
