@@ -37,7 +37,13 @@ export default {
   computed: {
     heroImages () {
       return [
-        require('assets/images/hero/black_mamba.jpg')
+        require('assets/images/hero/fly.jpg'),
+        require('assets/images/hero/black_mamba.jpg'),
+        require('assets/images/hero/chiapas.jpg'),
+        require('assets/images/hero/taron.jpg'),
+        require('assets/images/hero/stoe.jpg'),
+        require('assets/images/hero/max_moritz.jpg'),
+        require('assets/images/hero/joris.jpg')
       ]
     }
   },
