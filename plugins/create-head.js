@@ -8,7 +8,7 @@ Vue.prototype.$createHead = function (params = {}) {
 
   if (Object.prototype.hasOwnProperty.call(params, 'title') && params.title !== null) {
     head.title = params.title
-    head.meta.push({ hid: 'og:title', property: 'og:title', content: params.title })
+    head.meta.push({ hid: 'og:title', property: 'og:title', content: params.title + ' @ coaster.cloud' })
   }
 
   if (Object.prototype.hasOwnProperty.call(params, 'description') && params.description !== null) {

@@ -379,8 +379,38 @@ export default {
   },
 
   head () {
+    if (this.account) {
+      let attractions = 0
+      let rides = 0
+      let length = 0
+
+      this.account.rideStatistic.rideFacts.forEach(function (rideFact) {
+        if (rideFact.key === 'totalAttractions') {
+          attractions = rideFact.value
+        }
+
+        if (rideFact.key === 'totalRides') {
+          rides = rideFact.value
+        }
+
+        if (rideFact.key === 'totalRideLength') {
+          length = rideFact.valueAsString
+        }
+      })
+
+      return this.$createHead({
+        title: this.account.username,
+        description: attractions > 0 ? this.$t('account_social_teaser', {
+          username: this.account.username,
+          attractions,
+          rides,
+          length
+        }) : this.$t('discover_features'),
+        index: false
+      })
+    }
+
     return this.$createHead({
-      title: this.account?.username ?? null,
       description: this.$t('discover_features'),
       index: false
     })
@@ -450,7 +480,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           totalUniqueRides
         }
       }
-      rideFacts { label(locale: $locale), valueAsString(locale: $locale) }
+      rideFacts { key, label(locale: $locale), value, valueAsString(locale: $locale) }
     }
   }
 }
