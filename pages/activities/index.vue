@@ -68,7 +68,7 @@
 
               <template #row-details="data">
                 <b-card>
-                  <pre class="m-0">{{ JSON.stringify(JSON.parse(data.item.event.payload), null, 2) }}</pre>
+                  <pre class="patch m-0">{{ JSON.stringify(JSON.parse(data.item.event.payload), null, 2) }}</pre>
                 </b-card>
               </template>
             </b-table>
@@ -285,3 +285,12 @@ query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
   }
 }
 </query>
+
+<style lang="scss" scoped>
+.patch {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+</style>
