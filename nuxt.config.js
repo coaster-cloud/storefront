@@ -20,7 +20,7 @@ export default {
         body: true,
         async: true,
         defer: true,
-        "data-website-id": process.env.ANALYTICS_ID
+        "data-website-id": '9c8c9cd9-9625-4083-b05e-ab8f8acd7743'
       },
     ],
   },
