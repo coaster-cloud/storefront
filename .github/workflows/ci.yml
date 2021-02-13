@@ -29,3 +29,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/coaster-cloud/web-app-nginx:latest
+        env:
+          ANALYTICS_ID: 9c8c9cd9-9625-4083-b05e-ab8f8acd7743
+          DATA_SERVICE_URL: https://data.coaster.cloud/v1
+          SENTRY_DSN: https://e5547154090e45bba96718e5bf78b28e@o320437.ingest.sentry.io/5517128
