@@ -18,6 +18,10 @@
           {{ $t('attractions') }}
         </b-nav-item>
 
+        <b-nav-item key="nav-item-manufacturers" :to="localePath('manufacturers')">
+          {{ $t('manufacturers') }}
+        </b-nav-item>
+
         <!-- Logged in -->
         <template v-if="$store.getters['account/hasToken']">
           <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile-username', params: {username: $store.getters['account/getUsername']}})">

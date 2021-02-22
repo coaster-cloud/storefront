@@ -140,13 +140,13 @@ export default {
 
         AttractionDeleted: { text: 'attraction_deleted' },
         ParkDeleted: { text: 'park_deleted' },
-        ManufacturerDeleted: { text: 'manufacturer_updated' },
+        ManufacturerDeleted: { text: 'manufacturer_deleted' },
         LegacyAttractionDeleted: { text: 'attraction_deleted' },
         LegacyParkDeleted: { text: 'park_deleted' },
 
         AttractionUpdated: { text: 'attraction_updated' },
         ParkUpdated: { text: 'park_updated' },
-        ManufacturerUpdated: { text: 'manufacturer_deleted' },
+        ManufacturerUpdated: { text: 'manufacturer_updated' },
         LegacyAttractionModified: { text: 'attraction_updated' },
         LegacyParkModified: { text: 'park_updated' }
       }
