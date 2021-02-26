@@ -57,6 +57,7 @@ export default {
             manufacturer {
               id
               name
+              fullSlug
             }
           }
         }

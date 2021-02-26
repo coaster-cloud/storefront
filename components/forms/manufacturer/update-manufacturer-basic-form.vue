@@ -9,9 +9,9 @@
 
 <template>
   <b-modal
-    id="create-manufacturer-form"
+    id="update-manufacturer-basic-form"
     size="xs"
-    :title="$t('add.manufacturer')"
+    :title="$t('modify.basic_data')"
     no-stacking
     scrollable
     @show="load"
@@ -61,6 +61,13 @@ import ManufacturerUpdateForm from '~/components/mixins/manufacturer-update-form
 export default {
   mixins: [ManufacturerUpdateForm],
 
+  props: {
+    manufacturerId: {
+      type: String,
+      required: true
+    }
+  },
+
   data () {
     return {
       name: null,
@@ -77,7 +84,15 @@ export default {
       const me = this
 
       const query = `
-        query ($locale: String!){
+        query ($locale: String!, $manufacturerId: String!){
+          manufacturer(id: $manufacturerId) {
+            id
+            name
+            fullSlug
+            categories { key }
+            state { key }
+            web
+          }
           manufacturerStates {
             key
             label(locale: $locale)
@@ -89,17 +104,17 @@ export default {
         }
       `
 
-      this.name = null
-      this.categories = []
-      this.state = null
-      this.web = null
-      this.violations = []
-
       const result = await me.$graphql(query, {
-        locale: me.$i18n.locale
+        locale: me.$i18n.locale,
+        manufacturerId: me.manufacturerId
       })
 
       if (result) {
+        me.name = result.manufacturer.name
+        me.categories = result.manufacturer.categories.map(v => v.key)
+        me.state = result.manufacturer.state.key
+        me.web = result.manufacturer.web
+
         me.stateOptions = result.manufacturerStates.map(function (state) {
           return {
             value: state.key,
@@ -124,7 +139,7 @@ export default {
         web: this.web
       }
 
-      await this.createManufacturer(input, ok)
+      await this.updateManufacturer(this.manufacturerId, input, ok)
     }
   }
 }

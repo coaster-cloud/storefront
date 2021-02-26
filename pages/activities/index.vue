@@ -44,9 +44,12 @@
                     {{ data.item.event.resource.name }}
                   </nuxt-link>
 
-                  <div v-if="data.item.event.resource.__typename === 'Manufacturer'">
+                  <nuxt-link
+                    v-if="data.item.event.resource.__typename === 'Manufacturer'"
+                    :to="localePath({name: 'manufacturers-manufacturer', params: {manufacturer: data.item.event.resource.fullSlug}})"
+                  >
                     {{ data.item.event.resource.name }}
-                  </div>
+                  </nuxt-link>
                 </div>
 
                 <div>
@@ -273,6 +276,7 @@ query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
         }
         ... on Manufacturer {
           name
+          fullSlug
         }
       }
     }

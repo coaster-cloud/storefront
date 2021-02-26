@@ -120,7 +120,7 @@ export default {
 
   methods: {
     formatCoordinate (value) {
-      return value ? value.replace(/[^0-9.]/g, '') : value
+      return value ? value.replace(/[^0-9.-]/g, '') : value
     },
 
     async load () {

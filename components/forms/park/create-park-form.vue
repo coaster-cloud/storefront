@@ -40,6 +40,37 @@
       :options="stateOptions"
     />
 
+    <select-input
+      id="update-park-basic-form-timezone"
+      v-model="timezone"
+      :label="$t('timezone')"
+      :violations="getFieldViolations('[timezone]')"
+      :options="timezoneOptions"
+    />
+
+    <text-input
+      id="update-park-basic-form-web"
+      v-model="web"
+      :label="$t('web')"
+      :violations="getFieldViolations('[web]')"
+    />
+
+    <text-input
+      id="update-park-basic-form-latitude"
+      v-model="latitude"
+      :label="$t('latitude')"
+      :formatter="formatCoordinate"
+      :violations="getFieldViolations('[latitude]')"
+    />
+
+    <text-input
+      id="update-park-basic-form-longitude"
+      v-model="longitude"
+      :label="$t('longitude')"
+      :formatter="formatCoordinate"
+      :violations="getFieldViolations('[longitude]')"
+    />
+
     <template v-slot:modal-footer="{ ok }">
       <b-button variant="primary ml-auto" @click="save(ok)">
         {{ $t('save') }}
@@ -59,12 +90,21 @@ export default {
       name: null,
       categories: [],
       state: null,
+      timezone: null,
+      web: null,
+      latitude: null,
+      longitude: null,
       stateOptions: [],
-      categoriesOptions: []
+      categoriesOptions: [],
+      timezoneOptions: []
     }
   },
 
   methods: {
+    formatCoordinate (value) {
+      return value ? value.replace(/[^0-9.]/g, '') : value
+    },
+
     async load () {
       const me = this
 
@@ -78,12 +118,20 @@ export default {
             key
             label(locale: $locale)
           }
+          timezones {
+            key
+            label(locale: $locale)
+          }
         }
       `
 
       this.name = null
       this.categories = []
       this.state = null
+      this.timezone = null
+      this.web = null
+      this.latitude = null
+      this.longitude = null
       this.violations = []
 
       const result = await me.$graphql(query, {
@@ -104,6 +152,13 @@ export default {
             text: category.label
           }
         })
+
+        me.timezoneOptions = result.timezones.map(function (timezone) {
+          return {
+            value: timezone.key,
+            text: timezone.label
+          }
+        })
       }
     },
 
@@ -111,7 +166,11 @@ export default {
       const input = {
         name: this.name,
         categories: this.categories,
-        state: this.state
+        state: this.state,
+        timezone: this.timezone,
+        web: this.web,
+        latitude: this.latitude,
+        longitude: this.longitude
       }
 
       await this.createPark(input, ok)

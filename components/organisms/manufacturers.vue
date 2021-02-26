@@ -54,9 +54,11 @@
         <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
           <b-card class="card-list" no-body>
             <div class="card-body">
-              <div class="item-title text-center text-truncate">
-                {{ manufacturer.name }}
-              </div>
+              <nuxt-link :to="localePath(manufacturer.route)" class="w-40 w-sm-100">
+                <div class="item-title text-center text-truncate">
+                  {{ manufacturer.name }}
+                </div>
+              </nuxt-link>
 
               <div class="pt-2 text-muted text-small text-center">
                 {{ manufacturer.categories }}
@@ -200,7 +202,8 @@ export default {
         list.push({
           name: manufacturer.name,
           categories: categories.join(' / '),
-          address
+          address,
+          route: { name: 'manufacturers-manufacturer', params: { manufacturer: manufacturer.fullSlug } }
         })
       })
 
@@ -273,6 +276,7 @@ query ($locale: String, $facet: [ManufacturerFacet]!, $itemsPerPage: Int!, $page
         items {
             id
             name
+            fullSlug
             categories {
                 label(locale: $locale)
             }

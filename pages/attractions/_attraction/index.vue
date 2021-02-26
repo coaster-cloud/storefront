@@ -290,7 +290,7 @@ export default {
         type: 'route-list',
         value: this.attraction.manufacturers.map(function (value) {
           return {
-            route: { name: 'attractions', query: { manufacturer: value.id } },
+            route: { name: 'manufacturers-manufacturer', params: { manufacturer: value.fullSlug } },
             label: value.name
           }
         })
@@ -506,7 +506,7 @@ query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $
         fullSlug
         category { key, label(locale: $locale) }
         state { key, label(locale: $locale) }
-        manufacturers { id, name }
+        manufacturers { id, name, fullSlug }
         zone { id, name }
         latitude
         longitude
