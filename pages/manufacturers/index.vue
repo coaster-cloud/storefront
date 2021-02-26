@@ -52,6 +52,10 @@ export default {
 
     onManufacturerCreated (manufacturer) {
       this.$trackEvent('Manufacturer created')
+      this.$router.push(this.localePath({
+        name: 'manufacturers-manufacturer',
+        params: { manufacturer: manufacturer.fullSlug }
+      }))
     }
   },
 
