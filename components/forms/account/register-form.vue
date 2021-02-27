@@ -98,6 +98,7 @@ export default {
               field
               message(locale: $locale)
             }
+            token
           }
         }
       `
@@ -119,11 +120,13 @@ export default {
       if (me.violations.length === 0) {
         ok()
 
+        me.$store.commit('account/authenticate', result.register.token)
         this.$root.$bvToast.toast(this.$t('register_success'), {
           title: this.$t('register'),
           variant: 'success',
           solid: true,
-          toaster: 'b-toaster-top-center'
+          toaster: 'b-toaster-top-center',
+          autoHideDelay: 2000
         })
       }
     }

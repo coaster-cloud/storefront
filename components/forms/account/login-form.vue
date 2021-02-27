@@ -109,7 +109,8 @@ export default {
           title: this.$t('login'),
           variant: 'success',
           solid: true,
-          toaster: 'b-toaster-top-center'
+          toaster: 'b-toaster-top-center',
+          autoHideDelay: 2000
         })
       }
     }

@@ -114,7 +114,8 @@ export default {
         title: this.$t('logout'),
         variant: 'success',
         solid: true,
-        toaster: 'b-toaster-top-center'
+        toaster: 'b-toaster-top-center',
+        autoHideDelay: 2000
       })
     },
 
@@ -139,7 +140,8 @@ export default {
           title: me.$t('logout'),
           variant: 'danger',
           solid: true,
-          toaster: 'b-toaster-top-center'
+          toaster: 'b-toaster-top-center',
+          autoHideDelay: 2000
         })
       }, 30000)
     }
