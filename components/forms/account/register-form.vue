@@ -123,10 +123,7 @@ export default {
         me.$store.commit('account/authenticate', result.register.token)
         this.$root.$bvToast.toast(this.$t('register_success'), {
           title: this.$t('register'),
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center',
-          autoHideDelay: 2000
+          variant: 'success'
         })
       }
     }

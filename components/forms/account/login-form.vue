@@ -107,10 +107,7 @@ export default {
         me.$store.commit('account/authenticate', result.login.token)
         me.$root.$bvToast.toast(this.$t('login_success'), {
           title: this.$t('login'),
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center',
-          autoHideDelay: 2000
+          variant: 'success'
         })
       }
     }

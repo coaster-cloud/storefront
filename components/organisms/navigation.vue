@@ -112,10 +112,7 @@ export default {
 
       this.$root.$bvToast.toast(this.$t('logout_success'), {
         title: this.$t('logout'),
-        variant: 'success',
-        solid: true,
-        toaster: 'b-toaster-top-center',
-        autoHideDelay: 2000
+        variant: 'success'
       })
     },
 
@@ -138,10 +135,7 @@ export default {
 
         me.$root.$bvToast.toast(me.$t('session_expired'), {
           title: me.$t('logout'),
-          variant: 'danger',
-          solid: true,
-          toaster: 'b-toaster-top-center',
-          autoHideDelay: 2000
+          variant: 'danger'
         })
       }, 30000)
     }

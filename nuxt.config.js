@@ -64,7 +64,14 @@ export default {
 
   // Bootstrap
   bootstrapVue: {
-    icons: true
+    icons: true,
+    config: {
+      BToast: {
+        solid: true,
+        toaster: 'b-toaster-top-right',
+        autoHideDelay: 2000
+      }
+    }
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

@@ -83,9 +83,7 @@ export default {
 
         this.$root.$bvToast.toast(this.$t('reset_password_success'), {
           title: this.$t('change_password'),
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center'
+          variant: 'success'
         })
       }
     }
