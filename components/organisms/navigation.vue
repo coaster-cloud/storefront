@@ -21,38 +21,6 @@
         <b-nav-item key="nav-item-manufacturers" :to="localePath('manufacturers')">
           {{ $t('manufacturers') }}
         </b-nav-item>
-
-        <!-- Logged in -->
-        <template v-if="$store.getters['account/hasToken']">
-          <b-nav-item key="nav-item-profile" :to="localePath({name: 'profile-username', params: {username: $store.getters['account/getUsername']}})">
-            {{ $t('my_profile') }}
-          </b-nav-item>
-
-          <b-nav-item key="nav-item-profile-form" v-b-modal.update-account-form>
-            {{ $t('settings') }}
-          </b-nav-item>
-
-          <b-nav-item key="nav-item-logout" @click="logout">
-            {{ $t('logout') }}
-          </b-nav-item>
-
-          <update-account-form />
-        </template>
-
-        <!-- Logged out -->
-        <template v-if="!$store.getters['account/hasToken']">
-          <b-nav-item key="nav-item-login" v-b-modal.login-form>
-            {{ $t('login') }}
-          </b-nav-item>
-
-          <b-nav-item key="nav-item-register" v-b-modal.register-form>
-            {{ $t('register') }}
-          </b-nav-item>
-
-          <login-form />
-          <register-form />
-          <reset-password-form />
-        </template>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
@@ -62,9 +30,54 @@
           </b-form-checkbox>
         </b-nav-form>
 
+        <!-- Logged in -->
+        <template v-if="$store.getters['account/hasToken']">
+          <b-nav-item-dropdown key="nav-item-logout" right>
+            <template v-slot:button-content>
+              {{ $t('my_profile') }}
+            </template>
+
+            <b-dropdown-item :to="localePath({name: 'profile-username', params: {username: $store.getters['account/getUsername']}})">
+              {{ $t('public_profile') }}
+            </b-dropdown-item>
+
+            <b-dropdown-item v-b-modal.update-account-form>
+              {{ $t('settings') }}
+            </b-dropdown-item>
+
+            <b-dropdown-item @click="logout">
+              {{ $t('logout') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <update-account-form />
+        </template>
+
+        <!-- Logged out -->
+        <template v-if="!$store.getters['account/hasToken']">
+          <b-nav-item-dropdown key="nav-item-login" right>
+            <template v-slot:button-content>
+              {{ $t('login') }}
+            </template>
+
+            <b-dropdown-item v-b-modal.login-form>
+              {{ $t('login') }}
+            </b-dropdown-item>
+
+            <b-dropdown-item v-b-modal.register-form>
+              {{ $t('register') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <login-form />
+          <register-form />
+          <reset-password-form />
+        </template>
+
         <b-nav-item-dropdown key="nav-item-locale" right>
           <template v-slot:button-content>
             <i :class="currentLocale.icon" class="flag-icon current-locale" />
+            <span class="d-lg-none">{{ $t('locale') }}</span>
           </template>
 
           <b-dropdown-item
