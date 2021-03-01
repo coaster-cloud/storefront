@@ -241,3 +241,4 @@ account_social_teaser: '{username} hat bisher {attractions} Attraktionen gezähl
 total_attractions: 'Anzahl Attraktionen'
 search_manufacturer: 'Hersteller suchen ...'
 show_all_n_attractions: 'Zeige alle {total} Attraktionen'
+welcome_page: 'Startseite'

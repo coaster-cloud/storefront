@@ -240,3 +240,4 @@ account_social_teaser: '{username} has counted {attractions} attractions and cov
 total_attractions: 'Total attractions'
 search_manufacturer: 'Search manufacturer ...'
 show_all_n_attractions: 'Show all {total} attractions'
+welcome_page: 'Home'
