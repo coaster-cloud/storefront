@@ -9,7 +9,7 @@
         </b-col>
 
         <b-col sm="4">
-          <img src="~/assets/images/help/update_resource.gif" class="img-fluid">
+          <img src="~/assets/images/help/update_resource.png" class="img-fluid">
         </b-col>
       </b-row>
 
@@ -19,7 +19,7 @@
         </b-col>
 
         <b-col sm="4">
-          <img src="~/assets/images/help/create_resource.gif" class="img-fluid">
+          <img src="~/assets/images/help/create_resource.png" class="img-fluid">
         </b-col>
       </b-row>
 
@@ -29,7 +29,7 @@
         </b-col>
 
         <b-col sm="4">
-          <img src="~/assets/images/help/count_attraction.jpg" class="img-fluid">
+          <img src="~/assets/images/help/count_attraction.png" class="img-fluid">
         </b-col>
       </b-row>
 
@@ -39,7 +39,7 @@
         </b-col>
 
         <b-col sm="4">
-          <img src="~/assets/images/help/rate_attraction.jpg" class="img-fluid">
+          <img src="~/assets/images/help/rate_attraction.png" class="img-fluid">
         </b-col>
       </b-row>
     </div>
