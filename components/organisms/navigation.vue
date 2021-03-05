@@ -4,7 +4,7 @@
     <b-navbar toggleable="lg" variant="fade" type="light">
       <b-navbar-brand>
         <router-link :to="localePath('index')">
-          <img src="~/assets/images/logo.png" class="img-responsive navbar-brand-img">
+          <img src="~/assets/images/logo.png" class="navbar-brand-img">
         </router-link>
       </b-navbar-brand>
 
@@ -22,6 +22,10 @@
 
           <b-nav-item key="nav-item-manufacturers" :to="localePath('manufacturers')">
             {{ $t('manufacturers') }}
+          </b-nav-item>
+
+          <b-nav-item key="nav-item-help" :to="localePath('help')">
+            {{ $t('help') }}
           </b-nav-item>
         </b-navbar-nav>
 
@@ -113,6 +117,10 @@
 
           <b-nav-item key="sidebar-item-manufacturers" :to="localePath('manufacturers')">
             {{ $t('manufacturers') }}
+          </b-nav-item>
+
+          <b-nav-item key="sidebar-item-help" :to="localePath('help')">
+            {{ $t('help') }}
           </b-nav-item>
 
           <!-- Logged in -->

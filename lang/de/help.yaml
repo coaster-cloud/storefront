@@ -1,0 +1,27 @@
+help.update_resource: |
+  #### Wie kann ich Daten bearbeiten?
+  Du kannst vorhandene Parks, Attraktionen und Hersteller nach einer kostenlosen Registrierung bearbeiten. Melde dich hierzu mit deinen
+  Zugangsdaten an und öffne die Seite, die du bearbeiten möchtest. Klicke anschließend im Menü auf "Bearbeitungsmodus" um
+  alle Bearbeitungsmöglichkeiten anzuzeigen. Anschließend kannst du nun mit einem klick auf einer der Buttons die jeweilige
+  Information bearbeiten und speichern.
+
+help.create_resource: |
+  #### Wie kann ich Daten hinzufügen?
+  Du kannst neue Parks, Attraktionen und Hersteller nach einer kostenlosen Registrierung hinzufügen. Melde dich hierzu mit deinen
+  Zugangsdaten an und öffne entweder die Parkliste, die Herstellerliste oder die Attraktionsliste des jeweiligen Parks.
+  Klicke anschließend im Menü auf "Bearbeitungsmodus" um alle Bearbeitungsmöglichkeiten anzuzeigen. Über der Liste erscheint
+  nun ein "Hinzufügen" Button um ein neuen Park, Attraktion oder Hersteller hinzuzufügen. Bitte beachte, dass Attraktionen nur
+  in der Attraktionsliste eines Parks hinzugefügt werden können und _nicht_ in der allgemeinen Attraktionsliste.
+
+help.count_attraction: |
+  #### Wie kann ich Attraktionen zählen?
+  Melde dich mit deinen Zugangsdaten an und öffne die Attraktion, die du zählen möchtest. Anschließend kannst du den Tag
+  sowie die Anzahl der Fahrten auswählen. Du kannst die Anzahl der Fahrten für jeden Tag jederzeit ändern und somit auch ältere
+  Fahrten nachpflegen. Mit Klick auf "Optionen einblenden" kannst du auch Fahrten mit Virtual Reality zählen oder für die Attraktion
+  eine andere Kategorie wählen. Die von dir ausgewählte Kategorie wird für deine Zählstatistiken verwendet.
+
+help.rate_attraction: |
+  #### Wie kann ich Attraktionen bewerten?
+  Melde dich mit deinen Zugangsdaten an und öffne die Attraktion, die du bewerten möchtest. Anschließend kannst du die Attraktion
+  in drei Kategorien bewerten. Du kannst deine Bewertung jederzeit ändern, wenn sich deine Meinung ändert. Deine Bewertung
+  fließt unmittelbar in die Gesamtbewertung ein.

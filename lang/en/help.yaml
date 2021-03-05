@@ -1,0 +1,15 @@
+help.update_resource: |
+  #### How can I edit data?
+  You can edit existing parks, attractions and manufacturers after a free registration. Simply log in with your credentials and open the page you want to edit. Then click on "Edit mode" in the menu to display all editing options. Afterwards you can edit and save the respective information by clicking on one of the buttons.
+
+help.create_resource: |
+  #### How can I add data?
+  You can add new parks, attractions and manufacturers after a free registration. Simply log in with your credentials and open either the park list, the manufacturer list or the attraction list of the respective park. Then click on "Edit mode" in the menu to display all editing options. Above the list you will see a button to add a new park, attraction or manufacturer. Please note that attractions can only be added in the attraction list of a park and _not_ in the general attraction list.
+
+help.count_attraction: |
+  #### How can I count attractions?
+  Log in with your credentials and open the attraction you want to count. After that you can select the day and the number of rides. You can change the number of rides for each day at any time and thus also update older rides. By clicking on "Show options" you can also count rides with Virtual Reality or choose a different category for the attraction. The category you select will be used for your counting statistics.
+
+help.rate_attraction: |
+  #### How can I rate attractions?
+  Log in with your login data and open the attraction you want to rate. After that you can rate the attraction in three categories. You can change your rating at any time if your opinion changes. Your rating will be immediately included in the overall rating.
