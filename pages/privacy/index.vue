@@ -17,6 +17,7 @@
         <markdown-text :text="$t('privacy.webfonts')" />
         <markdown-text :text="$t('privacy.cloudflare')" />
         <markdown-text :text="$t('privacy.youtube')" />
+        <markdown-text :text="$t('privacy.osm')" />
         <markdown-text :text="$t('privacy.analytics')" />
       </div>
     </div>

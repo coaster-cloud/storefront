@@ -118,6 +118,12 @@ privacy.youtube: |
   mit dem Google DoubleClick Netzwerk. Wenn Sie das Video starten, könnte dies weitere Datenverarbeitungsvorgänge
   auslösen. Darauf haben wir keinen Einfluss. Weitere Informationen über Datenschutz bei YouTube finden Sie in
   deren Datenschutzerklärung unter: [http://www.youtube.com/t/privacy_at_youtube](http://www.youtube.com/t/privacy_at_youtube)
+privacy.osm: |
+  #### OpenStreetMaps
+  Diese Webseite nutzt OpenStreetMaps (kurz: OSM) um Karten darzustellen. Anbieter ist die [OpenStreetMap Foundation](https://wiki.osmfoundation.org/wiki/Main_Page).
+  Durch die Einbettung des Kartenmaterials findet ein Verbindungsaufbau mit den Server von OpenStreetMap statt, wodurch personenbezogene
+  Daten wie die IP Adresse übermittelt werden können. Wie OpenStreetMap Ihre Daten speichert, können Sie in der Datenschutzerklärung
+  von [OpenStreetMap](https://wiki.osmfoundation.org/wiki/Privacy_Policy) einsehen.
 privacy.analytics: |
   #### Webanalyse
   Diese Webseite nutzt "Umami", eine Open Source und selbstgehostete Software um anonyme Nutzungsdaten für diese Webseite zu sammeln. Diese Daten werden verwendet um festzustellen, welche Inhalte und Strukturen funktionieren und welcher eher nicht. Wir können damit unsere Webseite stetig verbessern und auf neue Anforderungen reagieren.

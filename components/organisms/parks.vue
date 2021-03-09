@@ -2,6 +2,21 @@
   <div>
     <!-- Filter Header -->
     <client-only>
+      <b-row class="mb-4">
+        <b-col cols="12" class="text-center">
+          <b-button-group>
+            <b-button :pressed="selectedViewMode === 'list'" variant="light" @click="selectedViewMode = 'list'">
+              <b-icon icon="list-ul" />
+              {{ $t('list') }}
+            </b-button>
+            <b-button :pressed="selectedViewMode === 'map'" variant="light" @click="selectedViewMode = 'map'">
+              <b-icon icon="map" />
+              {{ $t('map') }}
+            </b-button>
+          </b-button-group>
+        </b-col>
+      </b-row>
+
       <b-row align-h="between" class="mb-2">
         <b-col cols="6" lg="4" xl="3">
           <text-filter v-model="selectedName" :placeholder="$t('search_park')" />
@@ -49,46 +64,54 @@
       <no-data />
     </div>
 
-    <b-row v-else>
-      <template v-for="(park, index) in normalizedParks">
-        <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
-          <b-card class="card-list" no-body>
-            <nuxt-link :to="localePath(park.route)">
-              <b-card-img :src="park.image" :alt="park.name" top />
-            </nuxt-link>
-
-            <div class="card-body">
-              <nuxt-link :to="localePath(park.route)" class="w-40 w-sm-100">
-                <div class="item-title text-center text-truncate">
-                  {{ park.name }}
-                </div>
+    <template v-else>
+      <b-row v-if="selectedViewMode === 'list'">
+        <template v-for="(park, index) in normalizedParks">
+          <b-col :key="index" md="6" lg="4" xl="3" class="mb-3">
+            <b-card class="card-list" no-body>
+              <nuxt-link :to="localePath(park.route)">
+                <b-card-img :src="park.image" :alt="park.name" top />
               </nuxt-link>
 
-              <div class="pt-2 text-muted text-small text-center">
-                {{ park.categories }}
-              </div>
+              <div class="card-body">
+                <nuxt-link :to="localePath(park.route)" class="w-40 w-sm-100">
+                  <div class="item-title text-center text-truncate">
+                    {{ park.name }}
+                  </div>
+                </nuxt-link>
 
-              <template v-if="park.feature">
-                <div class="pt-2 text-center">
-                  <span class="badge badge-pill badge-primary">{{ park.feature }}</span>
+                <div class="pt-2 text-muted text-small text-center">
+                  {{ park.categories }}
                 </div>
-              </template>
-            </div>
-          </b-card>
-        </b-col>
-      </template>
 
-      <b-col cols="12">
-        <b-pagination
-          v-model="selectedPage"
-          :limit="3"
-          align="center"
-          class="align-items-center"
-          :total-rows="totalParks"
-          :per-page="itemsPerPage"
-        />
-      </b-col>
-    </b-row>
+                <template v-if="park.feature">
+                  <div class="pt-2 text-center">
+                    <span class="badge badge-pill badge-primary">{{ park.feature }}</span>
+                  </div>
+                </template>
+              </div>
+            </b-card>
+          </b-col>
+        </template>
+
+        <b-col cols="12">
+          <b-pagination
+            v-model="selectedPage"
+            :limit="3"
+            align="center"
+            class="align-items-center"
+            :total-rows="totalParks"
+            :per-page="itemsPerPage"
+          />
+        </b-col>
+      </b-row>
+
+      <template v-if="selectedViewMode === 'map'">
+        <client-only>
+          <leaflet-map :items="mapParks" />
+        </client-only>
+      </template>
+    </template>
   </div>
 </template>
 
@@ -114,6 +137,7 @@ export default {
     return {
       showFilter: Object.keys(this.$route.query).length > 0,
       parks: [],
+      mapParks: [],
       totalParks: 0,
       itemsPerPage: 24,
       categoryOptions: [],
@@ -134,6 +158,16 @@ export default {
 
   // Computed
   computed: {
+    selectedViewMode: {
+      get () {
+        return _.get(this.$route.query, 'view', 'list')
+      },
+
+      set (value) {
+        this.updateRoute({ view: value === 'list' ? null : value })
+      }
+    },
+
     selectedPage: {
       get () {
         return _.get(this.$route.query, 'page', 1)
@@ -236,6 +270,7 @@ export default {
       const me = this
 
       const variables = {
+        includeMap: me.selectedViewMode === 'map',
         page: me.selectedPage,
         itemsPerPage: me.itemsPerPage,
         sort: me.selectedSort === null ? 'RELEVANCE' : me.selectedSort.toUpperCase(),
@@ -258,6 +293,25 @@ export default {
       me.parks = result.parks.items
       me.totalParks = result.parks.pagination.totalItems
 
+      me.mapParks = result.mapParks.items
+        .filter(item => item.latitude && item.longitude)
+        .map(function (item) {
+          const detailUrl = me.$router
+            .resolve(me.localePath({ name: 'parks-park', params: { park: item.fullSlug } }))
+            .resolved
+            .fullPath
+
+          return {
+            latitude: item.latitude,
+            longitude: item.longitude,
+            popup: `<a href="${detailUrl}"><b>${item.name}</b></a>
+            <br />
+            ${item.categories.map(category => category.label).join(' | ')}
+            <br />
+            ${me.$t('attractions')}: ${item.attractions.totalItems}`
+          }
+        })
+
       me.$emit('refreshed', {
         totalParks: me.totalParks,
         initial
@@ -268,8 +322,8 @@ export default {
 </script>
 
 <query>
-query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, $filter: ParkFilter, $sort: ParkSort!) {
-    parks(facet: $facet, itemsPerPage: $itemsPerPage, page: $page, filter: $filter, sort: $sort) {
+query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, $filter: ParkFilter, $sort: ParkSort!, $includeMap: Boolean!) {
+    parks: parks(facet: $facet, itemsPerPage: $itemsPerPage, page: $page, filter: $filter, sort: $sort) {
         pagination {
             totalItems
         }
@@ -299,6 +353,17 @@ query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, 
             attractions {
                 totalItems
             }
+        }
+    }
+    mapParks: parks(itemsPerPage: 1000, filter: $filter) @include(if: $includeMap) {
+        items {
+            id
+            name
+            fullSlug
+            latitude
+            longitude
+            attractions { totalItems }
+            categories { label(locale: $locale) }
         }
     }
 }

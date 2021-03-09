@@ -68,6 +68,13 @@ privacy.youtube: |
   #### YouTube videos
   We use YouTube to show "Onride" videos. The videos were embedded in the extended data protection mode. YouTube uses cookies to collect information about visitors. It also may connect to the Google DoubleClick network. Starting a video could trigger further data processing by Youtube. We have no influence on that. For more information about privacy at YouTube, see
   their privacy policy at: [http://www.youtube.com/t/privacy_at_youtube](http://www.youtube.com/t/privacy_at_youtube)
+privacy.osm: |
+  #### OpenStreetMaps
+  This website uses OpenStreetMaps (short: OSM) to display maps. Provider is the [OpenStreetMap Foundation](https://wiki.osmfoundation.org/wiki/Main_Page).
+  Embedding the map material establishes a connection with the OpenStreetMap server, which may transmit personal data data such as the IP address.
+  For more information about how OpenStreetMap stores your data, see the privacy policy of [OpenStreetMap](https://wiki.osmfoundation.org/wiki/Privacy_Policy).
+
+  Translated with www.DeepL.com/Translator (free version)
 privacy.analytics: |
   #### Webanalyse
   This website uses "Umami", an open source and self-hosted software to collect anonymous usage data for this website. This data is used to determine which content and structures work and which do not. This allows us to continuously improve our website and to react to new requirements.
