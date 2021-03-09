@@ -23,7 +23,7 @@ export default {
       minZoom: 3
     })
 
-    this.$leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    this.$leaflet.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map)

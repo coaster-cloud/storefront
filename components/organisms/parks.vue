@@ -293,24 +293,26 @@ export default {
       me.parks = result.parks.items
       me.totalParks = result.parks.pagination.totalItems
 
-      me.mapParks = result.mapParks.items
-        .filter(item => item.latitude && item.longitude)
-        .map(function (item) {
-          const detailUrl = me.$router
-            .resolve(me.localePath({ name: 'parks-park', params: { park: item.fullSlug } }))
-            .resolved
-            .fullPath
+      if (me.selectedViewMode === 'map') {
+        me.mapParks = result.mapParks.items
+          .filter(item => item.latitude && item.longitude)
+          .map(function (item) {
+            const detailUrl = me.$router
+              .resolve(me.localePath({ name: 'parks-park', params: { park: item.fullSlug } }))
+              .resolved
+              .fullPath
 
-          return {
-            latitude: item.latitude,
-            longitude: item.longitude,
-            popup: `<a href="${detailUrl}"><b>${item.name}</b></a>
-            <br />
-            ${item.categories.map(category => category.label).join(' | ')}
-            <br />
-            ${me.$t('attractions')}: ${item.attractions.totalItems}`
-          }
-        })
+            return {
+              latitude: item.latitude,
+              longitude: item.longitude,
+              popup: `<a href="${detailUrl}"><b>${item.name}</b></a>
+              <br />
+              ${item.categories.map(category => category.label).join(' | ')}
+              <br />
+              ${me.$t('attractions')}: ${item.attractions.totalItems}`
+            }
+          })
+      }
 
       me.$emit('refreshed', {
         totalParks: me.totalParks,

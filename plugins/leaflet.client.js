@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/images/marker-icon.png'
 import 'leaflet/dist/images/marker-icon-2x.png'
 import 'leaflet/dist/images/marker-shadow.png'
 import Leaflet from 'leaflet'
