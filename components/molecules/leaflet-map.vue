@@ -20,6 +20,7 @@ export default {
 
   mounted () {
     this.map = this.$leaflet.map('map', {
+      tap: false,
       minZoom: 3
     })
 
