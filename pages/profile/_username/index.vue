@@ -257,7 +257,7 @@ export default {
 
     attractionPage: {
       get () {
-        return _.get(this.$route.query, 'apage', 1)
+        return parseInt(_.get(this.$route.query, 'apage', 1))
       },
 
       set (value) {
@@ -267,7 +267,7 @@ export default {
 
     parkPage: {
       get () {
-        return _.get(this.$route.query, 'ppage', 1)
+        return parseInt(_.get(this.$route.query, 'ppage', 1))
       },
 
       set (value) {
@@ -277,7 +277,7 @@ export default {
 
     manufacturerPage: {
       get () {
-        return _.get(this.$route.query, 'mpage', 1)
+        return parseInt(_.get(this.$route.query, 'mpage', 1))
       },
 
       set (value) {

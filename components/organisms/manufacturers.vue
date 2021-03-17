@@ -124,7 +124,7 @@ export default {
   computed: {
     selectedPage: {
       get () {
-        return _.get(this.$route.query, 'page', 1)
+        return parseInt(_.get(this.$route.query, 'page', 1))
       },
 
       set (value) {
