@@ -14,6 +14,7 @@
       :type="type"
       :placeholder="placeholder"
       :value="value"
+      :formatter="formatter"
       debounce="500"
       @update="(value) => $emit('input', value.trim())"
     />
@@ -56,6 +57,11 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+
+    formatter: {
+      type: Function,
+      default: value => value
     }
   }
 }

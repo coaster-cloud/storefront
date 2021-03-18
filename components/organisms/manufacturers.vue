@@ -138,7 +138,7 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ name: value, page: null })
+        this.updateRoute({ name: this.isEmpty(value) ? null : value, page: null })
       }
     },
 
@@ -222,6 +222,10 @@ export default {
       this.$router.replace({
         query: _.omitBy({ ...this.$route.query, ...fields }, _.isNil)
       })
+    },
+
+    isEmpty (value) {
+      return value === null || (typeof value === 'string' && value.trim().length === 0)
     },
 
     async loadManufacturers (initial = false) {

@@ -61,11 +61,11 @@
         <h5>{{ $t('safety_regulations') }}</h5>
         <div class="row mb-2 align-items-center">
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <text-filter v-model="selectedSize" size="sm" :placeholder="$t('size_of_child')" :append="$t('cm')" />
+            <text-filter v-model="selectedSize" :formatter="formatInteger" size="sm" :placeholder="$t('size_of_child')" :append="$t('cm')" />
           </div>
 
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <text-filter v-model="selectedAge" size="sm" :placeholder="$t('age_of_child')" :append="$t('years')" />
+            <text-filter v-model="selectedAge" :formatter="formatInteger" size="sm" :placeholder="$t('age_of_child')" :append="$t('years')" />
           </div>
 
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
@@ -209,7 +209,7 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ name: value, page: null })
+        this.updateRoute({ name: this.isEmpty(value) ? null : value, page: null })
       }
     },
 
@@ -275,27 +275,33 @@ export default {
 
     selectedSize: {
       get () {
-        return _.get(this.$route.query, 'size', null)
+        const size = _.get(this.$route.query, 'size', null)
+
+        return this.isEmpty(size) ? null : parseInt(size)
       },
 
       set (value) {
-        this.updateRoute({ size: value, page: null })
+        this.updateRoute({ size: this.isEmpty(value) ? null : value, page: null })
       }
     },
 
     selectedAge: {
       get () {
-        return _.get(this.$route.query, 'age', null)
+        const age = _.get(this.$route.query, 'age', null)
+
+        return this.isEmpty(age) ? null : parseInt(age)
       },
 
       set (value) {
-        this.updateRoute({ age: value, page: null })
+        this.updateRoute({ age: this.isEmpty(value) ? null : value, page: null })
       }
     },
 
     selectedAccompanied: {
       get () {
-        return _.get(this.$route.query, 'accompanied', false)
+        const accompanied = _.get(this.$route.query, 'accompanied', false)
+
+        return accompanied === 'true' || accompanied === true
       },
 
       set (value) {
@@ -360,6 +366,14 @@ export default {
 
   // Methods
   methods: {
+    formatInteger (value) {
+      return value ? value.replace(/[^0-9]/g, '') : value
+    },
+
+    isEmpty (value) {
+      return value === null || (typeof value === 'string' && value.trim().length === 0)
+    },
+
     updateRoute (fields) {
       this.$router.replace({
         query: _.omitBy({ ...this.$route.query, ...fields }, _.isNil)
@@ -372,9 +386,9 @@ export default {
       let safetyRegulation = null
       if (me.selectedSize || me.selectedAge) {
         safetyRegulation = {
-          size: me.isInt(me.selectedSize) ? me.selectedSize : null,
-          age: me.isInt(me.selectedAge) ? me.selectedAge : null,
-          accompanied: me.selectedAccompanied === 'true' || me.selectedAccompanied === true
+          size: me.selectedSize,
+          age: me.selectedAge,
+          accompanied: me.selectedAccompanied
         }
       }
 
@@ -411,11 +425,6 @@ export default {
         totalAttractions: me.totalAttractions,
         initial
       })
-    },
-
-    // Test if integer
-    isInt (value) {
-      return value !== null && /^-?[0-9]+$/.test(value)
     }
   }
 }
