@@ -4,7 +4,13 @@
     <client-only>
       <b-row align-h="between" class="mb-2">
         <b-col cols="6" lg="4" xl="3">
-          <text-filter v-model="selectedName" :placeholder="$t('search_manufacturer')" />
+          <text-input
+            id="filter-parks-name"
+            v-model="selectedName"
+            :placeholder="$t('search_manufacturer')"
+            lazy
+            erasable
+          />
         </b-col>
         <b-col cols="6" class="text-right">
           <b-button v-b-toggle.manufacturer-filter variant="light">
@@ -85,13 +91,11 @@
 <script>
 import _ from 'lodash'
 import NoData from '~/components/atoms/no-data'
-import TextFilter from '~/components/atoms/text-filter'
 import SelectFilter from '~/components/atoms/select-filter'
 
 export default {
   components: {
     SelectFilter,
-    TextFilter,
     NoData
   },
 

@@ -59,7 +59,7 @@
       id="update-park-basic-form-latitude"
       v-model="latitude"
       :label="$t('latitude')"
-      :formatter="formatCoordinate"
+      type="number"
       :violations="getFieldViolations('[latitude]')"
     />
 
@@ -67,7 +67,7 @@
       id="update-park-basic-form-longitude"
       v-model="longitude"
       :label="$t('longitude')"
-      :formatter="formatCoordinate"
+      type="number"
       :violations="getFieldViolations('[longitude]')"
     />
 
@@ -108,10 +108,6 @@ export default {
   },
 
   methods: {
-    formatCoordinate (value) {
-      return value ? value.replace(/[^0-9.]/g, '') : value
-    },
-
     async load () {
       const me = this
 

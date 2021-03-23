@@ -8,19 +8,70 @@
   -->
 
 <template>
-  <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-    <b-form-input
-      :id="id"
-      v-model.trim="modelValue"
-      :type="type"
-      :state="violations.length === 0 ? null : false"
-      :formatter="formatter"
-      :disabled="disabled"
-    />
-    <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
-      {{ violation }}
-    </b-form-invalid-feedback>
-  </b-form-group>
+  <div>
+    <template v-if="label">
+      <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
+        <b-input-group :size="size">
+          <b-form-input
+            :id="id"
+            v-model.trim="modelValue"
+            :size="size"
+            :type="type"
+            :state="violations.length === 0 ? null : false"
+            :number="type === 'number'"
+            :step="step"
+            :disabled="disabled"
+            :debounce="lazy ? 500 : 0"
+            :placeholder="placeholder"
+            no-wheel
+            trim
+          />
+
+          <b-input-group-append v-if="append">
+            <b-input-group-text>{{ append }}</b-input-group-text>
+          </b-input-group-append>
+
+          <b-input-group-append v-if="erasable && value !== null">
+            <b-button :size="size" variant="primary" @click="modelValue = null">
+              <b-icon icon="backspace" aria-hidden="true" />
+            </b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
+          {{ violation }}
+        </b-form-invalid-feedback>
+      </b-form-group>
+    </template>
+
+    <template v-else>
+      <b-input-group :size="size">
+        <b-form-input
+          :id="id"
+          v-model.trim="modelValue"
+          :size="size"
+          :type="type"
+          :state="violations.length === 0 ? null : false"
+          :number="type === 'number'"
+          :step="step"
+          :disabled="disabled"
+          :debounce="lazy ? 500 : 0"
+          :placeholder="placeholder"
+          no-wheel
+          trim
+        />
+
+        <b-input-group-append v-if="append">
+          <b-input-group-text>{{ append }}</b-input-group-text>
+        </b-input-group-append>
+
+        <b-input-group-append v-if="erasable && value !== null">
+          <b-button :size="size" variant="primary" @click="modelValue = null">
+            <b-icon icon="backspace" aria-hidden="true" />
+          </b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -34,6 +85,11 @@ export default {
     value: {
       type: [String, Number],
       default: null
+    },
+
+    size: {
+      type: String,
+      default: 'md'
     },
 
     label: {
@@ -61,12 +117,32 @@ export default {
       default: 4
     },
 
-    formatter: {
-      type: Function,
-      default: value => value
+    step: {
+      type: [String, Number],
+      default: 'any'
     },
 
     disabled: {
+      type: Boolean,
+      default: false
+    },
+
+    lazy: {
+      type: Boolean,
+      default: false
+    },
+
+    append: {
+      type: String,
+      default: null
+    },
+
+    placeholder: {
+      type: String,
+      default: null
+    },
+
+    erasable: {
       type: Boolean,
       default: false
     }

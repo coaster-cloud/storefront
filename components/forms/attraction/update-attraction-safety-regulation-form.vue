@@ -22,7 +22,8 @@
       v-model="soloMinHeight"
       :label="$t('safety_regulation.min_height')"
       :description="$t('input_hint.cm')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMinHeight]')"
       :disabled="noRestrictions"
     />
@@ -32,7 +33,8 @@
       v-model="soloMaxHeight"
       :label="$t('safety_regulation.max_height')"
       :description="$t('input_hint.cm')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMaxHeight]')"
       :disabled="noRestrictions"
     />
@@ -42,7 +44,8 @@
       v-model="soloMinAge"
       :label="$t('safety_regulation.min_age')"
       :description="$t('input_hint.years')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMinAge]')"
       :disabled="noRestrictions"
     />
@@ -52,7 +55,8 @@
       v-model="soloMaxAge"
       :label="$t('safety_regulation.max_age')"
       :description="$t('input_hint.years')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMaxAge]')"
       :disabled="noRestrictions"
     />
@@ -63,7 +67,8 @@
       v-model="accompaniedMinHeight"
       :label="$t('safety_regulation.min_height')"
       :description="$t('input_hint.cm')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinHeight]')"
       :disabled="noRestrictions"
     />
@@ -73,7 +78,8 @@
       v-model="accompaniedMinAge"
       :label="$t('safety_regulation.min_age')"
       :description="$t('input_hint.years')"
-      :formatter="formatInteger"
+      type="number"
+      :step="1"
       :violations="getFieldViolations('[safetyRegulation][accompaniedMinAge]')"
       :disabled="noRestrictions"
     />
@@ -147,10 +153,6 @@ export default {
   },
 
   methods: {
-    formatInteger (value) {
-      return value ? value.replace(/[^0-9]/g, '') : value
-    },
-
     async load () {
       const me = this
 

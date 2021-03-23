@@ -48,7 +48,8 @@
           v-model="attribute.value"
           :label="attribute.label"
           :description="attribute.description"
-          :formatter="getTextFormatter(attribute)"
+          :type="attribute.type === 'number' ? 'number' : 'text'"
+          :step="attribute.scale === 0 ? 1 : 'any'"
           :violations="violations.filter(v => v.field === `[setAttributes][${index}][value]`).map(v => v.message)"
         />
       </template>
@@ -87,22 +88,6 @@ export default {
   },
 
   methods: {
-    getTextFormatter (attribute) {
-      if (attribute.type === 'number' && attribute.scale > 0) {
-        return function (value) {
-          return value ? value.replace(/[^0-9.]/g, '') : value
-        }
-      }
-
-      if (attribute.type === 'number' && attribute.scale === 0) {
-        return function (value) {
-          return value ? value.replace(/[^0-9]/g, '') : value
-        }
-      }
-
-      return null
-    },
-
     async load () {
       const me = this
 

@@ -4,7 +4,13 @@
     <client-only>
       <b-row align-h="between" class="mb-2">
         <b-col cols="6" lg="4" xl="3">
-          <text-filter v-model="selectedName" :placeholder="$t('search_attraction')" />
+          <text-input
+            id="filter-attractions-name"
+            v-model="selectedName"
+            :placeholder="$t('search_attraction')"
+            lazy
+            erasable
+          />
         </b-col>
         <b-col cols="6" class="text-right">
           <b-button v-b-toggle.attraction-filter variant="light">
@@ -61,11 +67,31 @@
         <h5>{{ $t('safety_regulations') }}</h5>
         <div class="row mb-2 align-items-center">
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <text-filter v-model="selectedSize" :formatter="formatInteger" size="sm" :placeholder="$t('size_of_child')" :append="$t('cm')" />
+            <text-input
+              id="filter-attractions-size"
+              v-model="selectedSize"
+              type="number"
+              :step="1"
+              size="sm"
+              :placeholder="$t('size_of_child')"
+              :append="$t('cm')"
+              lazy
+              erasable
+            />
           </div>
 
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <text-filter v-model="selectedAge" :formatter="formatInteger" size="sm" :placeholder="$t('age_of_child')" :append="$t('years')" />
+            <text-input
+              id="filter-attractions-age"
+              v-model="selectedAge"
+              type="number"
+              :step="1"
+              size="sm"
+              :placeholder="$t('age_of_child')"
+              :append="$t('years')"
+              lazy
+              erasable
+            />
           </div>
 
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
@@ -133,13 +159,11 @@
 import _ from 'lodash'
 import PlaceholderImage from '~/assets/images/placeholder.middle.jpg'
 import NoData from '~/components/atoms/no-data'
-import TextFilter from '~/components/atoms/text-filter'
 import SelectFilter from '~/components/atoms/select-filter'
 
 export default {
   components: {
     SelectFilter,
-    TextFilter,
     NoData
   },
 
@@ -366,10 +390,6 @@ export default {
 
   // Methods
   methods: {
-    formatInteger (value) {
-      return value ? value.replace(/[^0-9]/g, '') : value
-    },
-
     isEmpty (value) {
       return value === null || (typeof value === 'string' && value.trim().length === 0)
     },
