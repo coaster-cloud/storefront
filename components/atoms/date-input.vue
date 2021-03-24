@@ -10,7 +10,7 @@
 <template>
   <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
     <b-form-datepicker
-      :value="modelValue"
+      v-model="modelValue"
       :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit', weekday: 'short' }"
       :locale="$store.state.account.locale"
     />

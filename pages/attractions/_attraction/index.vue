@@ -201,6 +201,7 @@
           <client-only>
             <!-- Rides and Custom Definition -->
             <set-rides-form
+              :key="`rides-input-${attraction.id}`"
               :attraction-id="attraction.id"
               :attraction-name="attraction.name"
               :count-date="countDate"
