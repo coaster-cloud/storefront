@@ -8,70 +8,37 @@
   -->
 
 <template>
-  <div>
-    <template v-if="label">
-      <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-        <b-input-group :size="size">
-          <b-form-input
-            :id="id"
-            v-model.trim="modelValue"
-            :size="size"
-            :type="type"
-            :state="violations.length === 0 ? null : false"
-            :number="type === 'number'"
-            :step="step"
-            :disabled="disabled"
-            :debounce="lazy ? 500 : 0"
-            :placeholder="placeholder"
-            no-wheel
-            trim
-          />
+  <b-form-group :label-cols-sm="label ? labelCol : null" :label-for="id" :label="label" :description="description">
+    <b-input-group :size="size">
+      <b-form-input
+        :id="id"
+        v-model.trim="modelValue"
+        :size="size"
+        :type="type"
+        :state="violations.length === 0 ? null : false"
+        :number="type === 'number'"
+        :step="step"
+        :disabled="disabled"
+        :debounce="lazy ? 500 : 0"
+        :placeholder="placeholder"
+        no-wheel
+        trim
+      />
 
-          <b-input-group-append v-if="append">
-            <b-input-group-text>{{ append }}</b-input-group-text>
-          </b-input-group-append>
+      <b-input-group-append v-if="append">
+        <b-input-group-text>{{ append }}</b-input-group-text>
+      </b-input-group-append>
 
-          <b-input-group-append v-if="erasable && value !== null">
-            <b-button :size="size" variant="primary" @click="modelValue = null">
-              <b-icon icon="backspace" aria-hidden="true" />
-            </b-button>
-          </b-input-group-append>
-        </b-input-group>
-        <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
-          {{ violation }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-    </template>
-
-    <template v-else>
-      <b-input-group :size="size">
-        <b-form-input
-          :id="id"
-          v-model.trim="modelValue"
-          :size="size"
-          :type="type"
-          :state="violations.length === 0 ? null : false"
-          :number="type === 'number'"
-          :step="step"
-          :disabled="disabled"
-          :debounce="lazy ? 500 : 0"
-          :placeholder="placeholder"
-          no-wheel
-          trim
-        />
-
-        <b-input-group-append v-if="append">
-          <b-input-group-text>{{ append }}</b-input-group-text>
-        </b-input-group-append>
-
-        <b-input-group-append v-if="erasable && value !== null">
-          <b-button :size="size" variant="primary" @click="modelValue = null">
-            <b-icon icon="backspace" aria-hidden="true" />
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </template>
-  </div>
+      <b-input-group-append v-if="erasable && value !== null">
+        <b-button :size="size" variant="primary" @click="modelValue = null">
+          <b-icon icon="backspace" aria-hidden="true" />
+        </b-button>
+      </b-input-group-append>
+    </b-input-group>
+    <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
+      {{ violation }}
+    </b-form-invalid-feedback>
+  </b-form-group>
 </template>
 
 <script>
@@ -157,6 +124,10 @@ export default {
       set (value) {
         if (typeof value === 'string' && value.trim().length === 0) {
           value = null
+        }
+
+        if (typeof value === 'number' && this.step === 1) {
+          value = parseInt(value)
         }
 
         this.$emit('input', value)

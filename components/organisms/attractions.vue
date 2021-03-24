@@ -10,6 +10,7 @@
             :placeholder="$t('search_attraction')"
             lazy
             erasable
+            class="mb-0"
           />
         </b-col>
         <b-col cols="6" class="text-right">
@@ -25,42 +26,97 @@
         <div class="row mb-2">
           <!-- Sorting -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <b-form-select v-model="selectedSort" :options="sortOptions" />
+            <select-input
+              id="sort-attractions"
+              v-model="selectedSort"
+              :placeholder="false"
+              :options="sortOptions"
+              class="mb-0"
+            />
           </div>
 
           <!-- Category -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedCategory" :placeholder="$t('any_category')" :options="categoryOptions" />
+            <select-input
+              id="filter-attractions-category"
+              v-model="selectedCategory"
+              :placeholder="$t('any_category')"
+              :options="categoryOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Thrill -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedThrill" :placeholder="$t('any_thrill')" :options="thrillOptions" />
+            <select-input
+              id="filter-attractions-thrill"
+              v-model="selectedThrill"
+              :placeholder="$t('any_thrill')"
+              :options="thrillOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Manufacturer -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedManufacturer" :placeholder="$t('any_manufacturer')" :options="manufacturerOptions" />
+            <select-input
+              id="filter-attractions-manufacturer"
+              v-model="selectedManufacturer"
+              :placeholder="$t('any_manufacturer')"
+              :options="manufacturerOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- State -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedState" :placeholder="$t('any_status')" :options="stateOptions" />
+            <select-input
+              id="filter-attractions-state"
+              v-model="selectedState"
+              :placeholder="$t('any_status')"
+              :options="stateOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Elements -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedElement" :placeholder="$t('any_element')" :options="elementOptions" />
+            <select-input
+              id="filter-attractions-elements"
+              v-model="selectedElement"
+              :placeholder="$t('any_element')"
+              :options="elementOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Tag -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedTag" :placeholder="$t('any_tag')" :options="tagOptions" />
+            <select-input
+              id="filter-attractions-tag"
+              v-model="selectedTag"
+              :placeholder="$t('any_tag')"
+              :options="tagOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Park zone -->
           <div v-if="zoneOptions.length > 0" class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedZone" :placeholder="$t('any_zone')" :options="zoneOptions" />
+            <select-input
+              id="filter-attractions-zone"
+              v-model="selectedZone"
+              :placeholder="$t('any_zone')"
+              :options="zoneOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
         </div>
 
@@ -72,11 +128,11 @@
               v-model="selectedSize"
               type="number"
               :step="1"
-              size="sm"
               :placeholder="$t('size_of_child')"
               :append="$t('cm')"
               lazy
               erasable
+              class="mb-0"
             />
           </div>
 
@@ -86,18 +142,21 @@
               v-model="selectedAge"
               type="number"
               :step="1"
-              size="sm"
               :placeholder="$t('age_of_child')"
               :append="$t('years')"
               lazy
               erasable
+              class="mb-0"
             />
           </div>
 
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <b-form-checkbox v-model="selectedAccompanied" name="check-button" switch>
-              {{ $t('child_is_accompanied') }}
-            </b-form-checkbox>
+            <switch-input
+              id="filter-attractions-accompanied"
+              v-model="selectedAccompanied"
+              :label="$t('child_is_accompanied')"
+              class="mb-0"
+            />
           </div>
         </div>
       </b-collapse>
@@ -158,15 +217,8 @@
 <script>
 import _ from 'lodash'
 import PlaceholderImage from '~/assets/images/placeholder.middle.jpg'
-import NoData from '~/components/atoms/no-data'
-import SelectFilter from '~/components/atoms/select-filter'
 
 export default {
-  components: {
-    SelectFilter,
-    NoData
-  },
-
   props: {
     parkId: {
       type: String,

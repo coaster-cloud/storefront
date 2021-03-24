@@ -8,7 +8,7 @@
   -->
 
 <template>
-  <b-form-group :label-cols-sm="labelCol">
+  <b-form-group>
     <b-form-checkbox :id="id" v-model="modelValue" switch :state="violations.length === 0 ? null : false">
       {{ label }}
     </b-form-checkbox>

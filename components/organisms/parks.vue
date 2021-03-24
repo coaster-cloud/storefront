@@ -25,6 +25,7 @@
             :placeholder="$t('search_park')"
             lazy
             erasable
+            class="mb-0"
           />
         </b-col>
         <b-col cols="6" class="text-right">
@@ -40,22 +41,43 @@
         <div class="row mb-2">
           <!-- Sorting -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <b-form-select v-model="selectedSort" :options="sortOptions" />
+            <select-input id="sort-parks" v-model="selectedSort" :placeholder="false" :options="sortOptions" class="mb-0" />
           </div>
 
           <!-- Category -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedCategory" :placeholder="$t('all_parks')" :options="categoryOptions" />
+            <select-input
+              id="filter-parks-category"
+              v-model="selectedCategory"
+              :placeholder="$t('all_parks')"
+              :options="categoryOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Country -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedCountry" :placeholder="$t('all_countries')" :options="countryOptions" />
+            <select-input
+              id="filter-parks-country"
+              v-model="selectedCountry"
+              :placeholder="$t('all_countries')"
+              :options="countryOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- State -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedState" :placeholder="$t('any_status')" :options="stateOptions" />
+            <select-input
+              id="filter-parks-state"
+              v-model="selectedState"
+              :placeholder="$t('any_status')"
+              :options="stateOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
         </div>
       </b-collapse>
@@ -124,15 +146,8 @@
 <script>
 import _ from 'lodash'
 import PlaceholderImage from '~/assets/images/placeholder.middle.jpg'
-import NoData from '~/components/atoms/no-data'
-import SelectFilter from '~/components/atoms/select-filter'
 
 export default {
-  components: {
-    SelectFilter,
-    NoData
-  },
-
   async fetch () {
     await this.loadParks(true)
   },

@@ -8,20 +8,42 @@
   -->
 
 <template>
-  <b-form-group :label-cols-sm="labelCol" :label-for="id" :label="label" :description="description">
-    <template v-if="multiple">
-      <b-form-checkbox-group :id="id" v-model="modelValue" stacked :options="options" :state="violations.length === 0 ? null : false" />
-    </template>
+  <b-form-group :label-cols-sm="label ? labelCol : null" :label-for="id" :label="label" :description="description">
+    <b-input-group :size="size">
+      <template v-if="multiple">
+        <b-form-checkbox-group
+          :id="id"
+          v-model="modelValue"
+          :size="size"
+          stacked
+          :options="options"
+          :state="violations.length === 0 ? null : false"
+        />
+      </template>
 
-    <template v-else>
-      <b-form-select :id="id" v-model="modelValue" :multiple="false" :options="options" :state="violations.length === 0 ? null : false">
-        <template v-slot:first>
-          <b-form-select-option :value="null">
-            -
-          </b-form-select-option>
-        </template>
-      </b-form-select>
-    </template>
+      <template v-else>
+        <b-form-select
+          :id="id"
+          v-model="modelValue"
+          :size="size"
+          :multiple="false"
+          :options="options"
+          :state="violations.length === 0 ? null : false"
+        >
+          <template v-if="placeholder !== false" v-slot:first>
+            <b-form-select-option :value="null">
+              {{ placeholder }}
+            </b-form-select-option>
+          </template>
+        </b-form-select>
+      </template>
+
+      <b-input-group-append v-if="erasable && value !== null">
+        <b-button :size="size" variant="primary" @click="modelValue = null">
+          <b-icon icon="backspace" aria-hidden="true" />
+        </b-button>
+      </b-input-group-append>
+    </b-input-group>
 
     <b-form-invalid-feedback v-for="(violation, index) in violations" :key="index" :state="false">
       {{ violation }}
@@ -40,6 +62,11 @@ export default {
     value: {
       type: [String, Array, Boolean, Number],
       default: null
+    },
+
+    size: {
+      type: String,
+      default: 'md'
     },
 
     label: {
@@ -68,6 +95,16 @@ export default {
     },
 
     multiple: {
+      type: Boolean,
+      default: false
+    },
+
+    placeholder: {
+      type: [String, Boolean],
+      default: '-'
+    },
+
+    erasable: {
       type: Boolean,
       default: false
     }

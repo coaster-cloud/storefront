@@ -5,11 +5,12 @@
       <b-row align-h="between" class="mb-2">
         <b-col cols="6" lg="4" xl="3">
           <text-input
-            id="filter-parks-name"
+            id="filter-manufacturers-name"
             v-model="selectedName"
             :placeholder="$t('search_manufacturer')"
             lazy
             erasable
+            class="mb-0"
           />
         </b-col>
         <b-col cols="6" class="text-right">
@@ -25,22 +26,43 @@
         <div class="row mb-2">
           <!-- Sorting -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <b-form-select v-model="selectedSort" :options="sortOptions" />
+            <select-input id="sort-manufacturers" v-model="selectedSort" :placeholder="false" :options="sortOptions" class="mb-0" />
           </div>
 
           <!-- Category -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedCategory" :placeholder="$t('any_category')" :options="categoryOptions" />
+            <select-input
+              id="filter-manufacturers-category"
+              v-model="selectedCategory"
+              :placeholder="$t('any_category')"
+              :options="categoryOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- Country -->
           <div v-if="countryOptions.length > 0" class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedCountry" :placeholder="$t('all_countries')" :options="countryOptions" />
+            <select-input
+              id="filter-manufacturers-country"
+              v-model="selectedCountry"
+              :placeholder="$t('all_countries')"
+              :options="countryOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
 
           <!-- State -->
           <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
-            <select-filter v-model="selectedState" :placeholder="$t('any_status')" :options="stateOptions" />
+            <select-input
+              id="filter-manufacturers-state"
+              v-model="selectedState"
+              :placeholder="$t('any_status')"
+              :options="stateOptions"
+              erasable
+              class="mb-0"
+            />
           </div>
         </div>
       </b-collapse>
@@ -90,15 +112,8 @@
 
 <script>
 import _ from 'lodash'
-import NoData from '~/components/atoms/no-data'
-import SelectFilter from '~/components/atoms/select-filter'
 
 export default {
-  components: {
-    SelectFilter,
-    NoData
-  },
-
   async fetch () {
     await this.loadManufacturers(true)
   },
