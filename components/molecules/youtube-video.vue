@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <div v-if="play === false" class="youtube-player">
-      <img class="img-fluid" src="~/assets/images/video.placeholder.middle.jpg">
+      <img class="img-fluid" src="~/assets/images/placeholder.middle.jpg">
       <div class="youtube-player__consent">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p class="youtube-player__text" v-html="$t('play_video_consent')" />
