@@ -25,23 +25,44 @@
             <div class="row mb-2">
               <!-- Year -->
               <div class="col-md-6 col-lg-4 col-xl-4 mb-2">
-                <select-filter v-model="selectedDate" :placeholder="$t('any_year')" :options="dateOptions">
+                <select-input
+                  id="filter-profile-date"
+                  v-model="selectedDate"
+                  :placeholder="$t('any_year')"
+                  :options="dateOptions"
+                  erasable
+                  class="mb-0"
+                >
                   <template v-if="typeof selectedDate === 'string' && selectedDate.length > 4">
                     <b-form-select-option :value="selectedDate">
                       {{ selectedDate }}
                     </b-form-select-option>
                   </template>
-                </select-filter>
+                </select-input>
               </div>
 
               <!-- Park -->
               <div class="col-md-6 col-lg-4 col-xl-4 mb-2">
-                <select-filter v-model="selectedPark" :placeholder="$t('any_park')" :options="parkOptions" />
+                <select-input
+                  id="filter-profile-park"
+                  v-model="selectedPark"
+                  :placeholder="$t('any_park')"
+                  :options="parkOptions"
+                  erasable
+                  class="mb-0"
+                />
               </div>
 
               <!-- Category -->
               <div class="col-md-6 col-lg-4 col-xl-4 mb-2">
-                <select-filter v-model="selectedCategory" :placeholder="$t('any_category')" :options="categoryOptions" />
+                <select-input
+                  id="filter-profile-category"
+                  v-model="selectedCategory"
+                  :placeholder="$t('any_category')"
+                  :options="categoryOptions"
+                  erasable
+                  class="mb-0"
+                />
               </div>
             </div>
           </b-collapse>

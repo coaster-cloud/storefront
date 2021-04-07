@@ -35,6 +35,8 @@
               {{ placeholder }}
             </b-form-select-option>
           </template>
+
+          <slot />
         </b-form-select>
       </template>
 
