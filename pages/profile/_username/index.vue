@@ -92,18 +92,43 @@
       <b-row class="mb-5">
         <b-col cols="12">
           <div class="text-center">
-            <h5>{{ $t('ride_facts') }}</h5>
+            <h5>{{ $t('my_counts') }}</h5>
           </div>
         </b-col>
 
-        <b-col v-for="(rideFact, index) in account.rideStatistic.rideFacts" :key="index" lg="3" md="4" sm="6">
+        <b-col v-for="(rideFact, index) in account.rideStatistic.counts" :key="index" lg="3" md="4" sm="6">
           <div class="text-center mt-4">
             <p class="mb-1">
               {{ rideFact.label }}
             </p>
-            <span class="text-muted">{{ rideFact.valueAsString }}</span>
+            <span class="text-muted">{{ rideFact.value }}</span>
           </div>
         </b-col>
+      </b-row>
+
+      <b-row class="mb-5">
+        <b-col cols="12">
+          <div class="text-center">
+            <h5>{{ $t('ride_facts') }}</h5>
+          </div>
+        </b-col>
+
+        <template v-if="account.rideStatistic.rideFacts.length > 0">
+          <b-col v-for="(rideFact, index) in account.rideStatistic.rideFacts" :key="index" lg="3" md="4" sm="6">
+            <div class="text-center mt-4">
+              <p class="mb-1">
+                {{ rideFact.label }}
+              </p>
+              <span class="text-muted">{{ rideFact.valueAsString }}</span>
+            </div>
+          </b-col>
+        </template>
+
+        <template v-else>
+          <b-col cols="12">
+            <no-data />
+          </b-col>
+        </template>
       </b-row>
 
       <b-row>
@@ -387,9 +412,13 @@ export default {
         return { text: category.category.label, value: category.category.key }
       })
 
-      this.dateOptions = result.account.rideStatistic.years.map(function (year) {
-        return { text: year.year, value: year.year }
-      })
+      this.dateOptions = result.account.rideStatistic.years
+        .map(function (year) {
+          return { text: year.year, value: year.year }
+        })
+        .sort(function (a, b) {
+          return parseInt(b.value) - parseInt(a.value)
+        })
 
       this.parkOptions = result.account.rideStatistic.parks.items.map(function (item) {
         return { text: item.park.name, value: item.park.id }
@@ -501,6 +530,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           totalUniqueRides
         }
       }
+      counts { key, label(locale: $locale), value }
       rideFacts { key, label(locale: $locale), value, valueAsString(locale: $locale) }
     }
   }
