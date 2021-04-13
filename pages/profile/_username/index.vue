@@ -109,6 +109,43 @@
       <b-row class="mb-5">
         <b-col cols="12">
           <div class="text-center">
+            <h5>{{ $t('my_records') }}</h5>
+          </div>
+        </b-col>
+
+        <template v-if="rideRecords.length > 0">
+          <b-col v-for="(record, index) in rideRecords" :key="index" lg="3" md="4" sm="6">
+            <b-card
+              border-variant="primary"
+              :header="record.label"
+              header-bg-variant="primary"
+              header-text-variant="white"
+              align="center"
+              class="mt-4"
+            >
+              <b-card-text>
+                <div>
+                  <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: record.attraction.fullSlug}})">
+                    {{ record.attraction.name }}
+                  </nuxt-link>
+                </div>
+
+                <small>{{ record.attraction.attribute.valueAsString }}</small>
+              </b-card-text>
+            </b-card>
+          </b-col>
+        </template>
+
+        <template v-else>
+          <b-col cols="12">
+            <no-data />
+          </b-col>
+        </template>
+      </b-row>
+
+      <b-row class="mb-5">
+        <b-col cols="12">
+          <div class="text-center">
             <h5>{{ $t('ride_facts') }}</h5>
           </div>
         </b-col>
@@ -135,8 +172,9 @@
         <!-- Attractions -->
         <b-col lg="4">
           <div class="content-block">
-            <h5>{{ $t('attractions') }}</h5>
-            <p>{{ $t('counted_attractions') }}</p>
+            <div class="text-center">
+              <h5>{{ $t('attractions') }}</h5>
+            </div>
 
             <template v-if="account.rideStatistic.attractionRides.items.length === 0">
               <no-data />
@@ -152,7 +190,7 @@
                       </nuxt-link>
                     </div>
 
-                    <small>{{ $tc('n_rides', attractionRide.rides, {'count': attractionRide.rides}) }}</small>
+                    <small>{{ $tc('n_rides', attractionRide.totalRides, {'count': attractionRide.totalRides}) }}</small>
                   </b-list-group-item>
                 </template>
               </b-list-group>
@@ -173,8 +211,9 @@
         <!-- Parks -->
         <b-col lg="4">
           <div class="content-block">
-            <h5>{{ $t('parks') }}</h5>
-            <p>{{ $t('counted_parks') }}</p>
+            <div class="text-center">
+              <h5>{{ $t('parks') }}</h5>
+            </div>
 
             <template v-if="account.rideStatistic.parkVisits.items.length === 0">
               <no-data />
@@ -190,7 +229,7 @@
                       </nuxt-link>
                     </div>
 
-                    <small>{{ $tc('n_visits', parkVisits.visits, {'count': parkVisits.visits}) }}</small>
+                    <small>{{ $tc('n_visits', parkVisits.totalVisits, {'count': parkVisits.totalVisits}) }}</small>
                   </b-list-group-item>
                 </template>
               </b-list-group>
@@ -211,8 +250,9 @@
         <!-- Manufacturers -->
         <b-col lg="4">
           <div class="content-block">
-            <h5>{{ $t('manufacturers') }}</h5>
-            <p>{{ $t('counted_manufacturers') }}</p>
+            <div class="text-center">
+              <h5>{{ $t('manufacturers') }}</h5>
+            </div>
 
             <template v-if="account.rideStatistic.parkVisits.items.length === 0">
               <no-data />
@@ -349,6 +389,29 @@ export default {
         items: me.account.rideStatistic.heatmap.map(item => ({ date: Moment(item.date).toDate(), count: item.rides })),
         endDate
       }
+    },
+
+    rideRecords () {
+      const me = this
+
+      const records = [
+        { field: 'fastestRide', label: 'fastest_ride' },
+        { field: 'highestRide', label: 'highest_ride' },
+        { field: 'longestRide', label: 'longest_ride' },
+        { field: 'strongestRide', label: 'strongest_ride' }
+      ]
+
+      const result = []
+
+      records.forEach(function (record) {
+        const items = me.account.rideStatistic[record.field].items
+
+        if (items.length > 0 && items[0].attraction.attribute !== null) {
+          result.push({ label: me.$t(record.label), attraction: items[0].attraction })
+        }
+      })
+
+      return result
     },
 
     breadcrumbs () {
@@ -497,7 +560,7 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           }
         }
       }
-      parkVisits(page: $parkPage, itemsPerPage: $itemsPerPage) {
+      parkVisits(page: $parkPage, itemsPerPage: $itemsPerPage, sort: VISITS_DESC) {
         pagination { totalItems }
         items {
           park {
@@ -505,10 +568,10 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
             name
             fullSlug
           }
-          visits
+          totalVisits
         }
       }
-      attractionRides(page: $attractionPage, itemsPerPage: $itemsPerPage) {
+      attractionRides(page: $attractionPage, itemsPerPage: $itemsPerPage, sort: RIDES_DESC) {
         pagination { totalItems }
         items {
           attraction {
@@ -516,10 +579,10 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
             name
             fullSlug
           }
-          rides
+          totalRides
         }
       }
-      manufacturerRides(page: $manufacturerPage, itemsPerPage: $itemsPerPage) {
+      manufacturerRides(page: $manufacturerPage, itemsPerPage: $itemsPerPage, sort: RIDES_DESC) {
         pagination { totalItems }
         items {
           manufacturer {
@@ -528,6 +591,50 @@ query ($username: String!, $locale: String!, $filter: RideStatisticFilter!, $ite
           }
           totalRides
           totalUniqueRides
+        }
+      }
+      fastestRide: attractionRides(page: 1, itemsPerPage: 3, sort: SPEED_DESC) {
+        items {
+          attraction {
+            id
+            name
+            fullSlug
+            attribute(key: "speed") { valueAsString(locale: $locale) }
+          }
+          totalRides
+        }
+      }
+      longestRide: attractionRides(page: 1, itemsPerPage: 3, sort: LENGTH_DESC) {
+        items {
+          attraction {
+            id
+            name
+            fullSlug
+            attribute(key: "length") { valueAsString(locale: $locale) }
+          }
+          totalRides
+        }
+      }
+      highestRide: attractionRides(page: 1, itemsPerPage: 3, sort: HEIGHT_DESC) {
+        items {
+          attraction {
+            id
+            name
+            fullSlug
+            attribute(key: "height") { valueAsString(locale: $locale) }
+          }
+          totalRides
+        }
+      }
+      strongestRide: attractionRides(page: 1, itemsPerPage: 3, sort: MAX_GFORCE_DESC) {
+        items {
+          attraction {
+            id
+            name
+            fullSlug
+            attribute(key: "max_gforce") { valueAsString(locale: $locale) }
+          }
+          totalRides
         }
       }
       counts { key, label(locale: $locale), value }
