@@ -94,15 +94,6 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query {
-          licenses {
-            key
-            name
-          }
-        }
-      `
-
       this.file = null
       this.date = Moment().format('YYYY-MM-DD')
       this.license = 'cc_by_nd_4_0'
@@ -110,7 +101,7 @@ export default {
       this.copyrightUrl = null
       this.violations = []
 
-      const result = await me.$graphql(query)
+      const result = await me.$graphql('69d33b62-6502-45d2-9ba0-3371deb5a6c5')
 
       if (result) {
         me.licenseOptions = result.licenses.map(function (license) {

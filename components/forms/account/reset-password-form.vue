@@ -58,18 +58,7 @@ export default {
     async save (ok) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: ResetPasswordInput!){
-          resetPassword(input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('271afccb-a1c5-48dc-a291-1ef010f46705', {
         locale: me.$i18n.locale,
         input: {
           email: me.email

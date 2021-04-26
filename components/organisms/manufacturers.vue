@@ -264,7 +264,7 @@ export default {
         }, _.isNil)
       }
 
-      const result = await me.$graphql(me.$options.__query, variables)
+      const result = await me.$graphql('bb272036-0531-4fdc-8e21-a43c9c310bc6', variables)
 
       result.manufacturers.facets.forEach(function (facet) {
         me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
@@ -281,37 +281,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($locale: String, $facet: [ManufacturerFacet]!, $itemsPerPage: Int!, $page: Int!, $filter: ManufacturerFilter, $sort: ManufacturerSort!) {
-    manufacturers(facet: $facet, itemsPerPage: $itemsPerPage, page: $page, filter: $filter, sort: $sort) {
-        pagination {
-            totalItems
-        }
-        facets {
-            key
-            terms {
-                key
-                label(locale: $locale)
-                quantity
-            }
-        }
-        items {
-            id
-            name
-            fullSlug
-            categories {
-                label(locale: $locale)
-            }
-            address {
-              street
-              houseNumber
-              city
-              postalCode
-              province
-              country { label(locale: $locale) }
-            }
-        }
-    }
-}
-</query>

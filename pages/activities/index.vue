@@ -225,7 +225,7 @@ export default {
         filter.reference = me.selectedReference
       }
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('1ee81fe2-0125-414a-9a8b-542e4102d509', {
         itemsPerPage: me.itemsPerPage,
         page: me.selectedPage,
         filter
@@ -251,44 +251,6 @@ export default {
   border: none;
 }
 </style>
-
-<query>
-query ($itemsPerPage: Int!, $page: Int!, $filter: EventFilter!) {
-  events (page: $page, itemsPerPage: $itemsPerPage, filter: $filter) {
-    pagination {
-        totalItems
-    }
-    items {
-      id
-      type
-      contributor { username }
-      payload
-      createdAt { format, value }
-      resource {
-        __typename
-        ... on Park {
-          name
-          fullSlug
-        }
-        ... on Attraction {
-          name
-          fullSlug
-        }
-        ... on Manufacturer {
-          name
-          fullSlug
-        }
-      }
-    }
-  }
-  accounts(sort: TOTAL_CONTRIBUTIONS_DESC, itemsPerPage: 20) {
-    items {
-      username
-      totalContributions
-    }
-  }
-}
-</query>
 
 <style lang="scss" scoped>
 .patch {

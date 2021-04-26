@@ -307,7 +307,7 @@ export default {
         }, _.isNil)
       }
 
-      const result = await me.$graphql(me.$options.__query, variables)
+      const result = await me.$graphql('6386833c-ed6e-4c32-88b8-c3b3ad3a338e', variables)
 
       result.parks.facets.forEach(function (facet) {
         me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
@@ -345,51 +345,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($locale: String, $facet: [ParkFacet]!, $itemsPerPage: Int!, $page: Int!, $filter: ParkFilter, $sort: ParkSort!, $includeMap: Boolean!) {
-    parks: parks(facet: $facet, itemsPerPage: $itemsPerPage, page: $page, filter: $filter, sort: $sort) {
-        pagination {
-            totalItems
-        }
-        facets {
-            key
-            terms {
-                key
-                label(locale: $locale)
-                quantity
-            }
-        }
-        items {
-            id
-            name
-            fullSlug
-            images {
-                url(size: MIDDLE)
-            }
-            categories {
-                label(locale: $locale)
-            }
-            address {
-                country {
-                    label(locale: $locale)
-                }
-            }
-            attractions {
-                totalItems
-            }
-        }
-    }
-    mapParks: parks(itemsPerPage: 1000, filter: $filter) @include(if: $includeMap) {
-        items {
-            id
-            name
-            fullSlug
-            latitude
-            longitude
-            attractions { totalItems }
-            categories { label(locale: $locale) }
-        }
-    }
-}
-</query>

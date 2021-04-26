@@ -89,22 +89,12 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($locale: String!){
-          attractionHistoryTypes {
-            key
-            label(locale: $locale)
-            fields
-          }
-        }
-      `
-
       this.type = null
       this.date = null
       this.name = null
       this.violations = []
 
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('30087256-674d-4750-b071-21d7ffb0a5fd', {
         locale: me.$i18n.locale
       })
 

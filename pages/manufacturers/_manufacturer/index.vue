@@ -179,7 +179,7 @@ export default {
     async loadManufacturer () {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('05364611-4543-4dba-9261-762cd56b72be', {
         manufacturerSlug: me.$route.params.manufacturer,
         locale: me.$i18n.locale,
         itemsPerPage: 8,
@@ -239,46 +239,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($manufacturerSlug: String!, $locale: String!, $filter: AttractionFilter!, $itemsPerPage: Int!) {
-    manufacturer(id: $manufacturerSlug) {
-        id
-        name
-        fullSlug
-        categories { key, label(locale: $locale) }
-        state { key, label(locale: $locale) }
-        web
-        address {
-            street
-            houseNumber
-            city
-            postalCode
-            province
-            country { label(locale: $locale) }
-        },
-        contributors {
-            account {
-              username
-            }
-            totalContributions
-        }
-    }
-    attractions(itemsPerPage: $itemsPerPage, filter: $filter) {
-        pagination {
-            totalItems
-        }
-        items {
-            id
-            name
-            fullSlug
-            images {
-                url(size: MIDDLE)
-            }
-            category {
-                label(locale: $locale)
-            }
-        }
-    }
-}
-</query>

@@ -91,19 +91,7 @@ export default {
     async save (ok) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: RegisterInput!){
-          register(input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            token
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('1c7ed8e6-f8ab-49d6-b735-36920eeeac7f', {
         locale: me.$i18n.locale,
         input: {
           name: me.name,

@@ -322,7 +322,7 @@ export default {
     async loadPark () {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('b04458d3-e42e-4509-ac73-0510b94df8d6', {
         parkSlug: me.$route.params.park,
         locale: me.$i18n.locale
       })
@@ -377,63 +377,3 @@ export default {
   width: 80px
 }
 </style>
-
-<query>
-query ($parkSlug: String!, $locale: String!) {
-    park(id: $parkSlug) {
-        id
-        name
-        shortDescription(locale: $locale)
-        fullSlug
-        categories { key, label(locale: $locale) }
-        state { key, label(locale: $locale) }
-        web
-        latitude
-        longitude
-        address {
-            street
-            houseNumber
-            city
-            postalCode
-            province
-            country { label(locale: $locale) }
-        },
-        timezone { label(locale: $locale) }
-        zones { id, name, openedAt { format, value }, closedAt { format, value }, formerNames, totalAttractions }
-        createdAt { format, value }
-        updatedAt { format, value }
-        images {
-            id
-            middle: url(size: MIDDLE)
-            large: url(size: LARGE)
-            contributor {
-              username
-            }
-            customCopyrightName
-            customCopyrightUrl
-        },
-        histories {
-            id
-            type { key }
-            date { format, value }
-            label(locale: $locale)
-        },
-        attributes {
-            type {
-              key
-              type
-              category
-              label(locale: $locale)
-            }
-            value
-            valueAsString(locale: $locale)
-        },
-        contributors {
-            account {
-              username
-            }
-            totalContributions
-        }
-    }
-}
-</query>

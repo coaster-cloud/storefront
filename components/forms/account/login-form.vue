@@ -78,19 +78,7 @@ export default {
     async save (ok) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: LoginInput!) {
-          login(input: $input) {
-            token
-            violations {
-              field
-              message(locale: $locale)
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('50a7642e-618e-4d69-b96d-141a6ff5ff9b', {
         locale: me.$i18n.locale,
         input: {
           username: me.username,

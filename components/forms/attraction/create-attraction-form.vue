@@ -122,28 +122,6 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($locale: String!, $parkId: String!){
-          park(id: $parkId) {
-            zones { id, name }
-          }
-          attractionStates {
-            key
-            label(locale: $locale)
-          }
-          attractionCategories {
-            key
-            label(locale: $locale)
-          }
-          manufacturers(itemsPerPage: 500) {
-            items {
-              id
-              name
-            }
-          }
-        }
-      `
-
       this.name = null
       this.category = null
       this.manufacturers = []
@@ -154,7 +132,7 @@ export default {
       this.longitude = null
       this.violations = []
 
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('ae8598fd-08a4-4201-9784-d9e08d48f83b', {
         locale: me.$i18n.locale,
         parkId: me.parkId
       })

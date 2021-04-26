@@ -156,23 +156,7 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($attractionId: String!){
-          attraction(id: $attractionId) {
-            id
-            safetyRegulation {
-              soloMinHeight
-              soloMaxHeight
-              soloMinAge
-              soloMaxAge
-              accompaniedMinHeight
-              accompaniedMinAge
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('b867149a-ea48-44a7-8428-814b92b0c325', {
         attractionId: me.attractionId
       })
 

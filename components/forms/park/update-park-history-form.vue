@@ -94,21 +94,7 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($parkId: String!, $locale: String!){
-          park(id: $parkId) {
-            id
-            histories { id, type { key }, date { value }, context { name } }
-          }
-          parkHistoryTypes {
-            key
-            label(locale: $locale)
-            fields
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('5eabf03b-74e2-46fa-a23e-8c8ddb2b2926', {
         parkId: me.parkId,
         locale: me.$i18n.locale
       })

@@ -13,23 +13,7 @@ export default {
     async createPark (input, onSuccess = null) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: CreateParkInput!){
-          createPark(input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              fullSlug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('83c5d919-f8a0-4820-9886-e72b7db4bf13', {
         locale: me.$i18n.locale,
         input
       })
@@ -48,23 +32,7 @@ export default {
     async updatePark (parkId, input, onSuccess = null, files = {}) {
       const me = this
 
-      const query = `
-        mutation ($parkId: String!, $locale: String!, $input: UpdateParkInput!){
-          updatePark(park: $parkId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            park {
-              id
-              name
-              fullSlug
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('7901c63a-e4c0-4f19-977e-7ca5fafc7c15', {
         locale: me.$i18n.locale,
         parkId,
         input

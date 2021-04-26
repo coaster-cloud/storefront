@@ -121,23 +121,6 @@ export default {
         return
       }
 
-      const query = `
-        mutation ($input: SetRidesInput!, $countDate: String!) {
-          setRides(input: $input) {
-            violations {
-              field
-              message
-            }
-            attraction {
-              myRides(date: $countDate) {
-                totalBasicRides
-                totalVirtualRealityRides
-              }
-            }
-          }
-        }
-      `
-
       const input = {
         attraction: me.attractionId,
         date: me.countDate
@@ -145,7 +128,10 @@ export default {
 
       input[field] = quantity
 
-      const result = await me.$graphql(query, { countDate: me.countDate, input })
+      const result = await me.$graphql('592b92dd-4c53-4a73-b1ae-b23266fa86a7', {
+        countDate: me.countDate,
+        input
+      })
 
       me.$trackEvent('Attraction counted')
 
@@ -167,23 +153,9 @@ export default {
         return
       }
 
-      const query = `
-        mutation ($input: SetCustomDefinitionInput!) {
-          setCustomDefinition(input: $input) {
-            violations {
-              field
-              message
-            }
-            attraction {
-              myCustomDefinition {
-                category
-              }
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, { input: { attraction: me.attractionId, category: value } })
+      const result = await me.$graphql('b238adb8-bab2-4fc7-9c83-6bfd366f5e25', {
+        input: { attraction: me.attractionId, category: value }
+      })
 
       me.$emit('custom-definition-changed', result.setCustomDefinition.attraction)
     }

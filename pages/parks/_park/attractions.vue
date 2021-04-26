@@ -61,7 +61,7 @@ export default {
     async loadPark () {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('71a626c3-b3c8-49e8-8892-ce5ee3e52823', {
         parkSlug: me.$route.params.park,
         locale: me.$i18n.locale
       })
@@ -107,18 +107,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($parkSlug: String!, $locale: String!) {
-    park(id: $parkSlug) {
-        id
-        name
-        shortDescription(locale: $locale)
-        fullSlug
-        images {
-          middle: url(size: MIDDLE)
-          large: url(size: LARGE)
-        }
-    }
-}
-</query>

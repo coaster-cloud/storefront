@@ -125,7 +125,7 @@ export default {
   async fetch () {
     const me = this
 
-    const result = await me.$graphql(me.$options.__query, { locale: me.$i18n.locale })
+    const result = await me.$graphql('e0dcadb3-dfcc-4f8d-b701-e756514f599d', { locale: me.$i18n.locale })
 
     me.totalParks = result.statistics.totalParks
     me.totalAttractions = result.statistics.totalAttractions
@@ -179,34 +179,6 @@ export default {
   }
 }
 </script>
-
-<query>
-  query ($locale: String!) {
-    statistics {
-      totalParks
-      totalAttractions
-      totalContributions
-    }
-    parks(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
-      items {
-        id
-        name
-        fullSlug
-        categories { label(locale: $locale)}
-        images { url(size: MIDDLE) }
-      }
-    },
-    attractions(itemsPerPage: 2, sort: RANDOM, filter: {images: {operator: GREATER_THAN_EQUAL, value: 1}}) {
-      items {
-        id
-        name
-        fullSlug
-        category { label(locale: $locale)}
-        images { url(size: MIDDLE) }
-      }
-    }
-  }
-</query>
 
 <style lang="scss" scoped>
 @import "~/assets/css/ci";

@@ -104,23 +104,6 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($locale: String!){
-          parkStates {
-            key
-            label(locale: $locale)
-          }
-          parkCategories {
-            key
-            label(locale: $locale)
-          }
-          timezones {
-            key
-            label(locale: $locale)
-          }
-        }
-      `
-
       this.name = null
       this.categories = []
       this.state = null
@@ -130,7 +113,7 @@ export default {
       this.longitude = null
       this.violations = []
 
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('af697cc7-93c0-4044-85ba-28aac907e362', {
         locale: me.$i18n.locale
       })
 

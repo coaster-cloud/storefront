@@ -70,36 +70,13 @@ export default {
         return
       }
 
-      const query = `
-        mutation ($input: SetRatingInput!) {
-           setRating(input: $input) {
-            violations {
-              field
-              message
-            }
-            attraction {
-              ratings {
-                fun { average, totalRatings }
-                thrill { average, totalRatings }
-                theme { average, totalRatings }
-              }
-              myRating {
-                fun
-                thrill
-                theme
-              }
-            }
-          }
-        }
-      `
-
       const input = {
         attraction: me.attraction
       }
 
       input[field] = value
 
-      const result = await me.$graphql(query, { input })
+      const result = await me.$graphql('fb86fdc3-6d46-4dd8-b24b-08b46fa8ae78', { input })
 
       me.$trackEvent('Attraction rated')
 

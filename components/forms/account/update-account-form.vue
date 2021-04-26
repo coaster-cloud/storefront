@@ -94,21 +94,10 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query {
-          myAccount {
-            name,
-            email
-            username,
-            locale
-          }
-        }
-      `
-
       this.password = null
       this.violations = []
 
-      const result = await me.$graphql(query)
+      const result = await me.$graphql('d77ed3b5-401f-4dca-bb16-900f8f347e31')
 
       if (result) {
         me.name = result.myAccount.name
@@ -121,17 +110,6 @@ export default {
     async save (ok) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: UpdateAccountInput!){
-          updateAccount(input: $input){
-            violations {
-              field
-              message(locale: $locale)
-            }
-          }
-        }
-      `
-
       const input = {
         name: me.name,
         email: me.email,
@@ -143,7 +121,7 @@ export default {
         input.password = me.password
       }
 
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('52535df0-034c-4645-9e82-09cf83db443e', {
         locale: me.$i18n.locale,
         input
       })

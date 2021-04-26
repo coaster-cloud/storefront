@@ -13,28 +13,7 @@ export default {
     async createAttraction (input, onSuccess = null) {
       const me = this
 
-      const query = `
-        mutation ($locale: String!, $input: CreateAttractionInput!){
-          createAttraction(input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            attraction {
-              id
-              name
-              fullSlug
-              park {
-                id
-                name
-                fullSlug
-              }
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('7be26569-e9b2-46aa-a082-6d6abd564aa9', {
         locale: me.$i18n.locale,
         input
       })
@@ -53,28 +32,7 @@ export default {
     async updateAttraction (attractionId, input, onSuccess = null, files = {}) {
       const me = this
 
-      const query = `
-        mutation ($attractionId: String!, $locale: String!, $input: UpdateAttractionInput!){
-          updateAttraction(attraction: $attractionId, input: $input) {
-            violations {
-              field
-              message(locale: $locale)
-            }
-            attraction {
-              id
-              name
-              fullSlug
-              park {
-                id
-                name
-                fullSlug
-              }
-            }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('68034f88-d314-4177-bc07-b2c2dd799d5b', {
         locale: me.$i18n.locale,
         attractionId,
         input

@@ -424,7 +424,7 @@ export default {
     async loadAttraction () {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('42de53a8-0a7a-432d-b5c2-85d8d2b5987b', {
         attractionSlug: me.$route.params.attraction,
         locale: me.$i18n.locale,
         isAuthenticated: me.$store.getters['account/hasToken'],
@@ -493,85 +493,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($attractionSlug: String!, $locale: String!, $isAuthenticated: Boolean!, $countDate: String!) {
-    attractionCategories {
-        key
-        label(locale: $locale)
-    },
-    attraction(id: $attractionSlug) {
-        id
-        name
-        shortDescription(locale: $locale)
-        fullSlug
-        category { key, label(locale: $locale) }
-        state { key, label(locale: $locale) }
-        manufacturers { id, name, fullSlug }
-        zone { id, name }
-        latitude
-        longitude
-        onride
-        park {
-          id
-          name
-          fullSlug
-        }
-        safetyRegulation {
-          soloLabel(locale: $locale)
-          accompaniedLabel(locale: $locale)
-          prohibitLabel(locale: $locale)
-        }
-        ratings {
-          fun { average, totalRatings }
-          thrill { average, totalRatings }
-          theme { average, totalRatings }
-        }
-        histories {
-          id
-          type { key }
-          date { format, value }
-          label(locale: $locale)
-        }
-        attributes {
-          type {
-            key
-            type
-            category
-            label(locale: $locale)
-          }
-          value
-          valueAsString(locale: $locale)
-        }
-        elements { quantity, type { label(locale: $locale) } }
-        contributors {
-          account {
-            username
-          }
-          totalContributions
-        }
-        images {
-            id
-            middle: url(size: MIDDLE)
-            large: url(size: LARGE)
-            contributor {
-            username
-          }
-          customCopyrightName
-          customCopyrightUrl
-        }
-        myRating @include(if: $isAuthenticated) {
-          fun
-          thrill
-          theme
-        }
-        myRides(date: $countDate) @include(if: $isAuthenticated) {
-          totalBasicRides
-          totalVirtualRealityRides
-        }
-        myCustomDefinition @include(if: $isAuthenticated) {
-          category
-        }
-    }
-}
-</query>

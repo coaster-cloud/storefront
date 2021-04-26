@@ -91,30 +91,7 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($locale: String!, $attractionId: String!){
-          attraction(id: $attractionId) {
-            id
-            attributes {
-                type {
-                  key
-                }
-                value
-            }
-          }
-          attractionAttributeTypes {
-              key
-              type
-              category
-              label(locale: $locale)
-              scale
-              choices { key, label(locale: $locale) }
-              unit { key }
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('e0820fa3-749c-427d-a048-f91e2cc9240e', {
         locale: me.$i18n.locale,
         attractionId: me.attractionId
       })

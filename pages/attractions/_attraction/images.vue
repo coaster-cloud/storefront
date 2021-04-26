@@ -115,7 +115,7 @@ export default {
     async loadAttraction () {
       const me = this
 
-      const result = await me.$graphql(me.$options.__query, {
+      const result = await me.$graphql('1305de8c-8477-4c6f-92f4-1da804e974f9', {
         attractionSlug: me.$route.params.attraction,
         locale: me.$i18n.locale
       })
@@ -187,29 +187,3 @@ export default {
   }
 }
 </script>
-
-<query>
-query ($attractionSlug: String!, $locale: String!) {
-    attraction(id: $attractionSlug) {
-        id
-        name
-        shortDescription(locale: $locale)
-        fullSlug
-        park {
-          id
-          name
-          fullSlug
-        }
-        images {
-          id
-          middle: url(size: MIDDLE)
-          large: url(size: LARGE)
-          contributor { username }
-          license { name, url }
-          date { format, value }
-          customCopyrightName
-          customCopyrightUrl
-        }
-    }
-}
-</query>

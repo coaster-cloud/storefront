@@ -83,28 +83,7 @@ export default {
     async load () {
       const me = this
 
-      const query = `
-        query ($locale: String!, $manufacturerId: String!){
-          manufacturer(id: $manufacturerId) {
-            id
-            name
-            fullSlug
-            categories { key }
-            state { key }
-            web
-          }
-          manufacturerStates {
-            key
-            label(locale: $locale)
-          }
-          manufacturerCategories {
-            key
-            label(locale: $locale)
-          }
-        }
-      `
-
-      const result = await me.$graphql(query, {
+      const result = await me.$graphql('18e8d896-29f8-4f75-98d1-a45f2814391b', {
         locale: me.$i18n.locale,
         manufacturerId: me.manufacturerId
       })
