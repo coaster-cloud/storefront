@@ -487,7 +487,7 @@ export default {
       const result = await me.$graphql('722d496e-9e32-49e3-82e8-4d4a20f85db0', variables)
 
       result.attractions.facets.forEach(function (facet) {
-        me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
+        me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label, disabled: term.quantity === 0 })))
       })
 
       me.attractions = result.attractions.items

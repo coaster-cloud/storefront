@@ -267,7 +267,7 @@ export default {
       const result = await me.$graphql('bb272036-0531-4fdc-8e21-a43c9c310bc6', variables)
 
       result.manufacturers.facets.forEach(function (facet) {
-        me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label })))
+        me.$set(me, me.facetMap[facet.key], facet.terms.map(term => ({ value: term.key, text: term.label, disabled: term.quantity === 0 })))
       })
 
       me.manufacturers = result.manufacturers.items
