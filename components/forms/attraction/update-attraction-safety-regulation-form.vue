@@ -21,10 +21,21 @@
       id="update-attraction-safety-regulation-form-solo-min-height"
       v-model="soloMinHeight"
       :label="$t('safety_regulation.min_height')"
-      :description="$t('input_hint.cm')"
+      :description="`${$t('input_hint.cm')} ${$t('input_hint.no_restriction')}`"
       type="number"
       :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMinHeight]')"
+      :disabled="noRestrictions"
+    />
+
+    <text-input
+      id="update-attraction-safety-regulation-form-solo-min-age"
+      v-model="soloMinAge"
+      :label="$t('safety_regulation.min_age')"
+      :description="`${$t('input_hint.years')} ${$t('input_hint.no_restriction')}`"
+      type="number"
+      :step="1"
+      :violations="getFieldViolations('[safetyRegulation][soloMinAge]')"
       :disabled="noRestrictions"
     />
 
@@ -36,17 +47,6 @@
       type="number"
       :step="1"
       :violations="getFieldViolations('[safetyRegulation][soloMaxHeight]')"
-      :disabled="noRestrictions"
-    />
-
-    <text-input
-      id="update-attraction-safety-regulation-form-solo-min-age"
-      v-model="soloMinAge"
-      :label="$t('safety_regulation.min_age')"
-      :description="$t('input_hint.years')"
-      type="number"
-      :step="1"
-      :violations="getFieldViolations('[safetyRegulation][soloMinAge]')"
       :disabled="noRestrictions"
     />
 
