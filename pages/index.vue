@@ -33,6 +33,24 @@
 
             <markdown-text :text="$t('home.teaser_rating')" />
           </b-media>
+
+          <b-media>
+            <template v-slot:aside>
+              <img src="~/assets/images/icons/user-interface.png" class="img-responsive teaser-icon" alt="Mobile app">
+            </template>
+
+            <markdown-text :text="$t('home.teaser_app')" />
+
+            <div class="text-right">
+              <a href="https://apps.apple.com/app/coaster-cloud/id1568754220" target="_blank">
+                <img src="~/assets/images/appstore.svg" class="img-responsive store-icon" alt="AppStore">
+              </a>
+
+              <a href="https://play.google.com/store/apps/details?id=cloud.coaster.mobile" target="_blank">
+                <img src="~/assets/images/playstore.png" class="img-responsive store-icon" alt="AppStore">
+              </a>
+            </div>
+          </b-media>
         </b-col>
 
         <!-- Metrics -->
@@ -69,7 +87,7 @@
       </b-row>
 
       <!-- Random parks / attractions -->
-      <b-row>
+      <b-row class="pt-4">
         <b-col
           v-for="(item, index) in random"
           :key="index"
@@ -188,6 +206,10 @@ export default {
 
 .teaser-icon {
   max-height: 100px;
+}
+
+.store-icon {
+  max-height: 40px;
 }
 
 .media {

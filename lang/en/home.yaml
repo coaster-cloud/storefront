@@ -16,7 +16,7 @@ home.teaser_rating: |
   Soon you will also have the possibility to create your personal **top or flop lists**.
 
 home.teaser_community: |
-  #### Community project
+  ##### Community project
   This is a community project, which can only exist through the **participation of many people**. We are happy therefore
   for every contribution. No matter whether you maintain a complete new park or fix technical data of an existing attraction - **any help is welcome**.
   With a **free registration** you can **add new data** or **update existing ones**. All park and attraction changes are logged.
@@ -24,3 +24,8 @@ home.teaser_community: |
 
   All theme park related data are published under **Creative Common (CC) licenses** and can therefore be copied and used by anyone as long as the license conditions are met.
   Text data is licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Different Create Common licenses can be used for images. These are noted on the respective image.
+
+home.teaser_app: |
+  ##### Your theme park app
+  **coaster.cloud** is your **companion** in the theme park. Download the app for Android or iPhone for your next visit to get attraction info even easier and count your rides even faster.
+  Of course, the app is completely free and ad-free.

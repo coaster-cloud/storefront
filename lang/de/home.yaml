@@ -12,7 +12,7 @@ home.teaser_rating: |
   ##### Deine Lieblingsattraktionen?
   Was ist deine Lieblingsattraktion? Welche sind in deinen Top 20? Auf **coaster. cloud** kannst du jede Attraktion **bewerten**. In kürze wirst du auch die Möglichkeit haben, deine persönlichen **Top oder Flop Listen** zu erstellen.
 home.teaser_community: |
-  #### Gemeinschaftsprojekt
+  ##### Gemeinschaftsprojekt
   Dies ist ein Gemeinschaftsprojekt, das nur durch die **Teilnahme vieler** existieren kann. Wir freuen uns daher
   über jeden Beitrag. Egal, ob du einen komplett neuen Park hinzufügst oder technische Daten einer bestehenden Attraktion bearbeitest - **jede Hilfe ist willkommen**.
   Mit einer **kostenlosen Registrierung** kannst du **neue Daten hinzufügen** oder **bestehende aktualisieren**. Alle Park- und Attraktionsänderungen werden protokolliert.
@@ -20,3 +20,7 @@ home.teaser_community: |
 
   Alle Daten zum Themenpark werden unter **Creative Common (CC) Lizenzen veröffentlicht** und können daher von jedem kopiert und genutzt werden, solange die Lizenzbedingungen erfüllt sind.
   Textdaten sind unter [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) lizenziert. Verschiedene Lizenzen können für Bilder verwendet werden. Diese sind am jeweiligen Bild vermerkt.
+home.teaser_app: |
+  ##### Deine Freizeitpark App
+  **coaster.cloud** ist dein **Begleiter** im Freizeitpark. Lade dir die App für Android oder iPhone für deinen nächsten Besuch herunter um noch einfacher an die Attraktionsinfos zu gelangen und noch schneller
+  deine Fahrten zu zählen. Natürlich ist die App komplett kostenlos und Werbefrei.
