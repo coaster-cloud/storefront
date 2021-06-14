@@ -17,7 +17,7 @@
         <create-attraction-form :park-id="park.id" @finish="onAttractionCreated" />
       </div>
 
-      <attractions :park-id="park.id" :fixed-states="['in_operation', 'under_construction']" @refreshed="afterRefresh" />
+      <attractions :park-id="park.id" :fixed-states="['out_of_operation', 'not_existing']" @refreshed="afterRefresh" />
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
           route: { name: 'parks-park', params: { park: this.park.fullSlug } }
         },
         {
-          label: `${this.$t('attractions')} (${this.totalAttractions})`
+          label: `${this.$t('former_attractions')} (${this.totalAttractions})`
         }
       ]
     }

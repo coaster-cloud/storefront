@@ -24,7 +24,7 @@ export default {
           route: 'index'
         },
         {
-          label: `${this.$t('overview')} (${this.totalAttractions})`
+          label: `${this.$t('attractions')} (${this.totalAttractions})`
         }
       ]
     }

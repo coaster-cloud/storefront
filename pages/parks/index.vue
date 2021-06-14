@@ -33,7 +33,7 @@ export default {
           route: 'index'
         },
         {
-          label: `${this.$t('overview')} (${this.totalParks})`
+          label: `${this.$t('parks')} (${this.totalParks})`
         }
       ]
     }

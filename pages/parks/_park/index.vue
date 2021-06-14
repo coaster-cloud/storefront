@@ -196,8 +196,15 @@
 
             <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'parks-park-attractions', params: {park: park.fullSlug}})" custom>
               <b-button variant="primary" block class="mb-1 text-left" @click="navigate">
-                <b-icon icon="table" aria-hidden="true" />
+                <b-icon icon="list-ul" aria-hidden="true" />
                 {{ $t('attractions') }}
+              </b-button>
+            </nuxt-link>
+
+            <nuxt-link v-slot="{ navigate }" :to="localePath({name: 'parks-park-former-attractions', params: {park: park.fullSlug}})" custom>
+              <b-button variant="primary" block class="mb-1 text-left" @click="navigate">
+                <b-icon icon="list-ul" aria-hidden="true" />
+                {{ $t('former_attractions') }}
               </b-button>
             </nuxt-link>
           </div>

@@ -72,7 +72,7 @@
           </div>
 
           <!-- State -->
-          <div class="col-md-6 col-lg-3 col-xl-3 mb-2">
+          <div v-if="fixedStates.length === 0" class="col-md-6 col-lg-3 col-xl-3 mb-2">
             <select-input
               id="filter-attractions-state"
               v-model="selectedState"
@@ -223,6 +223,10 @@ export default {
     parkId: {
       type: String,
       default: null
+    },
+    fixedStates: {
+      type: Array,
+      default: () => []
     }
   },
 
@@ -477,7 +481,7 @@ export default {
           category: me.selectedCategory,
           thrill: me.selectedThrill,
           manufacturer: me.selectedManufacturer,
-          state: me.selectedState,
+          state: me.fixedStates.length > 0 ? me.fixedStates : me.selectedState,
           element: me.selectedElement,
           tag: me.selectedTag,
           safetyRegulation
