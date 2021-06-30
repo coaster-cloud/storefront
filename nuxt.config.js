@@ -57,7 +57,6 @@ export default {
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     '@nuxtjs/sentry',
     'nuxt-i18n',
     ['cookie-universal-nuxt', { parseJSON: false }]
@@ -132,7 +131,8 @@ export default {
     defaultLocale: 'en',
     strategy: 'prefix',
     detectBrowserLanguage: {
-      onlyOnNoPrefix: true
+      useCookie: false,
+      onlyOnRoot: true
     }
   },
 
