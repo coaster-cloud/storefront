@@ -136,15 +136,6 @@ export default {
     }
   },
 
-  // PWA
-  pwa: {
-    manifest: {
-      name: 'coaster.cloud',
-      short_name: 'coaster.cloud',
-      description: 'Discover, count and search theme parks and their attractions. Create awesome statistics of your theme park visits.',
-    }
-  },
-
   // Loading
   loading: false
 }
