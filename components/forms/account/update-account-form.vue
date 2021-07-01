@@ -130,6 +130,8 @@ export default {
 
       if (me.violations.length === 0) {
         ok()
+
+        this.$trackEvent('Account updated')
       }
     }
   }

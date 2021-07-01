@@ -74,6 +74,8 @@ export default {
           title: this.$t('change_password'),
           variant: 'success'
         })
+
+        this.$trackEvent('Password reset')
       }
     }
   }

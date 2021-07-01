@@ -113,6 +113,8 @@ export default {
           title: this.$t('register'),
           variant: 'success'
         })
+
+        this.$trackEvent('Account registered')
       }
     }
   }

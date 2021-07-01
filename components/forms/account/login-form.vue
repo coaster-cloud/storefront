@@ -97,6 +97,8 @@ export default {
           title: this.$t('login'),
           variant: 'success'
         })
+
+        this.$trackEvent('Logged in')
       }
     }
   }
