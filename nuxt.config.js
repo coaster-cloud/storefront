@@ -20,7 +20,7 @@ export default {
         body: true,
         async: true,
         defer: true,
-        "data-website-id": '9c8c9cd9-9625-4083-b05e-ab8f8acd7743'
+        "data-website-id": process.env.ANALYTICS_ID || 'development'
       },
     ],
   },
@@ -106,8 +106,8 @@ export default {
 
   // Public env config
   publicRuntimeConfig: {
-    dataServiceUrl: process.env.DATA_SERVICE_URL,
-    imageUrl: process.env.IMAGE_URL
+    dataServiceUrl: process.env.DATA_SERVICE_URL || 'https://data.coaster.cloud/v1',
+    appVersion: process.env.APP_VERSION || 'v0.0.0'
   },
 
   // Translations

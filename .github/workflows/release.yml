@@ -1,8 +1,8 @@
-name: ci
+name: release
 
 on:
   push:
-    branches: master
+    tags: ['*']
 
 jobs:
   main:
@@ -21,6 +21,10 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
+      - name: Save tag version
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
       - name: Build and push nginx
         uses: docker/build-push-action@v2
         with:
@@ -29,7 +33,9 @@ jobs:
           push: true
           tags: |
             ghcr.io/coaster-cloud/web-app-nginx:latest
+            ghcr.io/coaster-cloud/web-app-nginx:${{ steps.vars.outputs.tag }}
         env:
-          ANALYTICS_ID: 9c8c9cd9-9625-4083-b05e-ab8f8acd7743
-          DATA_SERVICE_URL: https://data.coaster.cloud/v1
-          SENTRY_DSN: https://e5547154090e45bba96718e5bf78b28e@o320437.ingest.sentry.io/5517128
+          ANALYTICS_ID: ${{ secrets.ANALYTICS_ID }}
+          DATA_SERVICE_URL: ${{ secrets.DATA_SERVICE_URL }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          APP_VERSION: ${{ steps.vars.outputs.tag }}

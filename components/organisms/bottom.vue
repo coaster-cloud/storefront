@@ -11,7 +11,7 @@
         <div>
           <div>
             <p class="m-0">
-              &copy; {{ new Date().getFullYear() }} coaster.cloud |
+              &copy; {{ new Date().getFullYear() }} coaster.cloud | {{ $config.appVersion }} |
               <nuxt-link :to="localePath('activities')">
                 {{ $t('activities') }}
               </nuxt-link>
