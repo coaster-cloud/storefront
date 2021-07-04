@@ -25,6 +25,13 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo ANALYTICS_ID=${{ secrets.ANALYTICS_ID }} >> .env
+          echo DATA_SERVICE_URL=${{ secrets.DATA_SERVICE_URL }} >> .env
+          echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
+
       - name: Build and push nginx
         uses: docker/build-push-action@v2
         with:
