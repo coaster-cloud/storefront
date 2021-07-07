@@ -40,17 +40,20 @@
             </template>
 
             <markdown-text :text="$t('home.teaser_app')" />
+          </b-media>
 
-            <div class="text-right">
+          <b-row align-h="center" class="text-center mb-4">
+            <b-col cols="6" md="4">
               <a href="https://apps.apple.com/app/coaster-cloud/id1568754220" target="_blank">
                 <img src="~/assets/images/appstore.svg" class="img-responsive store-icon" alt="AppStore">
               </a>
-
+            </b-col>
+            <b-col cols="6" md="4">
               <a href="https://play.google.com/store/apps/details?id=cloud.coaster.mobile" target="_blank">
-                <img src="~/assets/images/playstore.png" class="img-responsive store-icon" alt="AppStore">
+                <img src="~/assets/images/playstore.png" class="img-responsive store-icon" alt="PlayStore">
               </a>
-            </div>
-          </b-media>
+            </b-col>
+          </b-row>
         </b-col>
 
         <!-- Metrics -->
