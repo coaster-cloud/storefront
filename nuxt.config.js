@@ -8,7 +8,8 @@ export default {
       { hid: 'og:title', property: 'og:title', content: 'coaster.cloud' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'coaster.cloud' },
       { hid: 'og:image', property: 'og:image', content: 'https://coaster.cloud/opengraph.jpg' },
-      { hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: 'coaster.cloud' }
+      { hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: 'coaster.cloud' },
+      { hid: 'apple-itunes-app', name: 'apple-itunes-app', content: 'app-id=1568754220' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
