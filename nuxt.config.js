@@ -35,7 +35,6 @@ export default {
   plugins: [
     { src: '~/node_modules/vue-flux', mode: 'client' },
     '~/plugins/vue-number-animation.client.js',
-    '~/plugins/vue-calendar-heatmap.client.js',
     '~/plugins/leaflet.client.js',
     '~/plugins/markdown.js',
     '~/plugins/vue-scroll-to.js',
@@ -107,7 +106,7 @@ export default {
 
   // Public env config
   publicRuntimeConfig: {
-    dataServiceUrl: process.env.DATA_SERVICE_URL || 'https://data.coaster.cloud/v1',
+    dataServiceUrl: process.env.DATA_SERVICE_URL || 'http://localhost:8010/v1',
     appVersion: process.env.APP_VERSION || 'v0.0.0'
   },
 

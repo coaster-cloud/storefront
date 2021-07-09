@@ -8,6 +8,12 @@
     <div v-else class="main-content">
       <breadcrumb :items="breadcrumbs" />
 
+      <b-row v-if="selectedParkTrip !== null" class="mb-2">
+        <b-col cols="12" class="text-center">
+          <h3>{{ account.rideStatistic.parkTrips.items[0].park.name }} am {{ account.rideStatistic.parkTrips.items[0].date | timestamp($i18n.locale) }}</h3>
+        </b-col>
+      </b-row>
+
       <b-row>
         <b-col>
           <!-- Filter Header -->
@@ -24,7 +30,7 @@
             <h5>{{ $t('filter') }}</h5>
             <div class="row mb-2">
               <!-- Year -->
-              <div class="col-md-6 col-lg-4 col-xl-4 mb-2">
+              <div v-if="selectedParkTrip === null" class="col-md-6 col-lg-4 col-xl-4 mb-2">
                 <select-input
                   id="filter-profile-date"
                   v-model="selectedDate"
@@ -42,7 +48,7 @@
               </div>
 
               <!-- Park -->
-              <div class="col-md-6 col-lg-4 col-xl-4 mb-2">
+              <div v-if="selectedParkTrip === null" class="col-md-6 col-lg-4 col-xl-4 mb-2">
                 <select-input
                   id="filter-profile-park"
                   v-model="selectedPark"
@@ -70,23 +76,38 @@
       </b-row>
 
       <b-row class="mb-5">
-        <!-- Heatmap -->
-        <b-col offset-md="2" md="8">
-          <client-only>
-            <div class="text-center">
-              <h5>{{ $t('heatmap') }}</h5>
-              <p>{{ $t('last_count_activities') }}</p>
-
-              <calendar-heatmap
-                :values="heatmap.items"
-                :end-date="heatmap.endDate"
-                :tooltip-unit="$t('rides')"
-                :range-color="['#ebedf0', '#dbc9ed', '#b48ed9', '#9762ca', '#663399']"
-                @day-click="filterDay"
-              />
-            </div>
-          </client-only>
+        <b-col cols="12">
+          <div class="text-center">
+            <h5>{{ $t('my_records') }}</h5>
+          </div>
         </b-col>
+
+        <template v-if="rideRecords.length > 0">
+          <b-col v-for="(record, index) in rideRecords" :key="index" lg="3" md="4" sm="6">
+            <b-card
+              border-variant="primary"
+              :header="record.label"
+              header-bg-variant="primary"
+              header-text-variant="white"
+              align="center"
+              class="mt-4"
+            >
+              <div>
+                <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: record.attraction.fullSlug}})">
+                  {{ record.attraction.name }}
+                </nuxt-link>
+              </div>
+
+              <small>{{ record.attraction.attribute.valueAsString }}</small>
+            </b-card>
+          </b-col>
+        </template>
+
+        <template v-else>
+          <b-col cols="12">
+            <no-data />
+          </b-col>
+        </template>
       </b-row>
 
       <b-row class="mb-5">
@@ -104,43 +125,6 @@
             <span class="text-muted">{{ rideFact.value }}</span>
           </div>
         </b-col>
-      </b-row>
-
-      <b-row class="mb-5">
-        <b-col cols="12">
-          <div class="text-center">
-            <h5>{{ $t('my_records') }}</h5>
-          </div>
-        </b-col>
-
-        <template v-if="rideRecords.length > 0">
-          <b-col v-for="(record, index) in rideRecords" :key="index" lg="3" md="4" sm="6">
-            <b-card
-              border-variant="primary"
-              :header="record.label"
-              header-bg-variant="primary"
-              header-text-variant="white"
-              align="center"
-              class="mt-4"
-            >
-              <b-card-text>
-                <div>
-                  <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: record.attraction.fullSlug}})">
-                    {{ record.attraction.name }}
-                  </nuxt-link>
-                </div>
-
-                <small>{{ record.attraction.attribute.valueAsString }}</small>
-              </b-card-text>
-            </b-card>
-          </b-col>
-        </template>
-
-        <template v-else>
-          <b-col cols="12">
-            <no-data />
-          </b-col>
-        </template>
       </b-row>
 
       <b-row class="mb-5">
@@ -170,7 +154,7 @@
 
       <b-row>
         <!-- Attractions -->
-        <b-col lg="4">
+        <b-col lg="4" offset-md="1" class="mb-5">
           <div class="content-block">
             <div class="text-center">
               <h5>{{ $t('attractions') }}</h5>
@@ -209,7 +193,7 @@
         </b-col>
 
         <!-- Parks -->
-        <b-col lg="4">
+        <b-col v-if="selectedParkTrip === null" lg="4" offset-md="1" class="mb-5">
           <div class="content-block">
             <div class="text-center">
               <h5>{{ $t('parks') }}</h5>
@@ -248,7 +232,7 @@
         </b-col>
 
         <!-- Manufacturers -->
-        <b-col lg="4">
+        <b-col lg="4" offset-md="1" class="mb-5">
           <div class="content-block">
             <div class="text-center">
               <h5>{{ $t('manufacturers') }}</h5>
@@ -285,6 +269,51 @@
             </template>
           </div>
         </b-col>
+
+        <!-- Last trips -->
+        <b-col v-if="selectedParkTrip === null" lg="4" offset-md="1" class="mb-5">
+          <div class="content-block">
+            <div class="text-center">
+              <h5>{{ $t('my_trips') }}</h5>
+            </div>
+
+            <template v-if="account.rideStatistic.parkTrips.items.length === 0">
+              <no-data />
+            </template>
+
+            <template v-else>
+              <b-list-group flush>
+                <template v-for="(parkTrip, index) in account.rideStatistic.parkTrips.items">
+                  <b-list-group-item :key="index" class="d-flex justify-content-between align-items-center">
+                    <div class="flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <b-link class="text-truncate" @click="selectedDate = parkTrip.date.value">
+                          {{ parkTrip.date | timestamp($i18n.locale) }}
+                        </b-link>
+                      </div>
+
+                      <small>{{ parkTrip.park.name }}</small>
+                    </div>
+
+                    <b-button size="sm" variant="link" @click="selectedParkTrip = `${parkTrip.date.value}-${parkTrip.park.id}`">
+                      <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
+                    </b-button>
+                  </b-list-group-item>
+                </template>
+              </b-list-group>
+
+              <b-pagination
+                v-if="account.rideStatistic.parkTrips.pagination.totalItems > itemsPerPage"
+                v-model="parkTripPage"
+                :limit="3"
+                align="center"
+                class="align-items-center"
+                :total-rows="account.rideStatistic.parkTrips.pagination.totalItems"
+                :per-page="itemsPerPage"
+              />
+            </template>
+          </div>
+        </b-col>
       </b-row>
     </div>
   </div>
@@ -292,7 +321,6 @@
 
 <script>
 import _ from 'lodash'
-import Moment from 'moment'
 
 export default {
   async fetch () {
@@ -341,6 +369,16 @@ export default {
       }
     },
 
+    selectedParkTrip: {
+      get () {
+        return _.get(this.$route.query, 'trip', null)
+      },
+
+      set (value) {
+        this.updateRoute({ trip: value, park: null, date: null, tpage: null })
+      }
+    },
+
     attractionPage: {
       get () {
         return parseInt(_.get(this.$route.query, 'apage', 1))
@@ -371,23 +409,13 @@ export default {
       }
     },
 
-    heatmap () {
-      const me = this
+    parkTripPage: {
+      get () {
+        return parseInt(_.get(this.$route.query, 'tpage', 1))
+      },
 
-      let endDate = new Date()
-      let year = me.selectedDate
-
-      if (typeof year === 'string' && year.length > 4) {
-        year = year.substring(0, 4)
-      }
-
-      if (year !== null && parseInt(endDate.getFullYear()) !== parseInt(year)) {
-        endDate = `${year}-12-31`
-      }
-
-      return {
-        items: me.account.rideStatistic.heatmap.map(item => ({ date: Moment(item.date).toDate(), count: item.rides })),
-        endDate
+      set (value) {
+        this.updateRoute({ tpage: value === 1 ? null : value })
       }
     },
 
@@ -439,29 +467,21 @@ export default {
       })
     },
 
-    filterDay (day) {
-      if (day.count > 0) {
-        const date = Moment(day.date)
-
-        this.showFilter = true
-        this.selectedDate = date.format('YYYY-MM-DD')
-      }
-    },
-
     async loadAccount () {
       const me = this
 
-      const result = await me.$graphql('dbc25aca-fe3d-4264-9112-82a3c7aa97b1', {
+      const result = await me.$graphql('4c3782ba-c118-4fca-ae22-fbb4a9fade00', {
         username: me.$route.params.username,
         locale: me.$i18n.locale,
         attractionPage: me.attractionPage,
         parkPage: me.parkPage,
         manufacturerPage: me.manufacturerPage,
+        parkTripPage: me.parkTripPage,
         itemsPerPage: me.itemsPerPage,
         filter: {
-          date: me.selectedDate,
+          date: me.selectedParkTrip ? me.selectedParkTrip.substr(0, 10) : me.selectedDate,
           category: me.selectedCategory,
-          park: me.selectedPark
+          park: me.selectedParkTrip ? me.selectedParkTrip.substr(11) : me.selectedPark
         }
       })
 
