@@ -166,17 +166,13 @@
 
             <template v-else>
               <b-list-group flush>
-                <template v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items">
-                  <b-list-group-item :key="index" class="flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: attractionRide.attraction.fullSlug}})">
-                        {{ attractionRide.attraction.name }}
-                      </nuxt-link>
-                    </div>
-
-                    <small>{{ $tc('n_rides', attractionRide.totalRides, {'count': attractionRide.totalRides}) }}</small>
-                  </b-list-group-item>
-                </template>
+                <list-item v-for="(attractionRide, index) in account.rideStatistic.attractionRides.items" :key="index" :title="attractionRide.attraction.name" :description="$tc('n_rides', attractionRide.totalRides, {'count': attractionRide.totalRides})">
+                  <nuxt-link class="text-truncate" :to="localePath({name: 'attractions-attraction', params: {attraction: attractionRide.attraction.fullSlug}})">
+                    <b-button size="sm" variant="link">
+                      <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
+                    </b-button>
+                  </nuxt-link>
+                </list-item>
               </b-list-group>
 
               <b-pagination
@@ -205,17 +201,13 @@
 
             <template v-else>
               <b-list-group flush>
-                <template v-for="(parkVisits, index) in account.rideStatistic.parkVisits.items">
-                  <b-list-group-item :key="index" class="flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <nuxt-link class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.fullSlug}})">
-                        {{ parkVisits.park.name }}
-                      </nuxt-link>
-                    </div>
-
-                    <small>{{ $tc('n_visits', parkVisits.totalVisits, {'count': parkVisits.totalVisits}) }}</small>
-                  </b-list-group-item>
-                </template>
+                <list-item v-for="(parkVisits, index) in account.rideStatistic.parkVisits.items" :key="index" :title="parkVisits.park.name" :description="$tc('n_visits', parkVisits.totalVisits, {'count': parkVisits.totalVisits})">
+                  <nuxt-link class="text-truncate" :to="localePath({name: 'parks-park', params: {park: parkVisits.park.fullSlug}})">
+                    <b-button size="sm" variant="link">
+                      <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
+                    </b-button>
+                  </nuxt-link>
+                </list-item>
               </b-list-group>
 
               <b-pagination
@@ -244,17 +236,13 @@
 
             <template v-else>
               <b-list-group flush>
-                <template v-for="(manufacturerRide, index) in account.rideStatistic.manufacturerRides.items">
-                  <b-list-group-item :key="index" class="flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <nuxt-link class="text-truncate" :to="localePath({ name: 'attractions', query: { manufacturer: manufacturerRide.manufacturer.id } })">
-                        {{ manufacturerRide.manufacturer.name }}
-                      </nuxt-link>
-                    </div>
-
-                    <small>{{ $tc('n_rides', manufacturerRide.totalRides, {'count': manufacturerRide.totalRides}) }}</small>
-                  </b-list-group-item>
-                </template>
+                <list-item v-for="(manufacturerRide, index) in account.rideStatistic.manufacturerRides.items" :key="index" :title="manufacturerRide.manufacturer.name" :description="$tc('n_rides', manufacturerRide.totalRides, {'count': manufacturerRide.totalRides})">
+                  <nuxt-link class="text-truncate" :to="localePath({ name: 'manufacturers-manufacturer', params: { manufacturer: manufacturerRide.manufacturer.fullSlug } })">
+                    <b-button size="sm" variant="link">
+                      <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
+                    </b-button>
+                  </nuxt-link>
+                </list-item>
               </b-list-group>
 
               <b-pagination
@@ -270,7 +258,7 @@
           </div>
         </b-col>
 
-        <!-- Last trips -->
+        <!-- My trips -->
         <b-col v-if="selectedParkTrip === null" lg="4" offset-md="1" class="mb-5">
           <div class="content-block">
             <div class="text-center">
@@ -283,23 +271,11 @@
 
             <template v-else>
               <b-list-group flush>
-                <template v-for="(parkTrip, index) in account.rideStatistic.parkTrips.items">
-                  <b-list-group-item :key="index" class="d-flex justify-content-between align-items-center">
-                    <div class="flex-column align-items-start">
-                      <div class="d-flex w-100 justify-content-between">
-                        <b-link class="text-truncate" @click="selectedDate = parkTrip.date.value">
-                          {{ parkTrip.date | timestamp($i18n.locale) }}
-                        </b-link>
-                      </div>
-
-                      <small>{{ parkTrip.park.name }}</small>
-                    </div>
-
-                    <b-button size="sm" variant="link" @click="selectedParkTrip = `${parkTrip.date.value}-${parkTrip.park.id}`">
-                      <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
-                    </b-button>
-                  </b-list-group-item>
-                </template>
+                <list-item v-for="(parkTrip, index) in account.rideStatistic.parkTrips.items" :key="index" :title="parkTrip.date | timestamp($i18n.locale)" :description="parkTrip.park.name">
+                  <b-button size="sm" variant="link" @click="selectedParkTrip = `${parkTrip.date.value}-${parkTrip.park.id}`">
+                    <b-icon icon="arrow-right-square-fill" aria-hidden="true" />
+                  </b-button>
+                </list-item>
               </b-list-group>
 
               <b-pagination
@@ -345,7 +321,13 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ date: value })
+        this.updateRoute({
+          date: value,
+          apage: null,
+          ppage: null,
+          mpage: null,
+          tpage: null
+        })
       }
     },
 
@@ -355,7 +337,13 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ category: value })
+        this.updateRoute({
+          category: value,
+          apage: null,
+          ppage: null,
+          mpage: null,
+          tpage: null
+        })
       }
     },
 
@@ -365,7 +353,13 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ park: value })
+        this.updateRoute({
+          park: value,
+          apage: null,
+          ppage: null,
+          mpage: null,
+          tpage: null
+        })
       }
     },
 
@@ -375,7 +369,15 @@ export default {
       },
 
       set (value) {
-        this.updateRoute({ trip: value, park: null, date: null, tpage: null })
+        this.updateRoute({
+          trip: value,
+          park: null,
+          date: null,
+          apage: null,
+          ppage: null,
+          mpage: null,
+          tpage: null
+        })
       }
     },
 
@@ -462,7 +464,7 @@ export default {
 
   methods: {
     updateRoute (fields) {
-      this.$router.replace({
+      this.$router.push({
         query: _.omitBy({ ...this.$route.query, ...fields }, _.isNil)
       })
     },
