@@ -10,7 +10,7 @@
 
       <b-row v-if="selectedParkTrip !== null" class="mb-2">
         <b-col cols="12" class="text-center">
-          <h3>{{ account.rideStatistic.parkTrips.items[0].park.name }} am {{ account.rideStatistic.parkTrips.items[0].date | timestamp($i18n.locale) }}</h3>
+          <h3>{{ account.rideStatistic.parkTrips.items[0].park.name }} / {{ account.rideStatistic.parkTrips.items[0].date | timestamp($i18n.locale) }}</h3>
         </b-col>
       </b-row>
 
@@ -378,6 +378,8 @@ export default {
           mpage: null,
           tpage: null
         })
+
+        this.$scrollTo('.breadcrumb')
       }
     },
 
